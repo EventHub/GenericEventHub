@@ -1,0 +1,172 @@
+﻿@model IEnumerable<SportsHub.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-header-sport">
+	<h5 class="pull-left">sports of the day</h5>
+	<span class="date pull-right">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</span>
+	<div class="clear"></div>
+	<div class="tab-container">
+        @foreach (var ev in Model)
+        {
+        <div class="tab tab-selected">
+			<h2>@Html.DisplayFor(modelItem => ev.ActivityName.Name)</h2>
+		</div>
+        }
+		<div class="clear"></div>
+	</div>
+</div>
+@foreach (var ev in Model)
+{
+<div class="row">
+	<div class="col-md-5">
+		<div id="participants">
+			<table class="table table-condensed table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>
+							<span>participants</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                    @if (ev.Attendees == null || ev.Attendees.Count == 0) 
+                    {
+                        <tr>
+                            <td>
+							    <span class="label-empty">No players have joined today's sport.</span>
+						    </td>
+                        </tr>
+                    }
+                    else
+                    { 
+                        foreach (var attendee in ev.Attendees)
+                        {
+                        <tr>
+                            <td>
+                                <span>@Html.DisplayFor(modelItem => attendee.Player.Name)</span>
+                            </td>
+                        </tr>
+                            if (attendee.PlusOnes != null) 
+                            { 
+                                foreach (var plusOne in attendee.PlusOnes) 
+                                {
+                                <tr>
+                                    <td>
+                                        <span>@Html.DisplayFor(modelItem => plusOne.Name)</span>
+							            <span class="plus-one"> (@Html.DisplayFor(modelItem => attendee.Player.Name)'s +1)</span>
+							            <button type="button" class="close remove-plus-one">&times;</button>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        }
+                    }
+				</tbody>
+			</table>
+			<div class="pull-right">
+				<a class="btn btn-custom btn-leave" disabled="disabled">leave</a>
+				<a class="btn btn-custom btn-plus-one">add +1</a>
+				<a class="btn btn-custom btn-join">join</a>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div>
+			<div class="page-header page-header-weather">
+				<h3>weather</h3>
+			</div>
+			<div class="bs-callout bs-callout-weather">
+				<strong class="label-important">some useful links</strong>
+				<div class="row">
+					<div class="col-md-6">
+						<ul class="list-unstyled links-list">
+							<li><a class="label-important" href="http://www.weather.com/weather/hourbyhour/graph/Weston+FL+33326:4:US">The Weather Channel</a></li>
+							<li><a class="label-important" href="http://www.accuweather.com/en/us/weston-fl/33327/weather-forecast/2257910">Accuweather</a></li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<ul class="list-unstyled links-list">
+							<li><a class="label-important" href="http://www.wunderground.com/weather-forecast/US/FL/Weston.html">Wunderground</a></li>
+							<li><a class="label-important" href="http://www.wunderground.com/wundermap/?lat=26.11238289&lon=-80.37126923&zoom=8&pin=Weston%2c%20FL">Radar (Wundermap)</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-7">
+		<div class="nested-row-breaker">
+			<div class="row">
+				<div class="alert alert-danger">
+					<p><strong>Not enough players.</strong> The game will be cancelled unless additional players join</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="row">
+						<span class="label-important">location</span>
+						<h3>@Html.DisplayFor(modelItem => ev.Location.Name)</h3>
+					</div>
+					<div class="row">
+						<span class="label-important">time</span>
+						<h3>@ev.Time.ToString("hh:mm tt")</h3>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<ul class="list-unstyled player-summary">
+							<li>
+								<span class="label-important">number of players: </span>
+                                @if (ev.Attendees != null)
+                                {
+                                    <strong class="players text-danger">@ev.Attendees.Count</strong>
+                                }
+                                else
+                                {
+                                    <strong class="players text-danger">0</strong>
+                                }
+							</li>
+							<li>
+								<span>players required: </span><strong class="players text-danger">@Html.DisplayFor(modelItem => ev.ActivityName.RequiredNumberOfPlayers)</strong>
+							</li>
+							<li>
+								<span>optimal number of players: </span><strong class="players text-danger">@Html.DisplayFor(modelItem => ev.ActivityName.RecommendedNumberOfPlayers)</strong>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="page-header page-header-comments">
+					<h3>comments</h3>
+				</div>
+				<div class="bs-callout bs-callout-info">
+					<strong class="label-important">join the conversation!</strong>
+					<div class="row">
+						<div class="col-md-9">
+							<div class="form-inline">
+								<span class="label-important">message</span>
+								<textarea class="form-control input-sm">A message with a maximum of 255 characters...</textarea>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="btn-container pull-right">
+								<a class="btn btn-primary btn-custom">post message</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="comments-list-container">
+					<ul class="list-unstyled">
+					</ul>
+					<div class="alert alert-empty">
+						<span class="label-empty">No messages have been posted yet.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+}
