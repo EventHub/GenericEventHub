@@ -1,0 +1,30 @@
+﻿@model IEnumerable<SportsHub.Models.Event>
+
+<div class="row">
+    <div class="page-header page-header-comments">
+        <h3>comments</h3>
+    </div>
+    <div class="bs-callout bs-callout-info">
+        <strong class="label-important">join the conversation!</strong>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-inline">
+                    <span class="label-important">message</span>
+                    <textarea class="form-control input-sm">A message with a maximum of 255 characters...</textarea>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="btn-container pull-right">
+                    <a class="btn btn-primary btn-custom">post message</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="comments-list-container">
+        <ul class="list-unstyled">
+        </ul>
+        <div class="alert alert-empty">
+            <span class="label-empty">No messages have been posted yet.</span>
+        </div>
+    </div>
+</div>

@@ -138,6 +138,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperMethods\CustomHtmlHelpers.cs" />
     <Compile Include="Infrastructure\ActivityDb.cs" />
     <Compile Include="Infrastructure\AttendanceDb.cs" />
     <Compile Include="Infrastructure\DatabaseServices.cs" />
@@ -202,6 +203,10 @@
     </Content>
     <None Include="readme.txt" />
     <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Event\_Conversation.cshtml" />
+    <Content Include="Views\Event\_EventInformation.cshtml" />
+    <Content Include="Views\Event\_Wheather.cshtml" />
+    <Content Include="Views\Event\_Participants.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
