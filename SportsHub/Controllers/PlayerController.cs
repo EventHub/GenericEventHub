@@ -10,7 +10,7 @@ namespace SportsHub.Controllers
 {
     public class PlayerController : Controller
     {
-        private PlayerDb db = new PlayerDb();
+        private PlayerDb _db = new PlayerDb();
 
         [HttpPost]
         public ActionResult Add(Player player) 
@@ -20,7 +20,7 @@ namespace SportsHub.Controllers
             if (ModelState.IsValid) 
             {
                 player.Username = User.Identity.Name;
-                resultMessage = db.AddPlayer(player);
+                resultMessage = _db.AddPlayer(player);
             }
 
             return RedirectToAction("Index", "Event", new { message = resultMessage });
@@ -33,7 +33,7 @@ namespace SportsHub.Controllers
             
             if (ModelState.IsValid) 
             {
-                resultMessage = db.InactivatePlayer(User.Identity.Name);
+                resultMessage = _db.InactivatePlayer(User.Identity.Name);
             }
 
             return RedirectToAction("Index", "Event", new { message = resultMessage });

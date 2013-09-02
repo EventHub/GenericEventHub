@@ -54,6 +54,15 @@ namespace SportsHub.Infrastructure
             this.AddEvent(eventToAdd);
             return eventToAdd;
         }
+
+        /// <summary>
+        /// Returns a single event that has a specified Id.
+        /// </summary>
+        /// <param name ="id">The id of an event which is also the primary key in the Db.</param>
+        internal Event GetEventById(int id)
+        {
+            return _Db.Event.SingleOrDefault(ev => ev.Id == id);
+        }
     }
 
     //protected class PreferredEventSorter : IComparer<Event>

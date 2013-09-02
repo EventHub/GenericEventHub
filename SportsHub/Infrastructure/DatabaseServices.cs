@@ -8,7 +8,7 @@ namespace SportsHub.Infrastructure
 {
     public abstract class DatabaseServices
     {
-        protected static SportsHubDb _Db = new SportsHubDb();
+        protected SportsHubDb _Db = new SportsHubDb();
 
         public void AddEvent(Event ev) 
         {

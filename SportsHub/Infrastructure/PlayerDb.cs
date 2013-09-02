@@ -62,5 +62,16 @@ namespace SportsHub.Infrastructure
         {
             return _Db.Player.FirstOrDefault(x => x.Username.Equals(username)) != null;
         }
+
+        /// <summary>
+        /// Returns a single player with the specified name.
+        /// </summary>
+        /// <param name ="username">
+        /// The username of the player to be retrieved.
+        /// </param>
+        internal Player GetPlayerByUsername(string username)
+        {
+            return _Db.Player.SingleOrDefault(player => player.Username == username);
+        }
     }
 }
