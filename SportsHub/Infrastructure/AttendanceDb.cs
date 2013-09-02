@@ -1,9 +1,7 @@
 ﻿using SportsHub.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SportsHub.Infrastructure
 {
@@ -25,8 +23,9 @@ namespace SportsHub.Infrastructure
         /// </summary>
         /// <param name ="ev">The event to attend.</param>
         /// <param name ="player">The player whose attendance record is going to be created.</param>
-        public string AttendEvent(Event ev, Player player) 
+        public string AttendEvent(Event ev, Player player)
         {
+            var result = String.Empty;
             if (!IsUserAttendingEvent(ev, player)) 
             {
                 Attendance attendance = new Attendance()
@@ -36,22 +35,26 @@ namespace SportsHub.Infrastructure
                     PlusOnes = new List<PlusOne>()
                 };
 
-                this.AddEntity(attendance);
+                AddEntity(attendance);
+                result = "User joined event!";
+            }
+            else
+            {
+                result = "User is already attending event";
             }
 
-            return "User is already attending event";
+            return result;
         }
 
+        /// <summary>
+        /// If there is no record of attendance or attendance record is equal or less than cero it returns false.
+        /// </summary>
+        /// <param name ="ev">The event to attend.</param>
+        /// <param name ="player">The player whose attendance record is going to be created.</param>
         public bool IsUserAttendingEvent(Event ev, Player player) 
         {
-            //var attendances = from att in _Db.Attendance
-            //                  where
-            //                      att.Event.Equals(ev) &&
-            //                      att.Player.Equals(player)
-            //                  select att;
             bool result = false;
-            var eventoToCheckIn = _Db.Event.SingleOrDefault(evento => evento.Id == ev.Id);
-            var attendanceInEventToCheck = eventoToCheckIn.Attendees;
+            var attendanceInEventToCheck = ev.Attendees;
 
             if (attendanceInEventToCheck != null && attendanceInEventToCheck.Count > 0)
             {
@@ -60,7 +63,7 @@ namespace SportsHub.Infrastructure
                         select y;
                 result = true;
             }
-            //return attendances.Count() > 0;
+
             return result;
         }
     }

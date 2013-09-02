@@ -1,22 +1,27 @@
 ﻿using SportsHub.Infrastructure;
 using SportsHub.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SportsHub.Controllers
 {
     public class EventController : Controller
     {
-        private EventDb controllerDb = new EventDb();
-        private ActivityDb activityDb = new ActivityDb();
+        private EventDb _controllerDb = new EventDb();
+        private ActivityDb _activityDb = new ActivityDb();
+        private PlayerDb _playerDb = new PlayerDb();
 
-        public ActionResult Index(string message = null) 
+        public ActionResult Index(string message = null)
         {
-            List<Activity> activitiesOfTheDay = activityDb.GetActivitiesOfTheDay();
-            List<Event> eventsOfTheDay = controllerDb.GetEventsOfTheDay(activitiesOfTheDay);
+            bool isRegistered = _playerDb.isARegisteredPlayer(@User.Identity.Name);
+            if (!isRegistered)
+            {
+                return RedirectToAction("Register", "Player");
+            }
+
+            List<Activity> activitiesOfTheDay = _activityDb.GetActivitiesOfTheDay();
+            List<Event> eventsOfTheDay = _controllerDb.GetEventsOfTheDay(activitiesOfTheDay);
+            ViewBag.Message = message;
 
             return View(eventsOfTheDay);
         }

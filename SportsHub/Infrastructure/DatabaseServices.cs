@@ -1,14 +1,10 @@
 ﻿using SportsHub.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SportsHub.Infrastructure
 {
     public abstract class DatabaseServices
     {
-        protected SportsHubDb _Db = new SportsHubDb();
+        protected static SportsHubDb _Db = new SportsHubDb();
 
         public void AddEvent(Event ev) 
         {

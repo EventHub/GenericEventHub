@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SportsHub.Infrastructure
 {
@@ -16,7 +15,7 @@ namespace SportsHub.Infrastructure
 
         public bool IsTodayActivityDay() 
         {
-            return this.GetActivitiesOfTheDay().Count > 0;
+            return GetActivitiesOfTheDay().Count > 0;
         }
     }
 }

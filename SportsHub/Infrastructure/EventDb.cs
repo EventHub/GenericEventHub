@@ -51,7 +51,7 @@ namespace SportsHub.Infrastructure
                 Time = DateTime.Today
             };
 
-            this.AddEvent(eventToAdd);
+            AddEvent(eventToAdd);
             return eventToAdd;
         }
 

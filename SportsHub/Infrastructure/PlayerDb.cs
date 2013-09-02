@@ -1,8 +1,7 @@
-﻿using SportsHub.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SportsHub.Models;
 using System.Linq;
-using System.Web;
 
 namespace SportsHub.Infrastructure
 {
@@ -13,28 +12,30 @@ namespace SportsHub.Infrastructure
 
         private const string RemovePlayerSuccessMessage = "Player Removed successfully";
         private const string RemovePlayerFailureMessage = "Player does not exist";
-        
-        public string AddPlayer(Player player)
-        {
-            if (!PlayerExists(player.Username))
-            {
-                if (!PlayerActive(player.Username))
-                {
-                    this.AddEntity(player);
 
-                }
-                else 
-                {
-                    player.isActive = true;
-                    this.UpdateEntity(player);
-                }
-                
-                return AddPlayerSuccessMessage;
-            }
-            else
+        /// <summary>
+        /// This creates a player for the current user.
+        /// </summary>
+        /// <param name ="player">The player that will be created. NOTE: Windows username must be received inside the player object.</param>
+        public string RegisterPlayer(Player newPlayer)
+        {
+            var result = string.Empty;
+            newPlayer.Attendance = new List<Attendance>();
+            newPlayer.Messages = new List<Message>();
+
+            newPlayer.SportsManaged = new List<Activity>();
+            try
             {
-                return AddPlayerFailureMessage;
+                AddEntity(newPlayer);
+                result = AddPlayerSuccessMessage;
             }
+            catch (Exception)
+            {
+                result = AddPlayerFailureMessage;
+                throw;
+            }
+
+            return result;
         }
 
         public string InactivatePlayer(string username) 
@@ -44,7 +45,7 @@ namespace SportsHub.Infrastructure
                 Player playerToRemove = _Db.Player.FirstOrDefault(x => x.Username.Equals(username));
                 playerToRemove.isActive = false;
 
-                this.UpdateEntity(playerToRemove);
+                UpdateEntity(playerToRemove);
 
                 return RemovePlayerSuccessMessage;
             }
@@ -72,6 +73,17 @@ namespace SportsHub.Infrastructure
         internal Player GetPlayerByUsername(string username)
         {
             return _Db.Player.SingleOrDefault(player => player.Username == username);
+        }
+
+        internal bool isARegisteredPlayer(string username)
+        {
+            bool result = false;
+            var allPlayers = GetPlayerByUsername(username);
+
+            if (allPlayers != null)
+                result = true;
+
+            return result;
         }
     }
 }
