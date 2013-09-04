@@ -135,6 +135,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -144,6 +145,7 @@
     <Compile Include="Infrastructure\AttendanceDb.cs" />
     <Compile Include="Infrastructure\DatabaseServices.cs" />
     <Compile Include="Infrastructure\EventDb.cs" />
+    <Compile Include="Infrastructure\MessageDb.cs" />
     <Compile Include="Infrastructure\PlayerDb.cs" />
     <Compile Include="Infrastructure\SportsHubDb.cs" />
     <Compile Include="Migrations\Configuration.cs" />

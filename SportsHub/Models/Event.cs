@@ -13,7 +13,7 @@ namespace SportsHub.Models
         public DateTime Time { get; set; }
         public Activity ActivityName { get; set; }
         public Location Location { get; set; }
-        public List<Attendance> Attendees { get; set; }
-        public List<Message> Messages { get; set; } 
+        public virtual List<Attendance> Attendees { get; set; }
+        public virtual List<Message> Messages { get; set; } 
     }
 }
