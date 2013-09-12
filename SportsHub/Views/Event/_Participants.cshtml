@@ -1,56 +1,53 @@
-﻿@model IEnumerable<SportsHub.Models.Event>
+﻿@model SportsHub.Models.Event
 
-@foreach (var ev in Model)
-{    
-    <div id="participants">
-        <table class="table table-condensed table-bordered table-striped">
-            <thead>
+<div id="participants">
+    <table class="table table-condensed table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    <span>participants</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Attendees == null || Model.Attendees.Count == 0)
+            {
                 <tr>
-                    <th>
-                        <span>participants</span>
-                    </th>
+                    <td>
+                        <span class="label-empty">No players have joined today's sport.</span>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @if (ev.Attendees == null || ev.Attendees.Count == 0)
+            }
+            else
+            {
+                foreach (var attendee in Model.Attendees)
                 {
-                    <tr>
-                        <td>
-                            <span class="label-empty">No players have joined today's sport.</span>
-                        </td>
-                    </tr>
-                }
-                else
-                {
-                    foreach (var attendee in ev.Attendees)
+                <tr>
+                    <td>
+                        <span>@Html.DisplayFor(modelItem => attendee.Player.Name)</span>
+                    </td>
+                </tr>
+                    if (attendee.PlusOnes != null)
                     {
-                    <tr>
-                        <td>
-                            <span>@Html.DisplayFor(modelItem => attendee.Player.Name)</span>
-                        </td>
-                    </tr>
-                        if (attendee.PlusOnes != null)
+                        foreach (var plusOne in attendee.PlusOnes)
                         {
-                            foreach (var plusOne in attendee.PlusOnes)
-                            {
-                    <tr>
-                        <td>
-                            <span>@Html.DisplayFor(modelItem => plusOne.Name)</span>
-                            <span class="plus-one">(@Html.DisplayFor(modelItem => attendee.Player.Name)'s +1)</span>
-                            <button type="button" class="close remove-plus-one">&times;</button>
-                        </td>
-                    </tr>
-                            }
+                <tr>
+                    <td>
+                        <span>@Html.DisplayFor(modelItem => plusOne.Name)</span>
+                        <span class="plus-one">(@Html.DisplayFor(modelItem => attendee.Player.Name)'s +1)</span>
+                        <button type="button" class="close remove-plus-one">&times;</button>
+                    </td>
+                </tr>
                         }
                     }
                 }
-            </tbody>
-        </table>
-        <div class="pull-right">
-            @Html.BootstrapCustomizableButtonActionLink("btn btn-custom btn-leave", "AddPlayer", "Player", ev.Id, "Leave", "Disabled")
-            @Html.BootstrapCustomizableButtonActionLink("btn btn-custom btn-plus-one", "AddPlayer", "Player", ev.Id, "Add +1")
-            @Html.BootstrapCustomizableButtonActionLink("btn btn-custom btn-join", "AttendEvent", "Attendance", ev.Id, "Join")
-        </div>
-        <div class="clear"></div>
+            }
+        </tbody>
+    </table>
+    <div class="pull-right">
+        @Html.BootstrapCustomizableButtonActionLink("btn btn-custom btn-leave", "AddPlayer", "Player", Model.Id, "Leave", "Disabled")
+        @Html.BootstrapCustomizableButtonActionLink("btn btn-custom btn-plus-one", "AddPlayer", "Player", Model.Id, "Add +1")
+        @Html.BootstrapCustomizableButtonActionLink("btn btn-custom btn-join", "AttendEvent", "Attendance", Model.Id, "Join")
     </div>
-}
+    <div class="clear"></div>
+</div>

@@ -19,7 +19,16 @@ namespace SportsHub.HelperMethods
         /// <param name ="elementStatus">This element status controlls whether or not the element is grayed out for a user. This is a default parameter set to Enabled, so if no value is passed an element will be enabled. It expects "Disabled" as a value, other values may produce unexpected behavior.</param>
         public static MvcHtmlString BootstrapCustomizableButtonActionLink(this HtmlHelper helper, string htmlClass, string action, string controller, int id, string textToDisplay, string elementStatus = "Enabled")
         {
-            return new MvcHtmlString("<a  class=\" " + htmlClass + "\" href=\"/" + controller + "/" + action + "/" + id + "\"" + elementStatus + "> " + textToDisplay + "</a>");
+            return new MvcHtmlString(string.Format(
+                @"<a  class=""{0}"" href=""{1}/{2}?eventId={3}&message={4}"" {5} >{6}</a>",
+                htmlClass,
+                controller,
+                action,
+                id,
+                "message",
+                elementStatus,
+                textToDisplay
+            ));
         }
     }
 }

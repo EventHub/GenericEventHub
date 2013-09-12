@@ -1,30 +1,57 @@
-﻿@model IEnumerable<SportsHub.Models.Event>
+﻿@using SportsHub.Models
+@model SportsHub.Models.Event
 
-<div class="row">
-    <div class="page-header page-header-comments">
-        <h3>comments</h3>
-    </div>
-    <div class="bs-callout bs-callout-info">
-        <strong class="label-important">join the conversation!</strong>
-        <div class="row">
-            <div class="col-md-9">
-                <div class="form-inline">
-                    <span class="label-important">message</span>
-                    <textarea class="form-control input-sm">A message with a maximum of 255 characters...</textarea>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="page-header page-header-comments">
+            <h3>comments</h3>
+        </div>
+        <div class="bs-callout bs-callout-info">
+            <strong class="label-important">join the conversation!</strong>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-inline">
+                        <span class="label-important">message</span>
+                        <textarea class="form-control input-sm">jdjdjdjdj</textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="btn-container pull-right">
-                    @Html.BootstrapCustomizableButtonActionLink("btn btn-primary btn-custom", "PostMessage", "Message", 0, "Post Message")
+                <div class="col-md-3">
+                    <div class="btn-container pull-right">
+                        @Html.BootstrapCustomizableButtonActionLink("btn btn-primary btn-custom", "PostMessage", "Message", Model.Id, "Post Message")
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="comments-list-container">
-        <ul class="list-unstyled">
-        </ul>
-        <div class="alert alert-empty">
-            <span class="label-empty">No messages have been posted yet.</span>
+        <div class="comments-list-container">
+            @if (!Model.Messages.Any())
+            {
+                <div class="alert alert-empty">
+                    <span class="label-empty">No messages have been posted yet.</span>
+                </div>
+            }
+            else
+            {
+                <ul class="list-unstyled">
+                    @foreach (Message message in Model.Messages)
+                    {
+                        <li>
+                            <div class="comment">
+                                <div class="heading">
+                                    <span class="comment-title"><strong>@Html.DisplayFor(name => message.Author.Name)</strong> said:</span>
+                                    <span class="time">@Html.DisplayFor(time => message.Time)</span>
+                                </div>
+                                <div class="message">
+                                    <p>@Html.DisplayFor(text => message.MessageText)</p>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
     </div>
-</div>
+}

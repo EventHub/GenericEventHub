@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SportsHub.Models.Event>
+﻿@using SportsHub.Models
+@model IEnumerable<SportsHub.Models.Event>
 
 @{
     ViewBag.Title = "Index";
@@ -10,7 +11,7 @@
     <span class="date pull-right">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</span>
     <div class="clear"></div>
     <div class="tab-container">
-        @foreach (var ev in Model)
+        @foreach (Event ev in Model)
         {
             <div class="tab tab-selected">
                 <h2>@Html.DisplayFor(modelItem => ev.ActivityName.Name)</h2>
@@ -19,17 +20,20 @@
         <div class="clear"></div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-5">
-        @Html.Partial("_Participants", Model)
-        <div>
-            @Html.Partial("_Wheather", Model)
+@foreach(Event ev in Model)
+    {
+    <div class="row">
+        <div class="col-md-5">
+            @Html.Partial("_Participants", ev)
+            <div>
+                @Html.Partial("_Wheather", ev)
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="nested-row-breaker">
+                @Html.Partial("_EventInformation", ev)
+                @Html.Partial("_Conversation", ev)
+            </div>
         </div>
     </div>
-    <div class="col-md-7">
-        <div class="nested-row-breaker">
-            @Html.Partial("_EventInformation", Model)
-            @Html.Partial("_Conversation", Model)
-        </div>
-    </div>
-</div>
+    }

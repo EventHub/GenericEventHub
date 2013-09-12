@@ -11,6 +11,7 @@ namespace SportsHub.Controllers
         private ActivityDb _activityDb = new ActivityDb();
         private PlayerDb _playerDb = new PlayerDb();
 
+        //TODO: Autenticacion sera para 
         public ActionResult Index(string message = null)
         {
             bool isRegistered = _playerDb.isARegisteredPlayer(@User.Identity.Name);

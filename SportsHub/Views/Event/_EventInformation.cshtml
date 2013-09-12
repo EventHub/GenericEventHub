@@ -1,45 +1,42 @@
-﻿@model IEnumerable<SportsHub.Models.Event>
+﻿@model SportsHub.Models.Event
 
-@foreach (var ev in Model)
-{
-    <div class="row">
-        <div class="alert alert-danger">
-            <p><strong>Not enough players.</strong> The game will be cancelled unless additional players join</p>
+<div class="row">
+    <div class="alert alert-danger">
+        <p><strong>Not enough players.</strong> The game will be cancelled unless additional players join</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <span class="label-important">location</span>
+            <h3>@Html.DisplayFor(modelItem => Model.Location.Name)</h3>
+        </div>
+        <div class="row">
+            <span class="label-important">time</span>
+            <h3>@Model.Time.ToString("hh:mm tt")</h3>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <span class="label-important">location</span>
-                <h3>@Html.DisplayFor(modelItem => ev.Location.Name)</h3>
-            </div>
-            <div class="row">
-                <span class="label-important">time</span>
-                <h3>@ev.Time.ToString("hh:mm tt")</h3>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row">
-                <ul class="list-unstyled player-summary">
-                    <li>
-                        <span class="label-important">number of players: </span>
-                        @if (ev.Attendees != null)
-                        {
-                            <strong class="players text-danger">@ev.Attendees.Count</strong>
-                        }
-                        else
-                        {
-                            <strong class="players text-danger">0</strong>
-                        }
-                    </li>
-                    <li>
-                        <span>players required: </span><strong class="players text-danger">@Html.DisplayFor(modelItem => ev.ActivityName.RequiredNumberOfPlayers)</strong>
-                    </li>
-                    <li>
-                        <span>optimal number of players: </span><strong class="players text-danger">@Html.DisplayFor(modelItem => ev.ActivityName.RecommendedNumberOfPlayers)</strong>
-                    </li>
-                </ul>
-            </div>
+    <div class="col-md-6">
+        <div class="row">
+            <ul class="list-unstyled player-summary">
+                <li>
+                    <span class="label-important">number of players: </span>
+                    @if (Model.Attendees != null)
+                    {
+                        <strong class="players text-danger">@Model.Attendees.Count</strong>
+                    }
+                    else
+                    {
+                        <strong class="players text-danger">0</strong>
+                    }
+                </li>
+                <li>
+                    <span>players required: </span><strong class="players text-danger">@Html.DisplayFor(modelItem => Model.ActivityName.RequiredNumberOfPlayers)</strong>
+                </li>
+                <li>
+                    <span>optimal number of players: </span><strong class="players text-danger">@Html.DisplayFor(modelItem => Model.ActivityName.RecommendedNumberOfPlayers)</strong>
+                </li>
+            </ul>
         </div>
     </div>
-}
+</div>
