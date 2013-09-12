@@ -11,7 +11,7 @@ namespace SportsHub.Controllers
         private EventDb _eventDb = new EventDb();
         private MessageDb _messageDb = new MessageDb();
 
-        public ActionResult PostMessage(int eventId, string message)
+        public ActionResult PostMessage(string message, int eventId)
         {
             string error = string.Empty;
 
