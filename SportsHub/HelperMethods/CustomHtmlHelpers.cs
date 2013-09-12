@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace SportsHub.HelperMethods
 {    
@@ -20,12 +16,11 @@ namespace SportsHub.HelperMethods
         public static MvcHtmlString BootstrapCustomizableButtonActionLink(this HtmlHelper helper, string htmlClass, string action, string controller, int id, string textToDisplay, string elementStatus = "Enabled")
         {
             return new MvcHtmlString(string.Format(
-                @"<a  class=""{0}"" href=""{1}/{2}?eventId={3}&message={4}"" {5} >{6}</a>",
+                @"<a  class=""{0}"" href=""{1}/{2}/{3}"" {4} >{5}</a>",
                 htmlClass,
                 controller,
                 action,
                 id,
-                "message",
                 elementStatus,
                 textToDisplay
             ));

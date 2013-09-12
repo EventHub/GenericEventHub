@@ -23,7 +23,7 @@ namespace SportsHub.Infrastructure
         /// </summary>
         /// <param name ="ev">The event to attend.</param>
         /// <param name ="player">The player whose attendance record is going to be created.</param>
-        public string AttendEvent(Event ev, Player player)
+        internal string AttendEvent(Event ev, Player player)
         {
             var result = String.Empty;
             if (!IsUserAttendingEvent(ev, player)) 
@@ -40,9 +40,47 @@ namespace SportsHub.Infrastructure
             }
             else
             {
-                result = "User is already attending event";
+                result = "User is already attending event.";
             }
 
+            return result;
+        }
+
+        /// <summary>
+        /// Remove player from the Attendance list for the current event.
+        /// </summary>
+        /// <param name ="ev">The event to attend.</param>
+        /// <param name ="player">The player whose attendance record is going to be removed for said event.</param>
+        internal string LeaveEvent(Event eventToAttend, Player player)
+        {
+            var result = String.Empty;
+            if (IsUserAttendingEvent(eventToAttend, player))
+            {
+                //TODO: From the attendances of the current event, find the one for the player calling this method and then update it to reflect this player as NOT ACTIVE.
+            }
+            else
+            {
+                result = "User has already left the event.";
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Add a plus one for the current player.
+        /// </summary>
+        /// <param name ="ev">The event to attend.</param>
+        /// <param name ="player">The player whose attendance record is going to be removed for said event.</param>
+        internal string AddPlusOne(Event eventToAttend, Player player)
+        {
+            var result = String.Empty;
+            if (IsUserAttendingEvent(eventToAttend, player))
+            {
+                //TODO: Get all attendances for player. From all attendances for player get only the attendances for the current event.
+            }
+            else
+            {
+                result = "User must join an event before he can bring plus ones.";
+            }
             return result;
         }
 

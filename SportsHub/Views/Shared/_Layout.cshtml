@@ -30,5 +30,18 @@
 		</div>
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
+        <script>
+            $('textarea').each(function () {
+                $(this).data('default', this.value);
+            }).focusin(function () {
+                if (this.value == $(this).data('default')) {
+                    this.value = '';
+                }
+            }).focusout(function () {
+                if (this.value == '') {
+                    this.value = $(this).data('default');
+                }
+            });
+    </script> 
 	</body>
 </html>

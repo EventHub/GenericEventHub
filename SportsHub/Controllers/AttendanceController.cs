@@ -1,5 +1,6 @@
 ﻿using SportsHub.Infrastructure;
 using System.Web.Mvc;
+using SportsHub.Models;
 
 namespace SportsHub.Controllers
 {
@@ -14,6 +15,24 @@ namespace SportsHub.Controllers
             var eventToAttend = _eventDb.GetEventById(id);
             var player = _playerDb.GetPlayerByUsername(User.Identity.Name);
             string errorMessage = _attendanceDb.AttendEvent(eventToAttend, player);
+
+            return RedirectToAction("Index", "Event", new { message = errorMessage });
+        }
+
+        public ActionResult AddPlusOne(int id)
+        {
+            var eventToAttend = _eventDb.GetEventById(id);
+            var player = _playerDb.GetPlayerByUsername(User.Identity.Name);
+            var errorMessage = _attendanceDb.AddPlusOne(eventToAttend, player);
+
+            return RedirectToAction("Index", "Event", new { message = errorMessage });
+        }
+
+        public ActionResult LeaveEvent(int id)
+        {
+            var eventToAttend = _eventDb.GetEventById(id);
+            var player = _playerDb.GetPlayerByUsername(User.Identity.Name);
+            string errorMessage = _attendanceDb.LeaveEvent(eventToAttend, player);
 
             return RedirectToAction("Index", "Event", new { message = errorMessage });
         }
