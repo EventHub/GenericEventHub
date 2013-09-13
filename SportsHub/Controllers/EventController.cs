@@ -11,7 +11,7 @@ namespace SportsHub.Controllers
         private ActivityDb _activityDb = new ActivityDb();
         private PlayerDb _playerDb = new PlayerDb();
 
-        //TODO: Autenticacion sera para 
+        //TODO: Autenticacion must take care of re-routing to create player; this has to happen in an attribute custom filter
         public ActionResult Index(string message = null)
         {
             bool isRegistered = _playerDb.isARegisteredPlayer(@User.Identity.Name);

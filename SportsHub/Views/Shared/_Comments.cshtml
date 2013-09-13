@@ -1,10 +1,16 @@
 ﻿@model SportsHub.Models.Event
 
-<div class="row">
+<div class="row" id = "comments">
     <div class="page-header page-header-comments">
         <h3>comments</h3>
     </div>
-    @using (Html.BeginForm("PostMessage", "Message"))
+    @using (Ajax.BeginForm("PostMessage", "Message",
+        new AjaxOptions()
+        {
+            HttpMethod =  "get",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "comments"
+        }))
     {
         @Html.ValidationSummary(true)
         <div class="bs-callout bs-callout-info">

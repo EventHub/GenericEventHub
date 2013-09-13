@@ -23,11 +23,12 @@
 		<div class="container contents">
             @RenderBody()
 		</div>
-		<div class="container">
-			<div class="footer">
-				<span>Custom Use &copy; 2013</span>
-			</div>
-		</div>
+	    <div class="container">
+	        <div class="footer">
+	            <span>Custom Use &copy; 2013</span>
+	        </div>
+	    </div>
+        @Scripts.Render("~/bundles/otf")
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
         <script>

@@ -159,6 +159,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SportsHub.Infrastructure.SportsHubDb.mdf" />
+    <Content Include="App_Data\SportsHub.Infrastructure.SportsHubDb_log.ldf">
+      <DependentUpon>SportsHub.Infrastructure.SportsHubDb.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -208,15 +212,13 @@
     </Content>
     <None Include="readme.txt" />
     <Content Include="Views\Event\Index.cshtml" />
-    <Content Include="Views\Event\_Conversation.cshtml" />
-    <Content Include="Views\Event\_EventInformation.cshtml" />
-    <Content Include="Views\Event\_Wheather.cshtml" />
-    <Content Include="Views\Event\_Participants.cshtml" />
+    <Content Include="Views\Shared\_Comments.cshtml" />
+    <Content Include="Views\Shared\_EventInformation.cshtml" />
+    <Content Include="Views\Shared\_Wheather.cshtml" />
+    <Content Include="Views\Shared\_Participants.cshtml" />
     <Content Include="Views\Player\Register.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

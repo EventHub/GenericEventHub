@@ -14,10 +14,10 @@ namespace SportsHub.Controllers
         public ActionResult PostMessage(string message, int eventId)
         {
             string error = string.Empty;
+            Event ev = _eventDb.GetEventById(eventId);
 
             if (ModelState.IsValid)
             {
-                Event ev = _eventDb.GetEventById(eventId);
                 Player author = _playerDb.GetPlayerByUsername(User.Identity.Name);
                 Message newMessage = new Message
                 {
@@ -28,6 +28,11 @@ namespace SportsHub.Controllers
                 };
 
                 error = _messageDb.AddMessage(newMessage);
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_Comments", ev);
             }
 
             return RedirectToAction("Index", "Event", new {errorMessage = error});
