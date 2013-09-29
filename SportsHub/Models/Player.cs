@@ -10,8 +10,8 @@ namespace SportsHub.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public bool isActive { get; set; }
-        public List<Attendance> Attendance { get; set; }
-        public List<Activity> SportsManaged { get; set; }
-        public List<Message> Messages { get; set; }
+        public virtual List<Attendance> Attendance { get; set; }
+        public virtual List<Activity> SportsManaged { get; set; }
+        public virtual List<Message> Messages { get; set; }
     }
 }

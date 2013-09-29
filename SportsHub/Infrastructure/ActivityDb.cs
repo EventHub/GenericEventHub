@@ -13,9 +13,19 @@ namespace SportsHub.Infrastructure
             return _Db.Activity.Where(x => x.DayOfTheWeek.Equals(today)).ToList();
         }
 
+        public List<Activity> GetAllActivities()
+        {
+            return _Db.Activity.ToList();
+        }
+
         public bool IsTodayActivityDay() 
         {
             return GetActivitiesOfTheDay().Count > 0;
+        }
+
+        internal Activity GetActivityByName(string activityName)
+        {
+            return _Db.Activity.SingleOrDefault(activity => activity.Name == activityName);
         }
     }
 }

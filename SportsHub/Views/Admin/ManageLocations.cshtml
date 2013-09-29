@@ -1,0 +1,58 @@
+﻿@model IEnumerable<SportsHub.Models.Location>
+
+@{
+    ViewBag.Title = "ManageLocations";
+}
+
+<div class="page-header-sport">
+    <h6>@ViewBag.Message</h6>
+    <h5 class="pull-left">Administration Suite</h5>
+    <span class="date pull-right">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</span>
+    <div class="clear"></div>
+    <div class="tab-container">
+        <div class="tab">
+            <h2>@Html.ActionLink("Activities", "ManageActivities", "Admin")</h2>
+        </div>
+        <div class="tab">
+            <h2>@Html.ActionLink("Players", "ManagePlayers", "Admin")</h2>
+        </div>
+        <div class="tab tab-selected">
+            <h2>@Html.ActionLink("Locations", "ManageLocations", "Admin")</h2>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="event-container row">
+        <p style="padding: 5px;">
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

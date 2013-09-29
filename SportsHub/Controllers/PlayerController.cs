@@ -1,10 +1,6 @@
 ﻿using SportsHub.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using SportsHub.Models;
 using Player = SportsHub.Models.Player;
 
 namespace SportsHub.Controllers

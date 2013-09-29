@@ -12,8 +12,8 @@ namespace SportsHub.Models
         public string DayOfTheWeek { get; set; }
         public int RequiredNumberOfPlayers { get; set; }
         public int RecommendedNumberOfPlayers { get; set; }
-        public Location PreferredLocation { get; set; }
-        public List<Player> Managers { get; set; }
+        public virtual Location PreferredLocation { get; set; }
+        public virtual List<Player> Managers { get; set; }
         public virtual List<Event> Events { get; set; }
     }
 }

@@ -25,5 +25,15 @@ namespace SportsHub.HelperMethods
                 textToDisplay
             ));
         }
+
+        
+        public static MvcHtmlString BootstrapRemovePlusOneButton(this HtmlHelper helper, int modelId, int plusOneId)
+        {
+            return new MvcHtmlString(string.Format(
+                @"<a type=""button"" class=""close remove-plus-one"" href=""Attendance/RemovePlusOne/{0}?plusOneId={1}"">&times;</a>",
+                modelId,
+                plusOneId
+            ));
+        }
     }
 }

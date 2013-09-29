@@ -1,39 +1,28 @@
+using SportsHub.Infrastructure;
+
 namespace SportsHub.Migrations
 {
-    using SportsHub.Models;
+    using Models;
     using System;
     using System.Data.Entity.Migrations;
     using System.Collections.Generic;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SportsHub.Infrastructure.SportsHubDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<SportsHubDb>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(SportsHub.Infrastructure.SportsHubDb context)
+        protected override void Seed(SportsHubDb context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-
             context.Activity.AddOrUpdate(
                 new Activity 
                 { 
                     Name = "Frisbee",
                     DayOfTheWeek = DayOfWeek.Monday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = null,
+                    PreferredLocation = new Location() { Address = "Parque", Activities = null, Name = "Tequesta Trace"},
                     PreferredTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
@@ -43,7 +32,27 @@ namespace SportsHub.Migrations
                     Name = "Basketball",
                     DayOfTheWeek = DayOfWeek.Tuesday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = null,
+                    PreferredLocation = new Location() { Address = "Park", Activities = null, Name = "Tequesta Trace" },
+                    PreferredTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 40, 0),
+                    RecommendedNumberOfPlayers = 10,
+                    RequiredNumberOfPlayers = 6
+                },
+                new Activity
+                {
+                    Name = "Basketball 2",
+                    DayOfTheWeek = DayOfWeek.Tuesday.ToString(),
+                    Managers = new List<Player>(),
+                    PreferredLocation = new Location() { Address = "Geschaft", Activities = null, Name = "Tequesta Trace" },
+                    PreferredTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 40, 0),
+                    RecommendedNumberOfPlayers = 10,
+                    RequiredNumberOfPlayers = 6
+                },
+                new Activity
+                {
+                    Name = "Basketball 3",
+                    DayOfTheWeek = DayOfWeek.Tuesday.ToString(),
+                    Managers = new List<Player>(),
+                    PreferredLocation = new Location() { Address = "Caleta", Activities = null, Name = "Tequesta Trace" },
                     PreferredTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
@@ -53,7 +62,7 @@ namespace SportsHub.Migrations
                     Name = "Run Club",
                     DayOfTheWeek = DayOfWeek.Wednesday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = null,
+                    PreferredLocation = new Location() { Address = "Caleta1", Activities = null, Name = "Tequesta Trace" },
                     PreferredTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
@@ -63,7 +72,7 @@ namespace SportsHub.Migrations
                     Name = "Volleyball",
                     DayOfTheWeek = DayOfWeek.Thursday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = null,
+                    PreferredLocation = new Location() { Address = "Caleta2", Activities = null, Name = "Tequesta Trace" },
                     PreferredTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
@@ -73,7 +82,7 @@ namespace SportsHub.Migrations
                     Name = "Friday's Sport",
                     DayOfTheWeek = DayOfWeek.Friday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = null,
+                    PreferredLocation = new Location() { Address = "Caleta3", Activities = null, Name = "Tequesta Trace" },
                     PreferredTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
@@ -83,7 +92,7 @@ namespace SportsHub.Migrations
                     Name = "Saturday's Sport",
                     DayOfTheWeek = DayOfWeek.Saturday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = null,
+                    PreferredLocation = new Location() { Address = "Caleta4", Activities = null, Name = "Tequesta Trace" },
                     PreferredTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 40, 0),
                     RecommendedNumberOfPlayers = 12,
                     RequiredNumberOfPlayers = 8

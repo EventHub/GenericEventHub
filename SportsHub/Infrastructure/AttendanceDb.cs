@@ -7,15 +7,11 @@ namespace SportsHub.Infrastructure
 {
     public class AttendanceDb : DatabaseServices
     {
-        public int GetPlayerAttendanceForActivity(Activity activity, Player player, DateTime since) 
+        public int GetPlayerAttendanceForActivity(Activity activity, Player player, DateTime since)
         {
-            var attendances = from att in _Db.Attendance where
-                                  att.Event.ActivityName == activity &&
-                                  att.Player == player &&
-                                  att.Event.Time > since
-                              select att;
-
-            return attendances.Count();
+            return player.Attendance.FindAll(
+                att => att.Event.ActivityName.Name == activity.Name
+                && att.Event.Time > since).Count;
         }
 
         /// <summary>
@@ -32,7 +28,6 @@ namespace SportsHub.Infrastructure
                 {
                     Event = ev,
                     Player = player,
-                    PlusOnes = new List<PlusOne>()
                 };
 
                 AddEntity(attendance);
@@ -56,7 +51,10 @@ namespace SportsHub.Infrastructure
             var result = String.Empty;
             if (IsUserAttendingEvent(eventToAttend, player))
             {
-                //TODO: From the attendances of the current event, find the one for the player calling this method and then update it to reflect this player as NOT ACTIVE.
+                Attendance playersAttendance = eventToAttend.Attendees.SingleOrDefault(att => att.Player.Username == player.Username);
+                eventToAttend.Attendees.Remove(playersAttendance);
+                this.DeleteEntity(playersAttendance);
+                // this.UpdateEntity(eventToAttend);
             }
             else
             {
@@ -70,12 +68,14 @@ namespace SportsHub.Infrastructure
         /// </summary>
         /// <param name ="ev">The event to attend.</param>
         /// <param name ="player">The player whose attendance record is going to be removed for said event.</param>
-        internal string AddPlusOne(Event eventToAttend, Player player)
+        /// <param name ="guestName">The name of the new guest.</param>
+        internal string AddPlusOne(Event eventToAttend, Player player, string guestName = "Guest")
         {
             var result = String.Empty;
-            if (IsUserAttendingEvent(eventToAttend, player))
+            if (this.IsUserAttendingEvent(eventToAttend, player))
             {
-                //TODO: Get all attendances for player. From all attendances for player get only the attendances for the current event.
+                eventToAttend.PlusOnes.Add(new PlusOne(){Name = guestName, Host = player, Event = eventToAttend});
+                this.UpdateEntity(eventToAttend);
             }
             else
             {
@@ -84,23 +84,43 @@ namespace SportsHub.Infrastructure
             return result;
         }
 
+        public string RemovePlusOne(Event currentEvent, PlusOne plusOneToRemove)
+        {
+            string result = string.Empty;
+            if (this.IsPlusOneAttendingEvent(currentEvent, plusOneToRemove))
+            {
+                currentEvent.PlusOnes.Remove(plusOneToRemove);
+                this.UpdateEntity(currentEvent);
+            }
+            else
+            {
+                result = "Plus one is no longer participating in this event.";
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// If there is no record of attendance or attendance record is equal or less than cero it returns false.
         /// </summary>
         /// <param name ="ev">The event to attend.</param>
         /// <param name ="player">The player whose attendance record is going to be created.</param>
-        public bool IsUserAttendingEvent(Event ev, Player player) 
+        internal bool IsUserAttendingEvent(Event ev, Player player) 
         {
             bool result = false;
-            var attendanceInEventToCheck = ev.Attendees;
-
-            if (attendanceInEventToCheck != null && attendanceInEventToCheck.Count > 0)
-            {
-                var x = from y in attendanceInEventToCheck
-                        where y.Player.Username == player.Username
-                        select y;
+            var attendee = ev.Attendees.SingleOrDefault(att => att.Player.Username == player.Username);
+            if (attendee != null)
                 result = true;
-            }
+
+            return result;
+        }
+
+        private bool IsPlusOneAttendingEvent(Event ev, PlusOne plusOne)
+        {
+            bool result = false;
+            var foundPlusOne = ev.PlusOnes.SingleOrDefault(po => po.Id == plusOne.Id);
+            if (foundPlusOne != null)
+                result = true;
 
             return result;
         }

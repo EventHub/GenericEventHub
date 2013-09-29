@@ -1,0 +1,57 @@
+﻿@model SportsHub.Models.Activity
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>New Activity - I need to implement the dropdowns for Location and Day of the week</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PreferredTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PreferredTime)
+            @Html.ValidationMessageFor(model => model.PreferredTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DayOfTheWeek)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DayOfTheWeek)
+            @Html.ValidationMessageFor(model => model.DayOfTheWeek)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RequiredNumberOfPlayers)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RequiredNumberOfPlayers)
+            @Html.ValidationMessageFor(model => model.RequiredNumberOfPlayers)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RecommendedNumberOfPlayers)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RecommendedNumberOfPlayers)
+            @Html.ValidationMessageFor(model => model.RecommendedNumberOfPlayers)
+        </div>
+
+        <p style="margin-top:10px;">
+            <input class="btn btn-primary" type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ManageActivities", "Admin")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

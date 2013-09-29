@@ -21,14 +21,7 @@
             <ul class="list-unstyled player-summary">
                 <li>
                     <span class="label-important">number of players: </span>
-                    @if (Model.Attendees != null)
-                    {
-                        <strong class="players text-danger">@Model.Attendees.Count</strong>
-                    }
-                    else
-                    {
-                        <strong class="players text-danger">0</strong>
-                    }
+                    <strong class="players text-danger">@((Model.Attendees != null ? Model.Attendees.Count : 0) + (Model.PlusOnes != null ? Model.PlusOnes.Count : 0))</strong>
                 </li>
                 <li>
                     <span>players required: </span><strong class="players text-danger">@Html.DisplayFor(modelItem => Model.ActivityName.RequiredNumberOfPlayers)</strong>

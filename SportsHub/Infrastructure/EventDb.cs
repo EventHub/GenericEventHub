@@ -10,7 +10,7 @@ namespace SportsHub.Infrastructure
 {
     public class EventDb : DatabaseServices
     {
-        public List<Event> GetEventsOfTheDay(List<Activity> activitiesOfTheDay) 
+        public List<Event> GetEventsOfTheDay(List<Activity> activitiesOfTheDay, Player user) 
         {
             List<Event> todaysEvents = new List<Event>();
 
@@ -33,8 +33,8 @@ namespace SportsHub.Infrastructure
                 }
             }
 
-            //PreferredEventSorter sorter = new PreferredEventSorter(username);
-            //todaysEvents.Sort(sorter);
+            PreferredEventSorter sorter = new PreferredEventSorter(user);
+            todaysEvents.Sort(sorter);
             return todaysEvents;
         }
 
@@ -65,27 +65,27 @@ namespace SportsHub.Infrastructure
         }
     }
 
-    //protected class PreferredEventSorter : IComparer<Event>
-    //{
-    //    private AttendanceDb _attendanceDb = new AttendanceDb();
-    //    private string username;
+    public class PreferredEventSorter : IComparer<Event>
+    {
+        private AttendanceDb _attendanceDb = new AttendanceDb();
+        private Player user;
 
-    //    public PreferredEventSorter(string username)
-    //    {
-    //        this.username = username;
-    //    }
+        public PreferredEventSorter(Player user)
+        {
+            this.user = user;
+        }
 
-    //    int IComparer.Compare(object a, object b)
-    //    {
-    //        Event eventA = (Event)a;
-    //        Event eventB = (Event)b;
+        public int Compare(Event a, Event b)
+        {
+            Event eventA = (Event)a;
+            Event eventB = (Event)b;
 
-    //        int eventAattendanceCount = this._attendanceDb.GetPlayerAttendanceForActivity(eventA.Activity.Name, username, DateTime.Today.AddMonths(-6));
-    //        int eventBattendanceCount = this._attendanceDb.GetPlayerAttendanceForActivity(eventB.Activity.Name, username, DateTime.Today.AddMonths(-6));
+            int eventAattendanceCount = this._attendanceDb.GetPlayerAttendanceForActivity(eventA.ActivityName, user, DateTime.Today.AddMonths(-6));
+            int eventBattendanceCount = this._attendanceDb.GetPlayerAttendanceForActivity(eventB.ActivityName, user, DateTime.Today.AddMonths(-6));
 
-    //        if (eventAattendanceCount > eventBattendanceCount) return 1;
-    //        if (eventAattendanceCount < eventBattendanceCount) return -1;
-    //        return 0;
-    //    }
-    //}
+            if (eventAattendanceCount > eventBattendanceCount) return -1;
+            if (eventAattendanceCount < eventBattendanceCount) return 1;
+            return 0;
+        }
+    }
 }

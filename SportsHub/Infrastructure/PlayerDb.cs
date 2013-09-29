@@ -75,6 +75,11 @@ namespace SportsHub.Infrastructure
             return _Db.Player.SingleOrDefault(player => player.Username == username);
         }
 
+        internal List<Player> GetAllPlayers()
+        {
+            return _Db.Player.ToList();
+        }
+
         internal bool isARegisteredPlayer(string username)
         {
             bool result = false;

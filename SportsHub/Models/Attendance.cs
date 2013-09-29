@@ -7,8 +7,7 @@ namespace SportsHub.Models
     {
         [Key]
         public int Id { get; set; }
-        public Event Event { get; set; }
-        public Player Player { get; set; }
-        public List<PlusOne> PlusOnes { get; set; }
+        public virtual Event Event { get; set; }
+        public virtual Player Player { get; set; }
     }
 }

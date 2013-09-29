@@ -9,7 +9,7 @@ namespace SportsHub.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public List<Event> Events { get; set; }
-        public List<Activity> Activities { get; set; }
+        public virtual List<Event> Events { get; set; }
+        public virtual List<Activity> Activities { get; set; }
     }
 }

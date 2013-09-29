@@ -19,11 +19,28 @@ namespace SportsHub.Controllers
             return RedirectToAction("Index", "Event", new { message = errorMessage });
         }
 
-        public ActionResult AddPlusOne(int id)
+        public ActionResult AddPlusOne(int eventId, string plusOneName)
         {
-            var eventToAttend = _eventDb.GetEventById(id);
+            var eventToAttend = _eventDb.GetEventById(eventId);
             var player = _playerDb.GetPlayerByUsername(User.Identity.Name);
-            var errorMessage = _attendanceDb.AddPlusOne(eventToAttend, player);
+            var errorMessage = string.Empty;
+            if (_attendanceDb.IsUserAttendingEvent(eventToAttend, player))
+            {
+               errorMessage = _attendanceDb.AddPlusOne(eventToAttend, player, plusOneName);
+            }
+            else
+            {
+                errorMessage = "You cannot add a plus one if you have not joined this event!";
+            }
+
+            return RedirectToAction("Index", "Event", new { message = errorMessage });
+        }
+
+        public ActionResult RemovePlusOne(int id, int plusOneId)
+        {
+            Event currentEvent = _eventDb.GetEventById(id);
+            PlusOne plusOneToRemove = currentEvent.PlusOnes.Find(p => p.Id == plusOneId);
+            string errorMessage = _attendanceDb.RemovePlusOne(currentEvent, plusOneToRemove);
 
             return RedirectToAction("Index", "Event", new { message = errorMessage });
         }

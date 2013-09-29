@@ -7,6 +7,7 @@ namespace SportsHub.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public Attendance Attendance { get; set; }
+        public virtual Event Event { get; set; }
+        public virtual Player Host { get; set; }
     }
 }
