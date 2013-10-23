@@ -4,29 +4,58 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2 style="margin-top: 10px;">Edit</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Activity</legend>
+        <legend>@Html.DisplayFor(model => model.Name)</legend>
 
         @Html.HiddenFor(model => model.Name)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.PreferredTime)
         </div>
+        //TODO: Create a ViewModel to solve this issue
+    @*<div class="editor-field">
         <div class="editor-field">
-            @Html.EditorFor(model => model.PreferredTime)
-            @Html.ValidationMessageFor(model => model.PreferredTime)
+            <select data-val="true" data-val-date="The field Time must be a date." data-val-required="The Time field is required." id="PreferredTimeSelect" name="PreferredTime" class="valid">
+                <option value="">--Select A Time--</option>
+                <option value="16:00">4:00:00 PM</option>
+                <option value="16:15">4:15:00 PM</option>
+                <option value="16:30">4:30:00 PM</option>
+                <option value="16:45">4:45:00 PM</option>
+                                
+                <option value="17:00">5:00:00 PM</option>
+                <option value="17:15">5:15:00 PM</option>
+                <option value="17:30">5:30:00 PM</option>
+                <option value="17:45">5:45:00 PM</option>
+                                
+                <option value="18:00">6:00:00 PM</option>
+                <option value="18:15">6:15:00 PM</option>
+                <option value="18:30">6:30:00 PM</option>
+                <option value="18:45">6:45:00 PM</option>
+                                
+                <option value="19:00">7:00:00 PM</option>
+                <option value="19:15">7:15:00 PM</option>
+                <option value="19:30">7:30:00 PM</option>
+                <option value="19:45">7:45:00 PM</option>
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="PreferredTime" data-valmsg-replace="true"></span>
         </div>
+    </div>*@
+        @Html.DropDownListFor(model => model.PreferredTime, new SelectList(new [] {new TimeSpan(18,20,10)}), "--Select A Time--")
+            @Html.ValidationMessageFor(model => model.PreferredTime)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.DayOfTheWeek)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DayOfTheWeek)
+            @Html.DropDownListFor(model => model.DayOfTheWeek,
+                              new SelectList(new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }),
+                              "-- Select Day Of The Week --")
             @Html.ValidationMessageFor(model => model.DayOfTheWeek)
         </div>
 
@@ -34,7 +63,9 @@
             @Html.LabelFor(model => model.RequiredNumberOfPlayers)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.RequiredNumberOfPlayers)
+            @Html.DropDownListFor(model => model.RequiredNumberOfPlayers,
+                              new SelectList(new[] { 1, 2, 3, 4, 5, 6, 7 }),
+                              "-- Select Required Number Of Players --")
             @Html.ValidationMessageFor(model => model.RequiredNumberOfPlayers)
         </div>
 
@@ -42,7 +73,9 @@
             @Html.LabelFor(model => model.RecommendedNumberOfPlayers)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.RecommendedNumberOfPlayers)
+            @Html.DropDownListFor(model => model.RecommendedNumberOfPlayers,
+                              new SelectList(new[] { 1, 2, 3, 4, 5, 6, 7 }),
+                              "-- Select Recomended Number Of Players --")
             @Html.ValidationMessageFor(model => model.RecommendedNumberOfPlayers)
         </div>
 

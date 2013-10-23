@@ -29,9 +29,9 @@
     </div>
     foreach (Event ev in Model)
     {
-        <div class="event-container row if (ev.Id != Model.ToList()[0].Id)
+        <div class="event-container row @if (ev.Id != Model.ToList()[0].Id)
                                         {
-                                            hideClass;
+                                            @hideClass;
                                         }" id="event-@ev.Id-container">
             <div class="col-md-5">
                 @Html.Partial("_Participants", ev)

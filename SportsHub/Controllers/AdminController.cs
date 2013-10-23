@@ -8,6 +8,7 @@ namespace SportsHub.Controllers
 {
     public class AdminController : Controller
     {
+        private EventDb _eventDb = new EventDb();
         private ActivityDb _activityDb = new ActivityDb();
         private PlayerDb _playerDb = new PlayerDb();
 
@@ -35,6 +36,15 @@ namespace SportsHub.Controllers
                                select activity.PreferredLocation;
 
             return View(allLocations);
+        }
+
+        public ActionResult ManageEventsOfTheDay()
+        {
+            Player user = _playerDb.GetPlayerByUsername(User.Identity.Name);
+            List<Activity> activitiesOfTheDay = _activityDb.GetActivitiesOfTheDay();
+            List<Event> eventsOfTheDay = _eventDb.GetEventsOfTheDay(activitiesOfTheDay, user);
+
+            return View(eventsOfTheDay);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace SportsHub.Controllers
 {
     public class EventController : Controller
     {
-        private EventDb _controllerDb = new EventDb();
+        private EventDb _eventDb = new EventDb();
         private ActivityDb _activityDb = new ActivityDb();
         private PlayerDb _playerDb = new PlayerDb();
 
@@ -26,7 +26,7 @@ namespace SportsHub.Controllers
             {
                 Player user = _playerDb.GetPlayerByUsername(username);
                 List<Activity> activitiesOfTheDay = _activityDb.GetActivitiesOfTheDay();
-                List<Event> eventsOfTheDay = _controllerDb.GetEventsOfTheDay(activitiesOfTheDay, user);
+                List<Event> eventsOfTheDay = _eventDb.GetEventsOfTheDay(activitiesOfTheDay, user);
                 ViewBag.Message = message;
 
                 return View(eventsOfTheDay);

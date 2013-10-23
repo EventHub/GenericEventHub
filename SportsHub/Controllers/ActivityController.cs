@@ -31,6 +31,7 @@ namespace SportsHub.Controllers
             return View(activityToEdit);
         }
 
+        //TODO: Change this to use a ViewModel specifically to retrieve the values that need to be changed.
         [HttpPost]
         public ActionResult Edit(Activity editedActivity)
         {

@@ -152,6 +152,7 @@
     <Compile Include="Infrastructure\PlayerDb.cs" />
     <Compile Include="Infrastructure\SportsHubDb.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ActivityViewModel.cs" />
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Message.cs" />
@@ -177,6 +178,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Properties\PublishProfiles\Local Publish.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Content\Images\ultisports_banner.png" />
     <Content Include="Scripts\bootstrap.js" />
@@ -229,7 +231,6 @@
     <Content Include="Views\Activity\Create.cshtml" />
     <Content Include="Views\Activity\Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

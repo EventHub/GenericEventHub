@@ -48,7 +48,7 @@ namespace SportsHub.Infrastructure
                 Attendees = new List<Attendance>(),
                 Location = activity.PreferredLocation,
                 Messages = new List<Message>(),
-                Time = DateTime.Today
+                Time = Convert.ToDateTime(activity.PreferredTime.ToString()),
             };
 
             AddEvent(eventToAdd);
