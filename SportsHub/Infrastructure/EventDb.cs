@@ -18,16 +18,23 @@ namespace SportsHub.Infrastructure
             {
                 bool eventExists = false;
 
-                foreach (Event ev in activity.Events) 
+                try
                 {
-                    if (ev.Time.Date == DateTime.Today.Date)
+                    foreach (Event ev in activity.Events)
                     {
-                        todaysEvents.Add(ev);
-                        eventExists = true;
+                        if (ev.Time.Date == DateTime.Today.Date)
+                        {
+                            todaysEvents.Add(ev);
+                            eventExists = true;
+                        }
+                    }
+
+                    if (!eventExists)
+                    {
+                        todaysEvents.Add(CreateEventOfTheDay(activity));
                     }
                 }
-
-                if (!eventExists)
+                catch (Exception)
                 {
                     todaysEvents.Add(CreateEventOfTheDay(activity));
                 }
@@ -44,10 +51,11 @@ namespace SportsHub.Infrastructure
 
             Event eventToAdd = new Event()
             {
-                ActivityName = activity,
+                Activity = activity,
                 Attendees = new List<Attendance>(),
                 Location = activity.PreferredLocation,
                 Messages = new List<Message>(),
+                PlusOnes = new List<PlusOne>(),
                 Time = Convert.ToDateTime(activity.PreferredTime.ToString()),
             };
 
@@ -63,6 +71,19 @@ namespace SportsHub.Infrastructure
         {
             return _Db.Event.SingleOrDefault(ev => ev.Id == id);
         }
+
+        internal bool IsInAnExistingEvent(Activity activityToDelete)
+        {
+            var allEvents = _Db.Event;
+            var result = Enumerable.Any(allEvents, ev => ev.Activity == activityToDelete);
+
+            return result;
+        }
+
+        public List<Event> AllEvents
+        {
+            get { return _Db.Event.ToList(); }
+        }
     }
 
     public class PreferredEventSorter : IComparer<Event>
@@ -77,11 +98,11 @@ namespace SportsHub.Infrastructure
 
         public int Compare(Event a, Event b)
         {
-            Event eventA = (Event)a;
-            Event eventB = (Event)b;
+            var eventA = (Event)a;
+            var eventB = (Event)b;
 
-            int eventAattendanceCount = this._attendanceDb.GetPlayerAttendanceForActivity(eventA.ActivityName, user, DateTime.Today.AddMonths(-6));
-            int eventBattendanceCount = this._attendanceDb.GetPlayerAttendanceForActivity(eventB.ActivityName, user, DateTime.Today.AddMonths(-6));
+            int eventAattendanceCount = this._attendanceDb.GetPlayerAttendanceForActivity(eventA.Activity, user, DateTime.Today.AddMonths(-6));
+            int eventBattendanceCount = this._attendanceDb.GetPlayerAttendanceForActivity(eventB.Activity, user, DateTime.Today.AddMonths(-6));
 
             if (eventAattendanceCount > eventBattendanceCount) return -1;
             if (eventAattendanceCount < eventBattendanceCount) return 1;

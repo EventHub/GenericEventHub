@@ -10,7 +10,7 @@ namespace SportsHub.Infrastructure
         public int GetPlayerAttendanceForActivity(Activity activity, Player player, DateTime since)
         {
             return player.Attendance.FindAll(
-                att => att.Event.ActivityName.Name == activity.Name
+                att => att.Event.Activity.Name == activity.Name
                 && att.Event.Time > since).Count;
         }
 
@@ -79,8 +79,9 @@ namespace SportsHub.Infrastructure
             }
             else
             {
-                result = "User must join an event before he can bring plus ones.";
+                result = "You cannot add a plus one if you have not joined this event!";
             }
+
             return result;
         }
 

@@ -15,17 +15,17 @@
             <div class="clear">
                 <h1 class="title pull-left"><a href="~/" style="color: white;">Sports Hub</a></h1>
                 <div class="img-container pull-right">
-                    <img src="@Url.Content("~/Content/Images/custom_banner.png")" alt="custom_banner" />
+                    <img src="@Url.Content("~/Content/img/ultisports_banner.png")" alt="custom_banner" />
                 </div>
             </div>
         </div>
     </div>
-    <div class="container contents">
+    <div class="container contents" style="margin-top: 50px;">
         @RenderBody()
     </div>
     <div class="container">
         <div class="footer">
-            <span>Custom Use &copy; 2013 - @Html.ActionLink("Administrator", "Index", "Admin")</span>
+            <span>Event Hub - Alpha Version &copy; 2013 - @Html.ActionLink("Administrator", "ManageActivities", "Admin")</span>
         </div>
     </div>
     @Scripts.Render("~/bundles/otf")
@@ -33,6 +33,18 @@
     @RenderSection("scripts", required: false)
     <script>
         $('textarea').each(function () {
+            $(this).data('default', this.value);
+        }).focusin(function () {
+            if (this.value == $(this).data('default')) {
+                this.value = '';
+            }
+        }).focusout(function () {
+            if (this.value == '') {
+                this.value = $(this).data('default');
+            }
+        });
+        
+        $('#plusOneName').each(function () {
             $(this).data('default', this.value);
         }).focusin(function () {
             if (this.value == $(this).data('default')) {
@@ -53,6 +65,12 @@
 
         $(document).ready(function () {
             $('#closeModal').on('click', function () {
+                $('#AddPlusOneModal').slideUp();
+            });
+        });
+        
+        $(document).ready(function () {
+            $('#closeModalX').on('click', function () {
                 $('#AddPlusOneModal').slideUp();
             });
         });

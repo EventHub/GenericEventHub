@@ -1,7 +1,16 @@
-﻿@model SportsHub.Models.Activity
+﻿@using SportsHub.Infrastructure
+@model SportsHub.Models.Activity
 
 @{
     ViewBag.Title = "Edit";
+    var activityDb = new ActivityDb();
+    var allActivities = activityDb.GetAllActivities();
+    IEnumerable <string> allLocations = from activity in allActivities
+                       select activity.PreferredLocation.Name;
+
+    var distinctLocations = allLocations.Distinct();
+
+    SelectList locationsDropdown = new SelectList(distinctLocations.ToArray());
 }
 
 <h2 style="margin-top: 10px;">Edit</h2>
@@ -18,35 +27,8 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.PreferredTime)
         </div>
-        //TODO: Create a ViewModel to solve this issue
-    @*<div class="editor-field">
-        <div class="editor-field">
-            <select data-val="true" data-val-date="The field Time must be a date." data-val-required="The Time field is required." id="PreferredTimeSelect" name="PreferredTime" class="valid">
-                <option value="">--Select A Time--</option>
-                <option value="16:00">4:00:00 PM</option>
-                <option value="16:15">4:15:00 PM</option>
-                <option value="16:30">4:30:00 PM</option>
-                <option value="16:45">4:45:00 PM</option>
-                                
-                <option value="17:00">5:00:00 PM</option>
-                <option value="17:15">5:15:00 PM</option>
-                <option value="17:30">5:30:00 PM</option>
-                <option value="17:45">5:45:00 PM</option>
-                                
-                <option value="18:00">6:00:00 PM</option>
-                <option value="18:15">6:15:00 PM</option>
-                <option value="18:30">6:30:00 PM</option>
-                <option value="18:45">6:45:00 PM</option>
-                                
-                <option value="19:00">7:00:00 PM</option>
-                <option value="19:15">7:15:00 PM</option>
-                <option value="19:30">7:30:00 PM</option>
-                <option value="19:45">7:45:00 PM</option>
-            </select>
-            <span class="field-validation-valid" data-valmsg-for="PreferredTime" data-valmsg-replace="true"></span>
-        </div>
-    </div>*@
-        @Html.DropDownListFor(model => model.PreferredTime, new SelectList(new [] {new TimeSpan(18,20,10)}), "--Select A Time--")
+    
+        @Html.DropDownListFor(model => model.PreferredTime, DataHelper.GetStandardTimes(), "--Select A Time--")
             @Html.ValidationMessageFor(model => model.PreferredTime)
 
         <div class="editor-label">
@@ -54,7 +36,7 @@
         </div>
         <div class="editor-field">
             @Html.DropDownListFor(model => model.DayOfTheWeek,
-                              new SelectList(new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }),
+                              DataHelper.GetDays(),
                               "-- Select Day Of The Week --")
             @Html.ValidationMessageFor(model => model.DayOfTheWeek)
         </div>
@@ -64,7 +46,7 @@
         </div>
         <div class="editor-field">
             @Html.DropDownListFor(model => model.RequiredNumberOfPlayers,
-                              new SelectList(new[] { 1, 2, 3, 4, 5, 6, 7 }),
+                              DataHelper.GetNumberOfPlayers(10),
                               "-- Select Required Number Of Players --")
             @Html.ValidationMessageFor(model => model.RequiredNumberOfPlayers)
         </div>
@@ -74,9 +56,18 @@
         </div>
         <div class="editor-field">
             @Html.DropDownListFor(model => model.RecommendedNumberOfPlayers,
-                              new SelectList(new[] { 1, 2, 3, 4, 5, 6, 7 }),
-                              "-- Select Recomended Number Of Players --")
+                                  DataHelper.GetNumberOfPlayers(10),
+                                  "-- Select Recomended Number Of Players --")
             @Html.ValidationMessageFor(model => model.RecommendedNumberOfPlayers)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PreferredLocation)
+        </div>
+        <div>
+            @Html.DropDownListFor(model => model.PreferredLocation.Name, locationsDropdown,
+                                  "-- Select Location --")
+            @Html.ValidationMessageFor(model => model.PreferredLocation)
         </div>
 
         <p style="margin-top: 10px;">

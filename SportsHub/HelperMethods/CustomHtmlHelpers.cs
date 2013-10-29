@@ -26,6 +26,18 @@ namespace SportsHub.HelperMethods
             ));
         }
 
+        public static MvcHtmlString BootstrapCustomizableButtonActionLinkNoParameter(this HtmlHelper helper, string htmlClass, string action, string controller, string textToDisplay, string elementStatus = "Enabled")
+        {
+            return new MvcHtmlString(string.Format(
+                @"<a  class=""{0}"" href=""/{1}/{2}"" {3} >{4}</a>",
+                htmlClass,
+                controller,
+                action,
+                elementStatus,
+                textToDisplay
+            ));
+        }
+
         
         public static MvcHtmlString BootstrapRemovePlusOneButton(this HtmlHelper helper, int modelId, int plusOneId)
         {

@@ -13,9 +13,9 @@
         <div class="tab">
             <h2>@Html.ActionLink("Activities", "ManageActivities", "Admin")</h2>
         </div>
-        <div class="tab">
+        @*<div class="tab">
             <h2>@Html.ActionLink("Players", "ManagePlayers", "Admin")</h2>
-        </div>
+        </div>*@
         <div class="tab tab-selected">
             <h2>@Html.ActionLink("Locations", "ManageLocations", "Admin")</h2>
         </div>
@@ -46,9 +46,8 @@
                         @Html.DisplayFor(modelItem => item.Address)
                     </td>
                     <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                        @Html.ActionLink("Edit", "Edit") |
+            @Html.ActionLink("Delete", "Delete")
                     </td>
                 </tr>
             }

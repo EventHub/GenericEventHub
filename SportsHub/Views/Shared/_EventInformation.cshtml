@@ -1,9 +1,30 @@
 ﻿@model SportsHub.Models.Event
+@{
+    var requiredPlayersMet = "text-warning";
+    var recommendedPlayersMet = "text-success";
+    var notEnoughPlayers = "text-danger";
+    var currentNumberOfPlayers = (Model.Attendees != null ? Model.Attendees.Count : 0) + (Model.PlusOnes != null ? Model.PlusOnes.Count : 0);
+}
 
 <div class="row">
-    <div class="alert alert-danger">
-        <p><strong>Not enough players.</strong> The game will be cancelled unless additional players join</p>
-    </div>
+    @if (currentNumberOfPlayers >= Model.Activity.RequiredNumberOfPlayers && currentNumberOfPlayers < Model.Activity.RecommendedNumberOfPlayers)
+    {
+        <div class="alert alert-warning">
+            <p><strong>The game is on!</strong> Get mentally prepared, but we are still waiting for more for EPIC level of fun...</p>
+        </div>
+    }
+    else if (currentNumberOfPlayers >= Model.Activity.RecommendedNumberOfPlayers)
+    {
+        <div class="alert alert-success">
+            <p><strong>Get ready to have some EPIC fun!</strong> Pack up, and get ready to go!</p>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <p><strong>Not enough players.</strong> The game will be cancelled unless additional players join</p>
+        </div>
+    }
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -21,13 +42,48 @@
             <ul class="list-unstyled player-summary">
                 <li>
                     <span class="label-important">number of players: </span>
-                    <strong class="players text-danger">@((Model.Attendees != null ? Model.Attendees.Count : 0) + (Model.PlusOnes != null ? Model.PlusOnes.Count : 0))</strong>
+                    <strong class="players @if (currentNumberOfPlayers >= Model.Activity.RequiredNumberOfPlayers && currentNumberOfPlayers < Model.Activity.RecommendedNumberOfPlayers)
+                                           {
+                                               @requiredPlayersMet
+                                           }
+                                           else if (currentNumberOfPlayers >= Model.Activity.RecommendedNumberOfPlayers)
+                                           {
+                                               @recommendedPlayersMet
+                                           }
+                                           else
+                                           {
+                                               @notEnoughPlayers
+                                           } ">
+                        @((Model.Attendees != null ? Model.Attendees.Count : 0) + (Model.PlusOnes != null ? Model.PlusOnes.Count : 0))
+                    </strong>
                 </li>
                 <li>
-                    <span>players required: </span><strong class="players text-danger">@Html.DisplayFor(modelItem => Model.ActivityName.RequiredNumberOfPlayers)</strong>
+                    <span>players required: </span><strong class="players @if (currentNumberOfPlayers >= Model.Activity.RequiredNumberOfPlayers && currentNumberOfPlayers < Model.Activity.RecommendedNumberOfPlayers)
+                                                                          {
+                                               @requiredPlayersMet
+                                                                          }
+                                                                          else if (currentNumberOfPlayers >= Model.Activity.RecommendedNumberOfPlayers)
+                                                                          {
+                                               @recommendedPlayersMet
+                                                                          }
+                                                                          else
+                                                                          {
+                                               @notEnoughPlayers
+                                                                          } ">@Html.DisplayFor(modelItem => Model.Activity.RequiredNumberOfPlayers)</strong>
                 </li>
                 <li>
-                    <span>optimal number of players: </span><strong class="players text-danger">@Html.DisplayFor(modelItem => Model.ActivityName.RecommendedNumberOfPlayers)</strong>
+                    <span>optimal number of players: </span><strong class="players @if (currentNumberOfPlayers >= Model.Activity.RequiredNumberOfPlayers && currentNumberOfPlayers < Model.Activity.RecommendedNumberOfPlayers)
+                                                                                   {
+                                               @requiredPlayersMet
+                                                                                   }
+                                                                                   else if (currentNumberOfPlayers >= Model.Activity.RecommendedNumberOfPlayers)
+                                                                                   {
+                                               @recommendedPlayersMet
+                                                                                   }
+                                                                                   else
+                                                                                   {
+                                               @notEnoughPlayers
+                                                                                   } ">@Html.DisplayFor(modelItem => Model.Activity.RecommendedNumberOfPlayers)</strong>
                 </li>
             </ul>
         </div>

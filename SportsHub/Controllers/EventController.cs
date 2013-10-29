@@ -26,11 +26,17 @@ namespace SportsHub.Controllers
             {
                 Player user = _playerDb.GetPlayerByUsername(username);
                 List<Activity> activitiesOfTheDay = _activityDb.GetActivitiesOfTheDay();
+
                 List<Event> eventsOfTheDay = _eventDb.GetEventsOfTheDay(activitiesOfTheDay, user);
                 ViewBag.Message = message;
 
                 return View(eventsOfTheDay);
             }
+        }
+
+        public ActionResult Delete()
+        {
+            return RedirectToAction("ManageEventsOfTheDay", "Admin");
         }
     }
 }

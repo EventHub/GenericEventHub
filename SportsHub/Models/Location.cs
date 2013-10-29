@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SportsHub.Models
 {
@@ -9,7 +8,9 @@ namespace SportsHub.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public virtual List<Event> Events { get; set; }
-        public virtual List<Activity> Activities { get; set; }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

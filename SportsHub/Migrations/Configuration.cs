@@ -16,13 +16,38 @@ namespace SportsHub.Migrations
 
         protected override void Seed(SportsHubDb context)
         {
+            var regionalPark = new Location()
+                {
+                    Address = "20200 Saddle Club Rd  Weston, FL 33327",
+                    Name = "Regional Park"
+                };
+
+            var tequestaTracePark = new Location()
+                {
+                    Address = "1800 Indian Trace, Weston, FL 33326",
+                    Name = "Tequesta Trace Park"
+                };
+
+            var cyclingRoute = new Location()
+                {
+                    Address = "All Over Weston",
+                    Name = "Weston Bike Lanes"
+                };
+
+            var runClub = new Location()
+                {
+                    Address = "1675 Market St  Weston, FL 33326",
+                    Name = "Weston Town Center"
+                };
+
+
             context.Activity.AddOrUpdate(
-                new Activity 
-                { 
+                new Activity
+                {
                     Name = "Frisbee",
                     DayOfTheWeek = DayOfWeek.Monday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = new Location() { Address = "Parque", Activities = null, Name = "Tequesta Trace"},
+                    PreferredLocation = regionalPark,
                     PreferredTime = new TimeSpan(17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
@@ -32,27 +57,17 @@ namespace SportsHub.Migrations
                     Name = "Basketball",
                     DayOfTheWeek = DayOfWeek.Tuesday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = new Location() { Address = "Park", Activities = null, Name = "Tequesta Trace" },
+                    PreferredLocation = tequestaTracePark,
                     PreferredTime = new TimeSpan(17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
                 },
                 new Activity
                 {
-                    Name = "Basketball 2",
+                    Name = "Cycling",
                     DayOfTheWeek = DayOfWeek.Tuesday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = new Location() { Address = "Geschaft", Activities = null, Name = "Tequesta Trace" },
-                    PreferredTime = new TimeSpan(17, 40, 0),
-                    RecommendedNumberOfPlayers = 10,
-                    RequiredNumberOfPlayers = 6
-                },
-                new Activity
-                {
-                    Name = "Basketball 3",
-                    DayOfTheWeek = DayOfWeek.Tuesday.ToString(),
-                    Managers = new List<Player>(),
-                    PreferredLocation = new Location() { Address = "Caleta", Activities = null, Name = "Tequesta Trace" },
+                    PreferredLocation = cyclingRoute,
                     PreferredTime = new TimeSpan(17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
@@ -62,7 +77,7 @@ namespace SportsHub.Migrations
                     Name = "Run Club",
                     DayOfTheWeek = DayOfWeek.Wednesday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = new Location() { Address = "Caleta1", Activities = null, Name = "Tequesta Trace" },
+                    PreferredLocation = runClub,
                     PreferredTime = new TimeSpan(17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
@@ -72,30 +87,20 @@ namespace SportsHub.Migrations
                     Name = "Volleyball",
                     DayOfTheWeek = DayOfWeek.Thursday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = new Location() { Address = "Caleta2", Activities = null, Name = "Tequesta Trace" },
+                    PreferredLocation = regionalPark,
                     PreferredTime = new TimeSpan(17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
                 },
                 new Activity
                 {
-                    Name = "Friday's Sport",
-                    DayOfTheWeek = DayOfWeek.Friday.ToString(),
+                    Name = "Football",
+                    DayOfTheWeek = DayOfWeek.Thursday.ToString(),
                     Managers = new List<Player>(),
-                    PreferredLocation = new Location() { Address = "Caleta3", Activities = null, Name = "Tequesta Trace" },
+                    PreferredLocation = tequestaTracePark,
                     PreferredTime = new TimeSpan(17, 40, 0),
                     RecommendedNumberOfPlayers = 10,
                     RequiredNumberOfPlayers = 6
-                }, 
-                new Activity
-                {
-                    Name = "Saturday's Sport",
-                    DayOfTheWeek = DayOfWeek.Saturday.ToString(),
-                    Managers = new List<Player>(),
-                    PreferredLocation = new Location() { Address = "Caleta4", Activities = null, Name = "Tequesta Trace" },
-                    PreferredTime = new TimeSpan(17, 40, 0),
-                    RecommendedNumberOfPlayers = 12,
-                    RequiredNumberOfPlayers = 8
                 }
             );
         }

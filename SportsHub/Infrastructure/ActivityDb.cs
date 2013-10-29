@@ -23,9 +23,9 @@ namespace SportsHub.Infrastructure
             return GetActivitiesOfTheDay().Count > 0;
         }
 
-        internal Activity GetActivityByName(string activityName)
+        internal Activity GetActivityByName(string Activity)
         {
-            return _Db.Activity.SingleOrDefault(activity => activity.Name == activityName);
+            return _Db.Activity.SingleOrDefault(activity => activity.Name == Activity);
         }
     }
 }

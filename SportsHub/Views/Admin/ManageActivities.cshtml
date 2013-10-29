@@ -4,90 +4,114 @@
     ViewBag.Title = "ManageActivities";
 }
 
-<div class="page-header-sport">
-    <h6>@ViewBag.Message</h6>
-    <h5 class="pull-left">Administration Suite</h5>
-    <span class="date pull-right">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</span>
-    <div class="clear"></div>
-    <div class="tab-container">
-        <div class="tab tab-selected">
-            <h2>@Html.ActionLink("Activities", "ManageActivities", "Admin")</h2>
-        </div>
-        <div class="tab">
-            <h2>@Html.ActionLink("Players", "ManagePlayers", "Admin")</h2>
-        </div>
-        <div class="tab">
-            <h2>@Html.ActionLink("Locations", "ManageLocations", "Admin")</h2>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="event-container row">
-        <p style="padding: 5px;">
-            @Html.ActionLink("Create New", "Create", "Activity")
-        </p>
-        <table class="table table-striped">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.PreferredTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DayOfTheWeek)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>Required Players
-                </th>
-                <th>Recommended Players
-                </th>
-                <th></th>
-            </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PreferredTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DayOfTheWeek)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequiredNumberOfPlayers)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RecommendedNumberOfPlayers)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", "Activity", new { id = item.Name }, null) |
-                        <a href="#" id="ConfirmDelete">Delete</a>
-                    </td>
-                </tr>
+<br />
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="page-header-sport">
+        <div class="row">
+            <div class="alert alert-danger">
+                <p>
+                    <strong>System Says:</strong>
+                    @ViewBag.Message
+                </p>
+            </div>
+        </div>
+    </div>
+}
+<h5 class="pull-left">Administration Suite</h5>
+<span class="date pull-right">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</span>
+<div class="clear"></div>
+<div class="tab-container">
+    <div class="tab tab-selected">
+        <h2>@Html.ActionLink("Activities", "ManageActivities", "Admin")</h2>
+    </div>
+    @*<div class="tab">
+            <h2>@Html.ActionLink("Players", "ManagePlayers", "Admin")</h2>
+        </div>*@
+    <div class="tab">
+        <h2>@Html.ActionLink("Locations", "ManageLocations", "Admin")</h2>
+    </div>
+    <div class="tab">
+        <h2>@Html.ActionLink("Today's Events", "ManageEventsOfTheDay", "Admin")</h2>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="event-container row">
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PreferredTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DayOfTheWeek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>Required Players
+            </th>
+            <th>Recommended Players
+            </th>
+            <th>Location
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PreferredTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayOfTheWeek)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequiredNumberOfPlayers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecommendedNumberOfPlayers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PreferredLocation.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Activity", new { id = item.Name }, null) |
+                        @*<a href="#" id="ConfirmDelete">Delete</a>*@
+                    <a href="/Activity/DeleteActivity/@item.Name">Delete</a>
+                </td>
+            </tr>
                 
-                <div class="modal" id="ConfirmDeleteModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close">&times;</button>
-                                <h4 class="modal-title">Confirm Delete</h4>
-                            </div>
-                            <div class="modal-body">
-                                Are you sure you want to delete @item.Name?
-                            </div>
-                            <div class="modal-footer">
-                                <button id="closeModal" type="button" class="btn btn-default">Close</button>
-                                <a class="btn btn-primary" href="/Activity/Delete/@item.Name">Delete @item.Name</a>
-                            </div>
+            <div class="modal" id="ConfirmDeleteModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close">&times;</button>
+                            <h4 class="modal-title">Confirm Delete</h4>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete @item.Name?
+                        </div>
+                        <div class="modal-footer">
+                            <button id="closeModal" type="button" class="btn btn-default">Close</button>
+                            <a class="btn btn-primary" href="/Activity/DeleteActivity/@item.Name">Delete @item.Name</a>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+        }
 
-        </table>
-    </div>
+    </table>
+
+    @Html.BootstrapCustomizableButtonActionLinkNoParameter("btn btn-primary", "Create", "Activity", "Add Activity")
+    <a href="/Admin/SendEmail" class="btn btn-danger">Generate Email</a>
+    <br />
+    <br />
+</div>
 </div>
 
 

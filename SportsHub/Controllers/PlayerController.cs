@@ -13,8 +13,9 @@ namespace SportsHub.Controllers
         public ActionResult Register(Player newPlayer)
         {
             string resultMessage = String.Empty;
-            if (ModelState.IsValid)
+            if (true/*ModelState.IsValid*/)
             {
+                newPlayer.isActive = true;
                 newPlayer.Username = User.Identity.Name;
                 resultMessage = _playerDb.RegisterPlayer(newPlayer);
             }

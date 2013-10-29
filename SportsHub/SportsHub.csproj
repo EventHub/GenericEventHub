@@ -144,9 +144,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelperMethods\CustomHtmlHelpers.cs" />
+    <Compile Include="HelperMethods\DataHelper.cs" />
     <Compile Include="Infrastructure\ActivityDb.cs" />
     <Compile Include="Infrastructure\AttendanceDb.cs" />
     <Compile Include="Infrastructure\DatabaseServices.cs" />
+    <Compile Include="Infrastructure\EMailServices.cs" />
     <Compile Include="Infrastructure\EventDb.cs" />
     <Compile Include="Infrastructure\MessageDb.cs" />
     <Compile Include="Infrastructure\PlayerDb.cs" />
@@ -154,6 +156,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityViewModel.cs" />
     <Compile Include="Models\Attendance.cs" />
+    <Compile Include="Models\EMail.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Player.cs" />
@@ -163,15 +166,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\SportsHub.Infrastructure.SportsHubDb.mdf" />
-    <Content Include="App_Data\SportsHub.Infrastructure.SportsHubDb_log.ldf">
-      <DependentUpon>SportsHub.Infrastructure.SportsHubDb.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\ultisports_banner.png" />
     <Content Include="Content\styles.css" />
+    <Content Include="Content\UltiSportsMailingListCSV.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -179,8 +180,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\Local Publish.pubxml" />
+    <None Include="Properties\PublishProfiles\Release.pubxml" />
+    <None Include="Properties\PublishProfiles\ultisportshub - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ultisportshub - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
-    <Content Include="Content\Images\ultisports_banner.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
@@ -230,6 +233,11 @@
     <Content Include="Views\Admin\ManageLocations.cshtml" />
     <Content Include="Views\Activity\Create.cshtml" />
     <Content Include="Views\Activity\Edit.cshtml" />
+    <Content Include="Views\Shared\TimeSpan.cshtml" />
+    <Content Include="Views\Admin\ManageEventsOfTheDay.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,6 +9,7 @@ namespace SportsHub.Models
         [Key]
         public string Name { get; set; }
         [Display(Name = "Time")]
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan PreferredTime { get; set; }
         [Display(Name = "Day")]
         public string DayOfTheWeek { get; set; }
