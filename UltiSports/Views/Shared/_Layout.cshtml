@@ -102,6 +102,26 @@
             });
         });
 
+        //Modal For Event Of The Day Confirm Delete
+        $(document).ready(function () {
+            $('#EODConfirmDelete').on('click', function () {
+                $('#EODConfirmDeleteModal').slideDown();
+            });
+        });
+
+        $(document).ready(function () {
+            $('#EODcloseModal').on('click', function () {
+                $('#EODConfirmDeleteModal').slideUp();
+            });
+        });
+
+        $(document).ready(function () {
+            $('.tab').on('click', function () {
+                var tabId = $(this).attr('id');
+                toggleTab(tabId);
+            });
+        });
+
         function toggleTab(tabId) {
             if (!$("#" + tabId).hasClass("tab-selected")) {
                 $(".tab").removeClass("tab-selected");

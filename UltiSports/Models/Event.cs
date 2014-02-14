@@ -15,6 +15,8 @@ namespace UltiSports.Models
         public virtual Location Location { get; set; }
         public virtual List<Player> Attendees { get; set; }
         public virtual List<PlusOne> PlusOnes { get; set; }
-        public virtual List<Message> Messages { get; set; } 
+        public virtual List<Message> Messages { get; set; }
+        [Display(Name = "Canceled")]
+        public bool IsCanceled { get; set; }
     }
 }

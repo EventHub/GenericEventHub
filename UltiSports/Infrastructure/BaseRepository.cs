@@ -37,7 +37,6 @@ namespace UltiSports.Infrastructure
         {
             return _repo.GetByID(id);
         }
-
     }
         public interface IBaseRepository<TEntity> where TEntity : class
         {

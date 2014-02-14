@@ -45,7 +45,11 @@
         </th>
         <th>Messages
         </th>
-        <th>Plus Ones
+        <th>Players
+        </th>
+        <th>Time
+        </th>
+        <th>Canceled
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Time)
@@ -65,15 +69,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Messages.Count)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.PlusOnes.Count)
-            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Attendees.Count)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Time)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", "EventOfTheDay", new { id = item.Id }, null)
-                @Html.ActionLink("Delete", "Delete", "Event", new { id = item.Id }, null)
+                @Html.DisplayFor(modelItem => item.IsCanceled)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", "EventOfTheDay", new { id = item.Id }, null) |
+                @Html.ActionLink("Cancel", "Cancel", "EventOfTheDay", new { id = item.Id }, null)
             </td>
         </tr>
     }

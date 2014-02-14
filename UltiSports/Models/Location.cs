@@ -8,6 +8,7 @@ namespace UltiSports.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        [Display(Name = "Available")]
         public bool isActive { get; set; }
         public override string ToString()
         {

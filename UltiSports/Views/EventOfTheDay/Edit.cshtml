@@ -41,6 +41,15 @@
             @Html.ValidationMessageFor(model => model.Activity)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsCanceled)
+        </div>
+        
+        <div>
+            @Html.EditorFor(model => model.IsCanceled)
+            @Html.ValidationMessageFor(model => model.IsCanceled)
+        </div>
+
         <p style="margin-top: 10px;">
             <input class="btn btn-primary" type="submit" value="Save" />
         </p>

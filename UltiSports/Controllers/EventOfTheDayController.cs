@@ -9,7 +9,7 @@ namespace UltiSports.Controllers
     [AdminAuthentication]
     public class EventOfTheDayController : Controller
     {
-        private IEventService _service;
+        private IEventService _eventService;
         private ILocationService _locationService;
         private IActivityService _activityService;
 
@@ -17,7 +17,7 @@ namespace UltiSports.Controllers
             ILocationService locationService,
             IActivityService activityService)
         {
-            _service = service;
+            _eventService = service;
             _locationService = locationService;
             _activityService = activityService;
         }
@@ -25,7 +25,7 @@ namespace UltiSports.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var response = _service.GetByID(id);
+            var response = _eventService.GetByID(id);
             var model = response.Data;
             ViewBag.AllActivities = _activityService.GetAll().Data;
             ViewBag.AllLocations = _locationService.GetAll().Data;
@@ -36,12 +36,43 @@ namespace UltiSports.Controllers
         [HttpPost]
         public ActionResult Edit(Event eventToUpdate)
         {
-            // Grab the existing entity for the activity selected and associated it to event
-            eventToUpdate.Activity = _activityService.GetByID(eventToUpdate.Activity.Name).Data;
-            eventToUpdate.Location = _locationService.GetByID(eventToUpdate.Location.Id).Data; // Possible issue with duplicate location names. Might need to add an attribute to prevent this.
-            _service.Update(eventToUpdate);
+            var result = RidiculousHelperBecauseIDontHaveResetContextYet(eventToUpdate);
+            _eventService.Update(result);
 
             return RedirectToAction("ManageEventsOfTheDay", "Admin");
+        }
+
+        public ActionResult Cancel(int Id)
+        {
+            var eventToCancel = _eventService.GetByID(Id);
+
+            if (eventToCancel.Data.IsCanceled)
+                eventToCancel.Data.IsCanceled = false;
+            else
+                eventToCancel.Data.IsCanceled = true;
+
+            _eventService.Update(eventToCancel.Data);
+
+            return RedirectToAction("ManageEventsOfTheDay", "Admin");
+        }
+
+        private Event RidiculousHelperBecauseIDontHaveResetContextYet(Event eventToUpdate)
+        {
+            // To avoid all of this I need to expose a "reset" context method
+            var result = _eventService.GetByID(eventToUpdate.Id);
+            result.Data.Id = eventToUpdate.Id;
+            result.Data.Messages = eventToUpdate.Messages;
+
+            result.Data.PlusOnes = eventToUpdate.PlusOnes;
+            result.Data.Time = eventToUpdate.Time;
+            result.Data.Attendees = eventToUpdate.Attendees;
+
+            result.Data.IsCanceled = eventToUpdate.IsCanceled;
+            // Grab the existing entity for the activity selected and associated it to event
+            result.Data.Activity = _activityService.GetByID(eventToUpdate.Activity.Name).Data;
+            result.Data.Location = _locationService.GetByID(eventToUpdate.Location.Id).Data; // Possible issue with duplicate location names. Might need to add an attribute to prevent this.
+
+            return result.Data;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace UltiSports.Models
         public string Username { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        [Display(Name = "Active Member")]
         public bool isActive { get; set; }
         public virtual List<Attendance> Attendance { get; set; }
         public virtual List<Activity> SportsManaged { get; set; }
