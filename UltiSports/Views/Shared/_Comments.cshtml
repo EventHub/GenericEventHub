@@ -1,0 +1,69 @@
+﻿@model UltiSports.Models.Event
+
+<div class="row" id = "comments">
+    <div class="page-header page-header-comments">
+        <h3>comments</h3>
+    </div>
+    @using (Ajax.BeginForm("Create", "Message",
+        new AjaxOptions()
+        {
+            HttpMethod =  "post",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "comments"
+        }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="bs-callout bs-callout-info">
+            <strong class="label-important">join the conversation!</strong>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-inline">
+                        <span class="label-important">message</span>
+                        <textarea id="textarea" class="form-control input-sm" data-val="true" data-val-length="The field Comment must be a string with a maximum length of 70." data-val-length-max="255" id="Comment" name="Message" type="text">A message with a maximum of 255 characters...</textarea>
+                        <textarea id="textarea2" class="input-sm" data-val="true" data-val-length="" data-val-length-max="255" id="eventId" name="eventId" type="hidden" style="display:none;">@Model.Id</textarea>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="btn-container pull-right">
+                        <input class="btn btn-primary" type="submit" value="Post Message" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.Messages.Count != 0)
+    {
+        <ul class="list-unstyled">
+            @foreach (var message in Model.Messages)
+            {
+                if (!string.IsNullOrEmpty(message.MessageText))
+                {
+                <li>
+                    <div class="comment">
+                        <div class="heading">
+                            <span class="comment-title"><strong>@message.Author.Name</strong> said:</span>
+                            <span class="time">@message.Time.ToString("T")</span>
+                        </div>
+                        <div class="message">
+                            <p>&quot;@message.MessageText&quot;</p>
+                        </div>
+                    </div>
+                </li>
+                }
+                else
+                {
+                <div class="alert alert-empty">
+                    <span class="label-empty">No messages have been posted yet.</span>
+                </div>
+                }
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="alert alert-empty">
+            <span class="label-empty">No messages have been posted yet.</span>
+        </div>
+    }
+</div>
