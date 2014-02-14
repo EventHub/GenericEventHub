@@ -86,11 +86,33 @@ namespace UltiSports.Services
                 SendEmail(players, subject, body);
             }
         }
+
+        public void SendCancellationEmail(string dayOfWeek)
+        {
+            var allEvents = _eventDb.GetEventsFor(dayOfWeek);
+            List<Player> players;
+            foreach (var ev in allEvents)
+            {
+                var ats = _attendanceDb.GetWhereEvent(ev.Id);
+                players = new List<Player>();
+                foreach (var a in ats)
+                {
+                    players.Add(a.Player);
+                }
+
+                var subject = String.Format("{0} Verdict: {1}", ev.Activity.Name, "Today's event has been canceled!");
+
+                var body = "Maybe next week!";
+
+                SendEmail(players, subject, body);
+            }
+        }
     }
 
     public interface IEmailService
     {
         void SendFirstEmail(string dayOfWeek);
         void SendFinalEmail(string dayOfWeek);
+        void SendCancellationEmail(string dayOfWeek);
     }
 }

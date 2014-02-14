@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using UltiSports.Filters;
 using UltiSports.Infrastructure;
 using UltiSports.Models;
@@ -13,13 +14,24 @@ namespace UltiSports.Controllers
         private ILocationService _locationService;
         private IActivityService _activityService;
 
+        private IPlayerService _playerService;
+        private IAttendanceService _attendanceService;
+        private IEmailService _emailService;
+
         public EventOfTheDayController(IEventService service,
             ILocationService locationService,
-            IActivityService activityService)
+            IActivityService activityService,
+            IPlayerService playerService,
+            IAttendanceService attendanceService,
+            IEmailService emailService)
         {
             _eventService = service;
             _locationService = locationService;
             _activityService = activityService;
+
+            _playerService = playerService;
+            _attendanceService = attendanceService;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -49,7 +61,10 @@ namespace UltiSports.Controllers
             if (eventToCancel.Data.IsCanceled)
                 eventToCancel.Data.IsCanceled = false;
             else
+            {
                 eventToCancel.Data.IsCanceled = true;
+                _emailService.SendCancellationEmail(DateTime.Now.Date.DayOfWeek.ToString());
+            }
 
             _eventService.Update(eventToCancel.Data);
 
