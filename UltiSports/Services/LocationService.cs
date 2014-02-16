@@ -15,10 +15,15 @@ namespace UltiSports.Services
         {
             _repo = locationDb;
         }
+
+        public IEnumerable<Location> GetAllActiveLocations()
+        {
+            return _repo.GetActiveLocations();
+        }
     }
 
     public interface ILocationService : IBaseService<Location>
     {
-
+        IEnumerable<Location> GetAllActiveLocations();
     }
 }

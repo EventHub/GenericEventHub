@@ -56,6 +56,9 @@
             </th>
             <th>Location
             </th>
+            <th title="Active events will be used to create activities.">
+                Active
+            </th>
             <th></th>
         </tr>
 
@@ -80,10 +83,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.PreferredLocation.Name)
                 </td>
+                <td title="Active events will be used to create activities.">
+                    @Html.DisplayFor(modelItem => item.isActive)
+                </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", "Activity", new { id = item.Name }, null) |
                         @*<a href="#" id="ConfirmDelete">Delete</a>*@
-                    <a href="/Activity/DeleteActivity/@item.Name">Delete</a>
+                    @Html.ActionLink("Toggle Active", "ToggleActive", "Activity", new { id = item.Name }, null)
                 </td>
             </tr>
                 
@@ -114,5 +120,3 @@
     <br />
 </div>
 </div>
-
-

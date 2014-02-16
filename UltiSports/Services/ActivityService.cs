@@ -77,6 +77,11 @@ namespace UltiSports.Services
         {
             return _activityDb.GetActivitiesFor(dayOfWeek);
         }
+
+        public IEnumerable<Activity> GetActiveActivitiesFor(string dayOfWeek)
+        {
+            return _activityDb.GetActiveActivitiesFor(dayOfWeek);
+        }
     }
 
     public interface IActivityService : IBaseService<Activity>
@@ -85,5 +90,6 @@ namespace UltiSports.Services
         System.Collections.Generic.IEnumerable<UltiSports.Models.Activity> GetActivitiesFor(string dayOfWeek);
         ServiceData<UltiSports.Models.Activity> GetByName(string name);
         ServiceResponse Update(UltiSports.Models.Activity editedActivity);
+        IEnumerable<Activity> GetActiveActivitiesFor(string dayOfWeek);
     }
 }
