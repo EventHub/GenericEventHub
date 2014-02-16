@@ -59,7 +59,7 @@
             @Html.LabelFor(model => model.PreferredLocation)
         </div>
         <div>
-            @Html.DropDownListFor(model => model.PreferredLocation.Id, DataHelper.GetAllLocations(allLocations),
+            @Html.DropDownListFor(model => model.LocationId, DataHelper.GetAllLocations(allLocations),
                                   "-- Select Location --")
             @Html.ValidationMessageFor(model => model.PreferredLocation)
         </div>

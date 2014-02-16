@@ -36,9 +36,8 @@ namespace UltiSports.Infrastructure
     public interface IActivityRepository : IBaseRepository<Activity>
     {
         IEnumerable<Activity> GetActivitiesFor(string dayOfWeek);
-        UltiSports.Models.Activity GetActivityByName(string name);
+        Activity GetActivityByName(string name);
         IEnumerable<UltiSports.Models.Activity> GetAllActivities();
-
         IEnumerable<Activity> GetActiveActivitiesFor(string dayOfWeek);
     }
 }

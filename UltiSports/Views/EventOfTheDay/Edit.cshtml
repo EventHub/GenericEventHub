@@ -25,7 +25,7 @@
         </div>
         
         <div>
-            @Html.DropDownListFor(model => model.Location.Id,
+            @Html.DropDownListFor(model => model.LocationId,
                                   locationsDropdown,
                                   "-- Select A New Locations --")
         </div>
@@ -35,7 +35,7 @@
         </div>
         
         <div>
-            @Html.DropDownListFor(model => model.Activity.Name,
+            @Html.DropDownListFor(model => model.ActivityName,
                               activitiesDropdown,
                               "-- Select A New Activities --")
             @Html.ValidationMessageFor(model => model.Activity)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UltiSports.Models
 {
@@ -9,7 +10,10 @@ namespace UltiSports.Models
         public int Id { get; set; }
         public string MessageText { get; set; }
         public DateTime Time { get; set; }
+        [ForeignKey("Author")]
+        public string AuthorName { get; set; }
         public virtual Player Author { get; set; }
+        public int EventId { get; set; }
         public virtual Event Event { get; set; }
     }
 
@@ -20,10 +24,12 @@ namespace UltiSports.Models
             this.Author = message.Author.Name;
             this.MessageText = message.MessageText;
             this.Time = message.Time;
+            this.EventId = message.Event.Id;
         }
 
         public string Author { get; set; }
         public string MessageText { get; set; }
         public DateTime Time { get; set; }
+        public int EventId { get; set; }
     }
 }

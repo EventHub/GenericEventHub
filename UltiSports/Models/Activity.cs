@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UltiSports.Models
 {
@@ -17,6 +18,8 @@ namespace UltiSports.Models
         public int RequiredNumberOfPlayers { get; set; }
         [Display(Name = "Recomended Players")]
         public int RecommendedNumberOfPlayers { get; set; }
+        [ForeignKey("PreferredLocation")]
+        public int LocationId { get; set; }
         [Display(Name = "Location")]
         public virtual Location PreferredLocation { get; set; }
         public virtual List<Player> Managers { get; set; }

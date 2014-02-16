@@ -59,7 +59,6 @@ namespace UltiSports.Controllers
         [HttpPost]
         public ActionResult Edit(Activity editedActivity)
         {
-            editedActivity.PreferredLocation = _locationService.GetByID(editedActivity.PreferredLocation.Id).Data;
             _activityService.Update(editedActivity);
             return RedirectToAction("ManageActivities", "Admin");
         }
