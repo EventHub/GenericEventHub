@@ -7,7 +7,7 @@ namespace UltiSports.Infrastructure
     public class UltiEventsContext : DbContext
     {
         public UltiEventsContext()
-            : base("UltiSports")
+            : base("UltiSportsDevelopment2")
         {
 
         }

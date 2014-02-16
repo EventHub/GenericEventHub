@@ -51,7 +51,7 @@ namespace UltiSports.Controllers
         public ActionResult Edit(string id)
         {
             ServiceData<Activity> response = _activityService.GetByID(id);
-            ViewBag.AllLocations = _locationService.GetAll().Data;
+            ViewBag.AllLocations = _locationService.GetAllActiveLocations();
             return View(response.Data);
         }
 
@@ -60,7 +60,7 @@ namespace UltiSports.Controllers
         public ActionResult Edit(Activity editedActivity)
         {
             editedActivity.PreferredLocation = _locationService.GetByID(editedActivity.PreferredLocation.Id).Data;
-            _activityService.Update(editedActivity);
+            _activityService.UpdateActivity(editedActivity);
             return RedirectToAction("ManageActivities", "Admin");
         }
 

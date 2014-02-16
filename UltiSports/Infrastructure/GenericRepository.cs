@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using UltiSports.Models;
 
 namespace UltiSports.Infrastructure
 {
@@ -84,6 +85,20 @@ namespace UltiSports.Infrastructure
         {
             context.Dispose();
         }
+
+        public void UpdateActivity(Activity entityToUpdate)
+        {
+            var result = context.Activity.Single(act => act.Name == entityToUpdate.Name);
+            result.PreferredLocation = context.Location.Single(loc => loc.Id == entityToUpdate.PreferredLocation.Id);
+            
+            result.DayOfTheWeek = entityToUpdate.DayOfTheWeek;
+            result.RequiredNumberOfPlayers = entityToUpdate.RequiredNumberOfPlayers;
+            result.RecommendedNumberOfPlayers = entityToUpdate.RecommendedNumberOfPlayers;
+            result.PreferredTime = entityToUpdate.PreferredTime;
+
+            context.Entry(result).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+        }
     }
 
     public interface IGenericRepository<TEntity> : IDisposable
@@ -95,5 +110,6 @@ namespace UltiSports.Infrastructure
         TEntity GetByID(object id);
         void Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
+        void UpdateActivity(Activity entityToUpdate);
     }
 }
