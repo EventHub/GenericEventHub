@@ -4,33 +4,25 @@
     <div class="page-header page-header-comments">
         <h3>comments</h3>
     </div>
-    @using (Ajax.BeginForm("Create", "Message",
-        new AjaxOptions()
-        {
-            HttpMethod =  "post",
-            InsertionMode = InsertionMode.Replace,
-            UpdateTargetId = "comments"
-        }))
-    {
-        @Html.ValidationSummary(true)
         <div class="bs-callout bs-callout-info">
             <strong class="label-important">join the conversation!</strong>
             <div class="row">
                 <div class="col-md-9">
-                    <div class="form-inline">
-                        <span class="label-important">message</span>
-                        <textarea id="textarea" class="form-control input-sm" data-val="true" data-val-length="The field Comment must be a string with a maximum length of 70." data-val-length-max="255" id="Comment" name="Message" type="text">A message with a maximum of 255 characters...</textarea>
-                        <textarea id="textarea2" class="input-sm" data-val="true" data-val-length="" data-val-length-max="255" id="eventId" name="eventId" type="hidden" style="display:none;">@Model.Id</textarea>
-                    </div>
-                </div>
+                    <form id="messagesForm">
+                        <div class="form-inline">
+                            <span class="label-important">message</span>
+                            <textarea id="textarea" class="form-control input-sm" data-val="true" data-val-length="The field Comment must be a string with a maximum length of 70." data-val-length-max="255" id="Comment" name="Message" type="text" placeholder="A message with a maximum of 255 characters..."></textarea>
+                            <textarea id="textarea2" class="input-sm" data-val="true" data-val-length="" data-val-length-max="255" id="eventId" name="eventId" type="hidden" style="display:none;">@Model.Id</textarea>
+                        </div>
+</div>
                 <div class="col-md-3">
                     <div class="btn-container pull-right">
-                        <input class="btn btn-primary" type="submit" value="Post Message" />
+                        <input id="postMessage" class="btn btn-primary" value="Post Message" />
                     </div>
                 </div>
             </div>
         </div>
-    }
+    </form>
 
     @if (Model.Messages.Count != 0)
     {
@@ -67,3 +59,44 @@
         </div>
     }
 </div>
+<script type="text/javascript">
+    $(function () {
+        var message = $.connection.messageHub;
+
+        message.client.hello = function () {
+            console.log("hello");
+        }
+
+        message.client.newChatMessage = function (eventId, user, name) {
+            if (eventId != @Model.Id) 
+                return;
+        }
+
+        $.connection.hub.start().done(function () {
+            console.log("signalr hub connected");
+            message.server.hello();
+        })
+        .fail(function () {
+            console.log("signalr hub error");
+        });
+
+        $("#postMessage").click(function () {
+            var event = {
+                Id: @Model.Id
+                };
+            var message = {
+                MessageText: $("#textarea").val(),
+                Event: event
+            };
+
+            $.ajax({
+                url: "/api/Message",
+                type: "post",
+                data: message,
+                success: function() {
+                    console.log("success");
+                }
+            })
+        });
+    });
+</script>

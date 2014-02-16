@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 
 namespace UltiSports.Infrastructure
 {
@@ -66,7 +65,7 @@ namespace UltiSports.Infrastructure
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
+            if (context.Entry(entityToDelete).State == System.Data.Entity.EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);
             }
@@ -77,12 +76,17 @@ namespace UltiSports.Infrastructure
         public virtual void Update(TEntity entityToUpdate)
         {
             dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            context.Entry(entityToUpdate).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            context.Dispose();
         }
     }
 
-    public interface IGenericRepository<TEntity>
+    public interface IGenericRepository<TEntity> : IDisposable
      where TEntity : class
     {
         void Delete(object id);

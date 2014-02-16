@@ -7,13 +7,14 @@ using UltiSports.Models;
 
 namespace UltiSports.Services
 {
-    public class MessageService : IMessageService
+    public class MessageService : BaseService<Message>, IMessageService
     {
         private IEventRepository _eventDb;
         private IMessageRepository _messageDb;
         private IPlayerRepository _playerDb;
 
-        public MessageService(IEventRepository eventDb, IMessageRepository messageDb, IPlayerRepository playerDb) {
+        public MessageService(IEventRepository eventDb, IMessageRepository messageDb, IPlayerRepository playerDb)
+        : base(messageDb) {
             _eventDb = eventDb;
             _messageDb = messageDb;
             _playerDb = playerDb;
@@ -45,10 +46,17 @@ namespace UltiSports.Services
 
             return new ServiceData<Event>(ev, result, success);
         }
+
+        public ServiceData<IEnumerable<Message>> GetMessagesForEvent(int eventId)
+        {
+            // Add more logic to see if things succeeded.
+            return new ServiceData<IEnumerable<Message>>(_messageDb.GetMessagesForEvent(eventId), "success", true);
+        }
     }
 
-    public interface IMessageService
+    public interface IMessageService : IBaseService<Message>
     {
         ServiceData<Event> Create(string message, int eventId, string name);
+        ServiceData<IEnumerable<Message>> GetMessagesForEvent(int eventId);
     }
 }

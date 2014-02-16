@@ -108,9 +108,14 @@ namespace UltiSports.Services
 
             return new ServiceData<IEnumerable<TEntity>>(data, message, success);
         }
+
+        public void Dispose()
+        {
+            _repo.Dispose();
+        }
     }
 
-    public interface IBaseService<TEntity>
+    public interface IBaseService<TEntity> : IDisposable
      where TEntity : class
     {
         ServiceResponse Create(TEntity entity);

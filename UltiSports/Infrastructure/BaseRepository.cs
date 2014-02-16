@@ -37,8 +37,13 @@ namespace UltiSports.Infrastructure
         {
             return _repo.GetByID(id);
         }
+
+        public void Dispose()
+        {
+            _repo.Dispose();
+        }
     }
-        public interface IBaseRepository<TEntity> where TEntity : class
+        public interface IBaseRepository<TEntity> : IDisposable where TEntity : class
         {
             void Insert(TEntity entity);
             void Update(TEntity entity);
