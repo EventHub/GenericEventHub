@@ -9,11 +9,11 @@ namespace UltiSports.Controllers
     [AdminAuthentication]
     public class LocationController : Controller
     {
-        private ILocationService _service;
+        private ILocationService _locationService;
 
         public LocationController(ILocationService service)
         {
-            _service = service;
+            _locationService = service;
         }
 
         [HttpGet]
@@ -28,7 +28,7 @@ namespace UltiSports.Controllers
 
             if (ModelState.IsValid)
             {
-                _service.Create(newLocation);
+                _locationService.Create(newLocation);
             }
             return RedirectToAction("ManageLocations", "Admin");
         }
@@ -36,21 +36,37 @@ namespace UltiSports.Controllers
         [HttpGet]
         public ActionResult Edit(int Id)
         {
-            var response = _service.GetByID(Id);
+            var response = _locationService.GetByID(Id);
             return View(response.Data);
         }
 
         [HttpPost]
         public ActionResult Edit(Location newLocation)
         {
-            _service.Update(newLocation);
+            _locationService.Update(newLocation);
             return RedirectToAction("ManageLocations", "Admin");
         }
 
         [HttpGet]
         public ActionResult Delete(Location location)
         {
-            _service.Delete(location);
+            _locationService.Delete(location);
+            return RedirectToAction("ManageLocations", "Admin");
+        }
+
+        public ActionResult ToggleAvailable(int Id)
+        {
+            var locationService = _locationService.GetByID(Id);
+
+            if (locationService.Data.IsActive)
+                locationService.Data.IsActive = false;
+            else
+            {
+                locationService.Data.IsActive = true;
+            }
+
+            _locationService.Update(locationService.Data);
+
             return RedirectToAction("ManageLocations", "Admin");
         }
     }
