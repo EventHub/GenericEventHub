@@ -10,12 +10,9 @@ namespace UltiSports.Services
     public class ActivityService : BaseService<Activity>, UltiSports.Services.IActivityService
     {
         private IActivityRepository _activityDb;
-        private ILocationRepository _locationDb;
 
-        public ActivityService(IActivityRepository activityDb,
-            ILocationRepository locationDb) : base(activityDb) {
+        public ActivityService(IActivityRepository activityDb) : base(activityDb) {
                 _activityDb = activityDb;
-                _locationDb = locationDb;
         }
 
         public ServiceResponse Create(Activity newActivity)
@@ -25,7 +22,6 @@ namespace UltiSports.Services
 
             try
             {
-                newActivity.PreferredLocation = _locationDb.GetLocationById(newActivity.PreferredLocation.Id);
                 _activityDb.Insert(newActivity);
                 message = "Great success!";
                 success = true;
@@ -60,7 +56,6 @@ namespace UltiSports.Services
 
             try
             {
-                editedActivity.PreferredLocation = _locationDb.GetLocationById(editedActivity.PreferredLocation.Id);
                 _activityDb.Update(editedActivity);
                 message = "Great success!";
                 success = true;
