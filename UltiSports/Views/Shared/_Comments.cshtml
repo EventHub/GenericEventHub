@@ -61,6 +61,12 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        function MessagesViewModel() {
+            Messages: ko.observable([]); 
+        };
+
+        ko.applyBindings(MessagesViewModel);
+
         var message = $.connection.messageHub;
 
         message.client.hello = function () {
