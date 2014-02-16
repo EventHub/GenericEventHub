@@ -29,7 +29,7 @@ namespace UltiSports.Infrastructure
 
         public IEnumerable<Activity> GetActiveActivitiesFor(string dayOfWeek)
         {
-            return _repo.Get(act => act.DayOfTheWeek.Equals(dayOfWeek) && act.isActive);
+            return _repo.Get(act => act.DayOfTheWeek.Equals(dayOfWeek) && act.IsActive);
         }
     }
 

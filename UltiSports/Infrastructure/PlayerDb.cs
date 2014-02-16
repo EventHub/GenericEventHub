@@ -15,7 +15,7 @@ namespace UltiSports.Infrastructure
         public bool PlayerActive(string username)
         {
             Player dbPlayer = GetPlayerByUsername(username);
-            return dbPlayer != null && dbPlayer.isActive;
+            return dbPlayer != null && dbPlayer.IsActive;
         }
 
         public bool PlayerExists(string username)

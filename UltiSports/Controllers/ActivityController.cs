@@ -68,11 +68,11 @@ namespace UltiSports.Controllers
         {
             var activityToCancel = _activityService.GetByID(id);
 
-            if (activityToCancel.Data.isActive)
-                activityToCancel.Data.isActive = false;
+            if (activityToCancel.Data.IsActive)
+                activityToCancel.Data.IsActive = false;
             else
             {
-                activityToCancel.Data.isActive = true;
+                activityToCancel.Data.IsActive = true;
             }
 
             _activityService.Update(activityToCancel.Data);

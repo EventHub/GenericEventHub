@@ -31,7 +31,7 @@ namespace UltiSports.Infrastructure
 
         public IEnumerable<Location> GetActiveLocations()
         {
-            return _repo.Get(loc => loc.isActive == true);
+            return _repo.Get(loc => loc.IsActive == true);
         }
     }
 
