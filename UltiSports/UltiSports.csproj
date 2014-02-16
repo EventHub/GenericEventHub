@@ -166,6 +166,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\EventController.cs" />
     <Compile Include="ApiControllers\MessageController.cs" />
     <Compile Include="ApiControllers\MessageHub.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

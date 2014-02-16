@@ -17,9 +17,9 @@ namespace UltiSports.Infrastructure
             return _repo.Get(x => x.DayOfTheWeek.Equals(dayOfWeek));
         }
 
-        public IEnumerable<Activity> GetAllActivities()
+        public IEnumerable<Activity> GetActive()
         {
-            return _repo.Get();
+            return _repo.Get(x => x.IsActive);
         }
 
         public Activity GetActivityByName(string name)
@@ -42,7 +42,7 @@ namespace UltiSports.Infrastructure
     {
         IEnumerable<Activity> GetActivitiesFor(string dayOfWeek);
         Activity GetActivityByName(string name);
-        IEnumerable<UltiSports.Models.Activity> GetAllActivities();
+        IEnumerable<UltiSports.Models.Activity> GetActive();
         IEnumerable<Activity> GetActiveActivitiesFor(string dayOfWeek);
         void UpdateActivity(Activity editedLocation);
     }

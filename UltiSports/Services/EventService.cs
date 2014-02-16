@@ -18,7 +18,12 @@ namespace UltiSports.Services
             _attendanceDb = attendanceDb;
         }
 
-        public List<Event> GetEventsOfTheDay(IEnumerable<Activity> activitiesOfTheDay, Player user)
+        public IEnumerable<Event> GetActiveEventsFor(DateTime date)
+        {
+            return _eventDb.GetActiveEventsFor(date);
+        }
+
+        public IEnumerable<Event> GetEventsOfTheDay(IEnumerable<Activity> activitiesOfTheDay, Player user)
         {
             List<Event> todaysEvents = new List<Event>();
 
@@ -53,7 +58,8 @@ namespace UltiSports.Services
 
     public interface IEventService : IBaseService<Event>
     {
-        System.Collections.Generic.List<UltiSports.Models.Event> GetEventsOfTheDay(System.Collections.Generic.IEnumerable<UltiSports.Models.Activity> activitiesOfTheDay, UltiSports.Models.Player user);
+        IEnumerable<Event> GetEventsOfTheDay(IEnumerable<Activity> activitiesOfTheDay, Player user);
+        IEnumerable<Event> GetActiveEventsFor(DateTime date);
     }
 
     public class PreferredEventSorter : IComparer<Event>
