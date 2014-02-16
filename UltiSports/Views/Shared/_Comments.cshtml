@@ -27,29 +27,22 @@
     @if (Model.Messages.Count != 0)
     {
         <ul class="list-unstyled">
-            @foreach (var message in Model.Messages)
-            {
-                if (!string.IsNullOrEmpty(message.MessageText))
-                {
+            <div data-bind="foreach: Messages">
                 <li>
                     <div class="comment">
                         <div class="heading">
-                            <span class="comment-title"><strong>@message.Author.Name</strong> said:</span>
-                            <span class="time">@message.Time.ToString("T")</span>
+                            <span class="comment-title"><strong data-bind="text: Author"></strong> said:</span>
+                            <span class="time" data-bind="text: Time"></span>
                         </div>
                         <div class="message">
-                            <p>&quot;@message.MessageText&quot;</p>
+                            <p data-bind="text: MessageText"></p>
                         </div>
                     </div>
                 </li>
-                }
-                else
-                {
+            </div><!--
                 <div class="alert alert-empty">
                     <span class="label-empty">No messages have been posted yet.</span>
-                </div>
-                }
-            }
+                </div>-->
         </ul>
     }
     else
@@ -61,21 +54,24 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        function MessagesViewModel() {
-            Messages: ko.observable([]); 
+        var MessagesViewModel = {
+            Messages: ko.observableArray()
         };
+
+        $.ajax({
+            url: "/api/Messages/Events/" + @Model.Id,
+            type: "get",
+            success: function(data) {
+                MessagesViewModel.Messages(data);
+            }
+        })
 
         ko.applyBindings(MessagesViewModel);
 
         var message = $.connection.messageHub;
 
-        message.client.hello = function () {
-            console.log("hello");
-        }
-
-        message.client.newChatMessage = function (eventId, user, name) {
-            if (eventId != @Model.Id) 
-                return;
+        message.client.newChatMessage = function (message) {
+            MessagesViewModel.Messages.push(message);
         }
 
         $.connection.hub.start().done(function () {
@@ -102,7 +98,9 @@
                 success: function() {
                     console.log("success");
                 }
-            })
+            });
+
+            $("#textarea").val("");
         });
     });
 </script>

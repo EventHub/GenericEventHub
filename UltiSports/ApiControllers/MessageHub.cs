@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
+using UltiSports.Models;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace UltiSports.ApiControllers
 {
@@ -13,9 +15,9 @@ namespace UltiSports.ApiControllers
             Clients.All.hello();
         }
 
-        public void NewChatMessage(string eventName, string user, string message)
+        public void NewChatMessage(Message message)
         {
-            Clients.All.sendMessage(eventName, user, message);
+            Clients.All.sendMessage(message);
         }
     }
 }

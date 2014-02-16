@@ -23,7 +23,7 @@ namespace UltiSports.ApiControllers
         public MessageController(IMessageService service)
         {
             _service = service;
-            // DI
+            // TODO: DI
             _hub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
         }
 
@@ -33,8 +33,8 @@ namespace UltiSports.ApiControllers
             return _service.GetAll().Data;
         }
 
-        [Route("api/Message/Events/{eventId}")]
-        public IEnumerable<Message> GetMessagesForEvent(int eventId)
+        [Route("api/Messages/Events/{eventId}")]
+        public IEnumerable<MessageDTO> GetMessagesForEvent(int eventId)
         {
             return _service.GetMessagesForEvent(eventId).Data;
         }
@@ -83,9 +83,10 @@ namespace UltiSports.ApiControllers
             {
                 // We're not passing time from client to avoid time format issues
                 message.Time = DateTime.Now;
-                _service.Create(message.MessageText, message.Event.Id, User.Identity.Name);
+                var newMessage = _service.Create(message.MessageText, message.Event.Id, User.Identity.Name).Data;
 
-                _hub.Clients.All.newChatMessage(message.Event.Id.ToString(), User.Identity.Name, message.MessageText);
+                var messageDTO = new MessageDTO(newMessage);
+                _hub.Clients.All.newChatMessage(messageDTO);
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, message);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = message.Id }));
@@ -120,7 +121,7 @@ namespace UltiSports.ApiControllers
 
         protected override void Dispose(bool disposing)
         {
-            _service.Dispose();
+            //_service.Dispose();
             base.Dispose(disposing);
         }
     }

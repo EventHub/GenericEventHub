@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using UltiSports.ApiControllers;
 using UltiSports.Infrastructure;
 using UltiSports.Models;
 
@@ -20,7 +21,7 @@ namespace UltiSports.Services
             _playerDb = playerDb;
         }
 
-        public ServiceData<Event> Create(string message, int eventId, string name)
+        public ServiceData<Message> Create(string message, int eventId, string name)
         {
             string result = string.Empty;
             bool success = false;
@@ -44,19 +45,24 @@ namespace UltiSports.Services
                 result = "Message failed";
             }
 
-            return new ServiceData<Event>(ev, result, success);
+            return new ServiceData<Message>(newMessage, result, success);
         }
 
-        public ServiceData<IEnumerable<Message>> GetMessagesForEvent(int eventId)
+        public ServiceData<IEnumerable<MessageDTO>> GetMessagesForEvent(int eventId)
         {
             // Add more logic to see if things succeeded.
-            return new ServiceData<IEnumerable<Message>>(_messageDb.GetMessagesForEvent(eventId), "success", true);
+            IEnumerable<MessageDTO> dtos = new List<MessageDTO>();
+            var messages = _messageDb.GetMessagesForEvent(eventId);
+
+            dtos = messages.Select(x => new MessageDTO(x));
+
+            return new ServiceData<IEnumerable<MessageDTO>>(dtos, "success", true);
         }
     }
 
     public interface IMessageService : IBaseService<Message>
     {
-        ServiceData<Event> Create(string message, int eventId, string name);
-        ServiceData<IEnumerable<Message>> GetMessagesForEvent(int eventId);
+        ServiceData<Message> Create(string message, int eventId, string name);
+        ServiceData<IEnumerable<MessageDTO>> GetMessagesForEvent(int eventId);
     }
 }

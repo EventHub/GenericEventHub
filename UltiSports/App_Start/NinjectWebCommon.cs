@@ -3,12 +3,14 @@
 
 namespace UltiSports.App_Start
 {
+    using Microsoft.AspNet.SignalR;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Syntax;
     using Ninject.Web.Common;
     using Ninject.Web.Mvc.FilterBindingSyntax;
     using System;
+    using System.Collections.Generic;
     using System.Web;
     using System.Web.Http;
     using System.Web.Http.Dependencies;
@@ -66,7 +68,7 @@ namespace UltiSports.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             // Register context
-            kernel.Bind<UltiEventsContext>().To<UltiEventsContext>().InRequestScope();
+            kernel.Bind<UltiEventsContext>().ToSelf().InRequestScope();
 
             // Register generic repositories
             kernel.Bind<IGenericRepository<Activity>>().To
@@ -147,5 +149,5 @@ namespace UltiSports.App_Start
         {
             return new NinjectDependencyScope(kernel.BeginBlock());
         }
-    } 
+    }
 }
