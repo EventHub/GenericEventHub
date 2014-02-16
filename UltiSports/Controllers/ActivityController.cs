@@ -11,21 +11,22 @@ namespace UltiSports.Controllers
     [AdminAuthentication]
     public class ActivityController : Controller
     {
-        private IActivityService _service;
+        private IActivityService _activityService;
         private ILocationService _locationService;
 
         public ActivityController(IActivityService service,
             ILocationService locationService)
         {
-            _service = service;
+            _activityService = service;
             _locationService = locationService;
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            var response = _locationService.GetAll();
-            ViewBag.AllLocations = response.Data;
+            var response = _locationService.GetAllActiveLocations();
+            ViewBag.AllLocations = response;
+
             return View();
         }
 
@@ -35,7 +36,7 @@ namespace UltiSports.Controllers
             // Do validation in service
             if (ModelState.IsValid)
             {
-                var response = _service.Create(newActivity);
+                var response = _activityService.Create(newActivity);
                 ViewBag.Message = response.Message;
             }
             else
@@ -49,7 +50,7 @@ namespace UltiSports.Controllers
         [HttpGet]
         public ActionResult Edit(string id)
         {
-            ServiceData<Activity> response = _service.GetByID(id);
+            ServiceData<Activity> response = _activityService.GetByID(id);
             ViewBag.AllLocations = _locationService.GetAll().Data;
             return View(response.Data);
         }
@@ -59,21 +60,22 @@ namespace UltiSports.Controllers
         public ActionResult Edit(Activity editedActivity)
         {
             editedActivity.PreferredLocation = _locationService.GetByID(editedActivity.PreferredLocation.Id).Data;
-            _service.Update(editedActivity);
+            _activityService.Update(editedActivity);
             return RedirectToAction("ManageActivities", "Admin");
         }
 
-        public ActionResult DeleteActivity(string id)
+        public ActionResult ToggleActive(string id)
         {
-            _service.Delete(id);
-            //if (_eventDb.IsInAnExistingEvent(activityToDelete))
-            //{
-            //    ActivityRepository.DeleteEntity(activityToDelete);
-            //}
-            //else
-            //{
-            //    ViewBag.Message = "Warning: this activity is part of an existing event. Please delete event first.";
-            //}
+            var activityToCancel = _activityService.GetByID(id);
+
+            if (activityToCancel.Data.IsActive)
+                activityToCancel.Data.IsActive = false;
+            else
+            {
+                activityToCancel.Data.IsActive = true;
+            }
+
+            _activityService.Update(activityToCancel.Data);
 
             return RedirectToAction("ManageActivities", "Admin");
         }

@@ -28,6 +28,11 @@ namespace UltiSports.Infrastructure
         {
             return _repo.Get(x => x.Name.Equals(name)).SingleOrDefault();
         }
+
+        public IEnumerable<Location> GetActiveLocations()
+        {
+            return _repo.Get(loc => loc.IsActive == true);
+        }
     }
 
     public interface ILocationRepository : IBaseRepository<Location>
@@ -35,5 +40,7 @@ namespace UltiSports.Infrastructure
         System.Collections.Generic.IEnumerable<UltiSports.Models.Location> GetAllLocations();
         UltiSports.Models.Location GetLocationById(int id);
         UltiSports.Models.Location GetLocationByName(string name);
+
+        IEnumerable<Location> GetActiveLocations();
     }
 }

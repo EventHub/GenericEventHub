@@ -36,7 +36,7 @@ namespace UltiSports.Services
             newPlayer.Attendance = new List<Attendance>();
             newPlayer.Messages = new List<Message>();
 
-            newPlayer.isActive = true;
+            newPlayer.IsActive = true;
 
             newPlayer.SportsManaged = new List<Activity>();
             try
@@ -64,7 +64,7 @@ namespace UltiSports.Services
             if (_playerDb.PlayerExists(username))
             {
                 Player playerToRemove = _playerDb.GetPlayerByUsername(username);
-                playerToRemove.isActive = false;
+                playerToRemove.IsActive = false;
 
                 _playerDb.Update(playerToRemove);
 

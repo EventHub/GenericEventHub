@@ -21,7 +21,7 @@ namespace UltiSports.Models
         public virtual Location PreferredLocation { get; set; }
         public virtual List<Player> Managers { get; set; }
         public virtual List<Event> Events { get; set; }
-        public bool isActive { get; set; }
+        public bool IsActive { get; set; }
         public override string ToString()
         {
             return Name;

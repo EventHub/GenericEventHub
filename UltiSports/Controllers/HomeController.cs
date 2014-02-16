@@ -21,6 +21,7 @@ namespace UltiSports.Controllers
             _activityService = activityService;
             _eventService = eventService;
         }
+
         public ActionResult Index(string message = null)
         {
             string username = @User.Identity.Name;
@@ -29,10 +30,11 @@ namespace UltiSports.Controllers
             {
                 return RedirectToAction("Register", "Player");
             }
+
             var response = _playerService.GetByID(username);
             var user = response.Data;
             var dayOfWeek = DateTime.Now.Date.DayOfWeek.ToString();
-            var activitiesOfTheDay = _activityService.GetActivitiesFor(dayOfWeek);
+            var activitiesOfTheDay = _activityService.GetActiveActivitiesFor(dayOfWeek);
 
             var eventsOfTheDay = _eventService.GetEventsOfTheDay(activitiesOfTheDay, user);
             ViewBag.Message = message;
