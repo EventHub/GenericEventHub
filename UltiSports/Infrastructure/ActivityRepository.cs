@@ -31,6 +31,11 @@ namespace UltiSports.Infrastructure
         {
             return _repo.Get(act => act.DayOfTheWeek.Equals(dayOfWeek) && act.IsActive);
         }
+
+        public void UpdateActivity(Activity editedLocation)
+        {
+            _repo.UpdateActivity(editedLocation);
+        }
     }
 
     public interface IActivityRepository : IBaseRepository<Activity>
@@ -39,5 +44,6 @@ namespace UltiSports.Infrastructure
         Activity GetActivityByName(string name);
         IEnumerable<UltiSports.Models.Activity> GetAllActivities();
         IEnumerable<Activity> GetActiveActivitiesFor(string dayOfWeek);
+        void UpdateActivity(Activity editedLocation);
     }
 }
