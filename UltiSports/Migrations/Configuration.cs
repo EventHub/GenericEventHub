@@ -54,16 +54,6 @@ namespace UltiSports.Migrations
                 },
                 new Activity
                 {
-                    Name = "Basketball",
-                    DayOfTheWeek = DayOfWeek.Tuesday.ToString(),
-                    Managers = new List<Player>(),
-                    PreferredLocation = tequestaTracePark,
-                    PreferredTime = new TimeSpan(17, 40, 0),
-                    RecommendedNumberOfPlayers = 10,
-                    RequiredNumberOfPlayers = 6
-                },
-                new Activity
-                {
                     Name = "Cycling",
                     DayOfTheWeek = DayOfWeek.Sunday.ToString(),
                     Managers = new List<Player>(),
