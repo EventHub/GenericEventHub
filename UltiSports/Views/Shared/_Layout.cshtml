@@ -4,11 +4,8 @@
     <title>Sports Hub</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/otf")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/signalR");
-    @Scripts.Render("~/bundles/knockout");
+        @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery") 
 </head>
 <body class="wrapper">
     <div class="banner">
@@ -31,7 +28,10 @@
         <div class="footer">
             <span>Event Hub - Alpha Version &copy; 2013 - @Html.ActionLink("Administrator", "ManageActivities", "Admin")</span>
         </div>
-    </div>
+    </div>    
+    @Scripts.Render("~/bundles/otf")
+    @Scripts.Render("~/bundles/signalR");
+    @Scripts.Render("~/bundles/knockout");
     <script src="/signalr/hubs"></script>        
     @RenderSection("scripts", required: false)
     <script>

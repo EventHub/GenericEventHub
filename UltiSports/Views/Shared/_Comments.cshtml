@@ -24,39 +24,35 @@
         </div>
     </form>
 
-    @if (Model.Messages.Count != 0)
-    {
-        <ul class="list-unstyled">
             <div data-bind="foreach: Messages">
-                <li>
-                    <div class="comment">
-                        <div class="heading">
-                            <span class="comment-title"><strong data-bind="text: Author"></strong> said:</span>
-                            <span class="time" data-bind="text: Time"></span>
+
+                <ul class="list-unstyled">
+                    <li>
+                        <div class="comment">
+                            <div class="heading">
+                                <span class="comment-title"><strong data-bind="text: Author"></strong> said:</span>
+                                <span class="time" data-bind="text: Time"></span>
+                            </div>
+                            <div class="message">
+                                <p data-bind="text: MessageText"></p>
+                            </div>
                         </div>
-                        <div class="message">
-                            <p data-bind="text: MessageText"></p>
-                        </div>
-                    </div>
-                </li>
-            </div><!--
-                <div class="alert alert-empty">
-                    <span class="label-empty">No messages have been posted yet.</span>
-                </div>-->
-        </ul>
-    }
-    else
-    {
+                    </li>
+                </ul>
+        </div>
+        <!-- ko if: Messages().length == 0 -->
         <div class="alert alert-empty">
             <span class="label-empty">No messages have been posted yet.</span>
         </div>
-    }
+        <!-- /ko -->
 </div>
 <script type="text/javascript">
     $(function () {
         var MessagesViewModel = {
             Messages: ko.observableArray()
         };
+        
+        ko.applyBindings(MessagesViewModel);
 
         $.ajax({
             url: "/api/Messages/Events/" + @Model.Id,
@@ -66,12 +62,12 @@
             }
         })
 
-        ko.applyBindings(MessagesViewModel);
 
         var message = $.connection.messageHub;
 
         message.client.newChatMessage = function (message) {
-            MessagesViewModel.Messages.push(message);
+            if (message.EventId == @Model.Id)
+                MessagesViewModel.Messages.push(message);
         }
 
         $.connection.hub.start().done(function () {
