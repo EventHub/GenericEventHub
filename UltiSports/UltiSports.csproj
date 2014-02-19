@@ -169,6 +169,8 @@
     <Compile Include="ApiControllers\EventController.cs" />
     <Compile Include="ApiControllers\MessageController.cs" />
     <Compile Include="ApiControllers\MessageHub.cs" />
+    <Compile Include="ApiControllers\ParticipantsController.cs" />
+    <Compile Include="ApiControllers\ParticipantsHub.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
@@ -317,6 +319,10 @@
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="Scripts\modernizr-2.7.1.js" />
+    <Content Include="Scripts\moment-with-langs.js" />
+    <Content Include="Scripts\moment-with-langs.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -364,10 +370,10 @@
     <Content Include="Views\Player\Edit.cshtml" />
     <Content Include="Views\Location\Create.cshtml" />
     <Content Include="Views\EventOfTheDay\Edit.cshtml" />
+    <Content Include="Views\Event\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Event\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

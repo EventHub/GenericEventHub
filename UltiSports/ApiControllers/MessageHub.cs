@@ -10,11 +10,6 @@ namespace UltiSports.ApiControllers
 {
     public class MessageHub : Hub
     {
-        public void Hello()
-        {
-            Clients.All.hello();
-        }
-
         public void NewChatMessage(Message message)
         {
             Clients.All.sendMessage(message);

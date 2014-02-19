@@ -11,12 +11,14 @@ using System.Web.Http.Description;
 using UltiSports.Models;
 using UltiSports.Infrastructure;
 using UltiSports.Services;
+using Microsoft.AspNet.SignalR;
 
 namespace UltiSports.ApiControllers
 {
     public class EventsController : ApiController
     {
         private IEventService _service;
+        private IHubContext _hub;
 
         public EventsController(IEventService service)
         {
@@ -29,12 +31,11 @@ namespace UltiSports.ApiControllers
             return _service.GetAll().Data;
         }
 
-        /*
+        
         [Route("api/Events/{date:datetime}")]
         public IEnumerable<Event> GetEventsFor(DateTime date) {
-            return _service.get
+            return _service.GetActiveEventsFor(date);
         }
-         */
 
         // GET api/Events/5
         [ResponseType(typeof(Event))]

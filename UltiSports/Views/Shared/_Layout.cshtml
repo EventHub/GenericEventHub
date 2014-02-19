@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-    <title>Sports Hub</title>
+    <title>UltiSports</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
@@ -14,25 +14,26 @@
                 <span class="user-welcome pull-right">Welcome, @User.Identity.Name.Substring(7)</span>
             </div>
             <div class="clear">
-                <h1 class="title pull-left"><a href="~/" style="color: white;">Sports Hub</a></h1>
+                <h1 class="title pull-left"><a href="~/" style="color: white;">UltiSports</a></h1>
                 <div class="img-container pull-right">
                     <img src="@Url.Content("~/Content/img/ultisports_banner.png")" alt="custom_banner" />
                 </div>
             </div>
         </div>
     </div>
-    <div class="container contents" style="margin-top: 50px;">
+    <div class="container contents" style="margin-top: 25px;">
         @RenderBody()
     </div>
     <div class="container">
         <div class="footer">
-            <span>Event Hub - Alpha Version &copy; 2013 - @Html.ActionLink("Administrator", "ManageActivities", "Admin")</span>
+            <span>UltiSports - Alpha Version &copy; 2013 - @Html.ActionLink("Administrator", "ManageActivities", "Admin")</span>
         </div>
     </div>    
     @Scripts.Render("~/bundles/otf")
-    @Scripts.Render("~/bundles/signalR");
-    @Scripts.Render("~/bundles/knockout");
+    @Scripts.Render("~/bundles/signalR")
     <script src="/signalr/hubs"></script>        
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/moment")
     @RenderSection("scripts", required: false)
     <script>
         $('textarea').each(function () {

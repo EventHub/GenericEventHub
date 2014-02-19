@@ -13,6 +13,11 @@ namespace UltiSports.Controllers
             _service = service;
         }
 
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
         public ActionResult Delete()
         {
             return RedirectToAction("ManageEventsOfTheDay", "Admin");

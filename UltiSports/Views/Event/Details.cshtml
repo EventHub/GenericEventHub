@@ -1,0 +1,170 @@
+﻿
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-9">
+                    <div id="ev">
+                        <div class="page-header" style="margin-top: 5px;">
+                            <h2 data-bind="text: Event().ActivityName"></h2>
+                        </div>
+
+                        <h4>
+                            <span><strong>When: </strong></span>
+                            <span data-bind="text: moment(Event().Time).format('MMMM DD[, ]YYYY [@@] h:mm a')"></span>
+                        </h4>
+                        <h4>
+                            <span><strong>Where: </strong></span>
+                            <span>
+                                <a target="_blank" data-bind="attr: {href: Event().locationUrl }, text: Event().Location.Name"></a>
+                            </span>
+                        </h4>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <a href="http://www.accuweather.com/en/us/weston-fl/33327/weather-forecast/2257910" class="aw-widget-legal">
+                        <!--
+                        By accessing and/or using this code snippet, you agree to AccuWeather’s terms and conditions (in English) which can be found at http://www.accuweather.com/en/free-weather-widgets/terms and AccuWeather’s Privacy Statement (in English) which can be found at http://www.accuweather.com/en/privacy.
+                        -->
+                    </a><div id="awcc1392782342691" class="aw-widget-current" data-locationkey="2257910" data-unit="f" data-language="en-us" data-useip="false" data-uid="awcc1392782342691"></div>
+                    <script type="text/javascript" src="http://oap.accuweather.com/launch.js"></script>
+                </div>
+            </div>
+
+        <div id="participants">
+
+        </div>
+
+        <div class="row" id="comments">
+            <div class="page-header page-header-comments">
+                <h3>comments</h3>
+            </div>
+            <div class="bs-callout bs-callout-info">
+                <strong class="label-important">join the conversation!</strong>
+                <div class="row">
+                    <div class="col-md-9">
+                        <form id="messagesForm">
+                            <div class="form-inline">
+                                <span class="label-important">message</span>
+                                <textarea id="textarea" class="form-control input-sm" data-val="true"
+                                          data-val-length="The field Comment must be a string with a maximum length of 70."
+                                          data-val-length-max="255" id="Comment" name="Message" type="text"
+                                          placeholder="A message with a maximum of 255 characters..."></textarea>
+                            </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="btn-container pull-right">
+                            <input id="postMessage" class="btn btn-primary" value="Post Message" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+
+            <div data-bind="foreach: Messages">
+
+                <ul class="list-unstyled">
+                    <li>
+                        <div class="comment">
+                            <div class="heading">
+                                <span class="comment-title"><strong data-bind="text: Author"></strong> said:</span>
+                                <span class="time moment" data-bind="text: moment(Time).format('MMMM DD, YYYY [@@] h:mm:ss a')"></span>
+                            </div>
+                            <div class="message">
+                                <p data-bind="text: MessageText"></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- ko if: Messages().length == 0 -->
+            <div class="alert alert-empty">
+                <span class="label-empty">No messages have been posted yet.</span>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+</div>
+    <!-- Comments -->
+    <script type="text/javascript">
+        $(function () {
+            var eventId = document.location.pathname.split('/')[3];
+            function MessagesViewModel() {
+                var self = this;
+
+                self.Messages = ko.observableArray([]);
+
+                $.ajax({
+                    url: "/api/Messages/Events/" + eventId,
+                    type: "get",
+                    success: function (data) {
+                        self.Messages(data);
+                    }
+                });
+            }
+
+            var messagesViewModel = new MessagesViewModel();
+            ko.applyBindings(messagesViewModel, $("#comments").get(0));
+
+            var message = $.connection.messageHub;
+
+            message.client.newChatMessage = function (message) {
+                if (message.EventId == eventId)
+                    messagesViewModel.Messages.push(message);
+            }
+
+            $.connection.hub.start().done(function () {
+                console.log("signalr hub connected");
+                message.server.hello();
+            })
+            .fail(function () {
+                console.log("signalr hub error");
+            });
+
+            $("#postMessage").click(function () {
+                var event = {
+                    Id: eventId
+                };
+                var message = {
+                    MessageText: $("#textarea").val(),
+                    Event: event
+                };
+
+                if (message.MessageText == "") {
+                    return
+                }
+
+                $.ajax({
+                    url: "/api/Message",
+                    type: "post",
+                    data: message,
+                    success: function () {
+                        console.log("success");
+                    }
+                });
+
+                $("#textarea").val("");
+            });
+        });
+    </script>
+    <!-- Event -->
+    <script type="text/javascript">
+        $(function () {
+            var eventId = document.location.pathname.split('/')[3];
+            function EventViewModel() {
+                var self = this;
+                self.Event = ko.observable({});
+
+                $.ajax({
+                    url: "/api/Events/" + eventId,
+                    type: "get",
+                    success: function (data) {
+                        data.locationUrl = "http://maps.google.com?q=" + data.Location.Name.split(" ").join("+");
+                        self.Event(data);
+                    }
+                });
+            }
+
+            ko.applyBindings(new EventViewModel(), $("#ev").get(0));
+        });
+
+    </script>

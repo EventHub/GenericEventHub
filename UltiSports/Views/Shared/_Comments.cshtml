@@ -31,7 +31,7 @@
                         <div class="comment">
                             <div class="heading">
                                 <span class="comment-title"><strong data-bind="text: Author"></strong> said:</span>
-                                <span class="time" data-bind="text: Time"></span>
+                                <span class="time moment" data-bind="text: moment(Time).format('MMMM DD, YYYY [@@] h:mm:ss a')"></span>
                             </div>
                             <div class="message">
                                 <p data-bind="text: MessageText"></p>
@@ -48,28 +48,30 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        var MessagesViewModel = {
-            Messages: ko.observableArray()
-        };
-        
-        ko.applyBindings(MessagesViewModel);
+        function MessagesViewModel() {
+            var self = this;
 
-        $.ajax({
-            url: "/api/Messages/Events/" + @Model.Id,
-            type: "get",
-            success: function(data) {
-                MessagesViewModel.Messages(data);
-            }
-        })
+            self.Messages = ko.observableArray([]);
 
+            $.ajax({
+                url: "/api/Messages/Events/" + @Model.Id,
+                type: "get",
+                success: function(data) {
+                    self.Messages(data);
+                }
+            });
+        }
+
+        var messagesViewModel = new MessagesViewModel();
+        ko.applyBindings(messagesViewModel, $("#comments").get(0));
 
         var message = $.connection.messageHub;
 
         message.client.newChatMessage = function (message) {
             if (message.EventId == @Model.Id)
-                MessagesViewModel.Messages.push(message);
+                messagesViewModel.Messages.push(message);
         }
-
+         
         $.connection.hub.start().done(function () {
             console.log("signalr hub connected");
             message.server.hello();
@@ -86,6 +88,10 @@
                 MessageText: $("#textarea").val(),
                 Event: event
             };
+            
+            if (message.MessageText == "") {
+                return
+            }
 
             $.ajax({
                 url: "/api/Message",
