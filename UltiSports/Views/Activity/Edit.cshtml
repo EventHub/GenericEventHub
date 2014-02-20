@@ -21,9 +21,9 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.PreferredTime)
         </div>
-    
+
         @Html.DropDownListFor(model => model.PreferredTime, DataHelper.GetStandardTimes(), "--Select A Time--")
-            @Html.ValidationMessageFor(model => model.PreferredTime)
+        @Html.ValidationMessageFor(model => model.PreferredTime)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.DayOfTheWeek)
@@ -54,21 +54,14 @@
                                   "-- Select Recomended Number Of Players --")
             @Html.ValidationMessageFor(model => model.RecommendedNumberOfPlayers)
         </div>
-        
+
         <div class="editor-label">
             @Html.LabelFor(model => model.PreferredLocation)
         </div>
         <div>
-            @Html.DropDownListFor(model => model.LocationId, DataHelper.GetAllLocations(allLocations),
+            @Html.DropDownListFor(model => model.PreferredLocation.Id, DataHelper.GetAllLocations(allLocations),
                                   "-- Select Location --")
             @Html.ValidationMessageFor(model => model.PreferredLocation)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsActive)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsActive)
-            @Html.ValidationMessageFor(model => model.IsActive)
         </div>
 
         <p style="margin-top: 10px;">

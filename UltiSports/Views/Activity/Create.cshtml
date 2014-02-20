@@ -7,12 +7,13 @@
     var allLocations = (IEnumerable<UltiSports.Models.Location>)ViewBag.AllLocations;
 }
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>Create Activity</legend>
-        
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
         </div>
@@ -52,7 +53,7 @@
             @Html.DropDownListFor(model => model.RecommendedNumberOfPlayers, DataHelper.GetNumberOfPlayers(10), "-- Select Recomended Number Of Players --")
             @Html.ValidationMessageFor(model => model.RecommendedNumberOfPlayers)
         </div>
-        
+
         <div class="editor-label">
             @Html.LabelFor(model => model.PreferredLocation)
         </div>

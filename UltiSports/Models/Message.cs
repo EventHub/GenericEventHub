@@ -10,10 +10,7 @@ namespace UltiSports.Models
         public int Id { get; set; }
         public string MessageText { get; set; }
         public DateTime Time { get; set; }
-        [ForeignKey("Author")]
-        public string AuthorName { get; set; }
         public virtual Player Author { get; set; }
-        public int EventId { get; set; }
         public virtual Event Event { get; set; }
     }
 

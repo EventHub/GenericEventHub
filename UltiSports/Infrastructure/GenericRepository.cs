@@ -89,13 +89,22 @@ namespace UltiSports.Infrastructure
         {
             var result = context.Activity.Single(act => act.Name == entityToUpdate.Name);
             result.PreferredLocation = context.Location.Single(loc => loc.Id == entityToUpdate.PreferredLocation.Id);
-            
+
             result.DayOfTheWeek = entityToUpdate.DayOfTheWeek;
             result.RequiredNumberOfPlayers = entityToUpdate.RequiredNumberOfPlayers;
             result.RecommendedNumberOfPlayers = entityToUpdate.RecommendedNumberOfPlayers;
             result.PreferredTime = entityToUpdate.PreferredTime;
 
             context.Entry(result).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        public void CreateActivity(Activity entityToCreate)
+        {
+            entityToCreate.PreferredLocation = context.Location.Single(loc => loc.Id == entityToCreate.PreferredLocation.Id);
+            entityToCreate.IsActive = true;
+
+            dbSet.Add(entityToCreate as TEntity);
             context.SaveChanges();
         }
     }
@@ -110,5 +119,6 @@ namespace UltiSports.Infrastructure
         void Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
         void UpdateActivity(Activity entityToUpdate);
+        void CreateActivity(Activity entityToUpdate);
     }
 }

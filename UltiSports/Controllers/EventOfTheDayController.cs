@@ -73,7 +73,6 @@ namespace UltiSports.Controllers
 
         private Event RidiculousHelperBecauseIDontHaveResetContextYet(Event eventToUpdate)
         {
-            // To avoid all of this I need to expose a "reset" context method
             var result = _eventService.GetByID(eventToUpdate.Id);
             result.Data.Id = eventToUpdate.Id;
             result.Data.Messages = eventToUpdate.Messages;

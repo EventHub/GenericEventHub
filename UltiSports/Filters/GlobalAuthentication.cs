@@ -19,7 +19,7 @@ namespace UltiSports.Filters
         {
             var currentUser = PlayerDb.GetPlayerByUsername(filterContext.HttpContext.User.Identity.Name);
             #region Adding this for debuggin purposes, must remove after admin selection feature is finished
-            currentUser.SportsManaged.Add(ActivityDb.GetActivityByName("Basketball"));
+            currentUser.SportsManaged.Add(ActivityDb.GetActivityByName("Football"));
             #endregion
             if (currentUser.SportsManaged.Count == 0)
             {

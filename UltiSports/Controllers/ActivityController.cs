@@ -36,7 +36,7 @@ namespace UltiSports.Controllers
             // Do validation in service
             if (ModelState.IsValid)
             {
-                var response = _activityService.Create(newActivity);
+                var response = _activityService.CreateActivity(newActivity);
                 ViewBag.Message = response.Message;
             }
             else
@@ -59,7 +59,7 @@ namespace UltiSports.Controllers
         [HttpPost]
         public ActionResult Edit(Activity editedActivity)
         {
-            _activityService.Update(editedActivity);
+            _activityService.UpdateActivity(editedActivity);
             return RedirectToAction("ManageActivities", "Admin");
         }
 

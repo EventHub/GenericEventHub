@@ -22,7 +22,7 @@ namespace UltiSports.Controllers
             _eventService = eventService;
         }
 
-        public ActionResult Index(string message = null)
+        public ActionResult Index(string message = null, int eventId = -1)
         {
             string username = @User.Identity.Name;
             bool isRegistered = _playerService.IsRegistered(username);
@@ -37,6 +37,17 @@ namespace UltiSports.Controllers
             var activitiesOfTheDay = _activityService.GetActiveActivitiesFor(dayOfWeek);
 
             var eventsOfTheDay = _eventService.GetEventsOfTheDay(activitiesOfTheDay, user);
+
+            if (eventId != -1)
+            {
+                var listOfEventsOfDay = eventsOfTheDay.ToList();
+                var selectedEvent = eventsOfTheDay.SingleOrDefault(page => page.Id == eventId);
+                listOfEventsOfDay.Remove(selectedEvent);
+
+                listOfEventsOfDay.Insert(0, selectedEvent);
+                eventsOfTheDay = listOfEventsOfDay;
+            }            
+
             ViewBag.Message = message;
 
             return View(eventsOfTheDay);

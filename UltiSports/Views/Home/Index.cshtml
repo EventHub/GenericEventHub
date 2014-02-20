@@ -1,43 +1,138 @@
-﻿
-<div id="events" style="display:none">
-    <div data-bind="foreach: events">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h3><a data-bind="attr: { href: eventUrl }, text: ActivityName"></a></h3>
-                <div>
-                    <span data-bind="text: Location.Name"></span>
-                    <span>&nbsp;@@&nbsp;</span>
-                    <span data-bind="text: moment(Time).format('MMMM DD, YYYY [@@] h:mm:ss a')"></span>
+﻿@using UltiSports.Models
+@model IEnumerable<UltiSports.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+    var selectedEventId = new Event();
+    var selectedTabClass = "tab-selected";
+    if (Model.Any())
+    {
+        selectedEventId = Model.First();
+    }
+
+    var allEvents = new List<Event>();
+
+    foreach (var ev in Model)
+    {
+        allEvents.Add(ev);
+    }
+
+    var t = 0;
+}
+
+@if (Model.Any())
+{
+    foreach (var evento in allEvents)
+    {
+        <div class="event + @selectedEventId" >
+            <div class="page-header-sport">
+                @if (!String.IsNullOrEmpty(ViewBag.Message))
+                {
+                    <div class="page-header-sport">
+                        <div class="row" style="margin-bottom: -40px;">
+                            <div class="alert alert-warning">
+                                <p>
+                                    <strong>System Says:</strong>
+                                    @ViewBag.Message
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <h5 class="pull-left">Today's Sports</h5>
+                <span class="date pull-right">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</span>
+                <div class="clear"></div>
+                <div class="tab-container">
+                    @foreach (Event ev in Model)
+                    {
+                        <div class="tab @if (ev.Id == Model.ToList()[0].Id)
+                                    {
+                                        @selectedTabClass
+                                    }" id="event-@ev.Id-tab">
+                            <h2>@Html.ActionLink(@ev.Activity.Name, "Index", "Home", new { Message = "", eventId = ev.Id }, null)</h2>
+                        </div>
+                    }
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div class="event-container row id=event-@evento.Id-container">
+                <div class="col-md-5">
+                    @Html.Partial("_Participants", evento)
+                    <div>
+                        @Html.Partial("_Wheather", evento)
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="nested-row-breaker">
+                        @Html.Partial("_EventInformation", evento)
+                        @Html.Partial("_Comments", evento)
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div id="no-events" style="display:none">
-    <h1>No events today! Check back tomorrow</h1>
-</div>
-
-<script type="text/javascript">
-    $(function () {
-        function EventsViewModel() {
-            var self = this;
-            self.events = ko.observableArray([]);
-
-            $.ajax({
-                url: "/api/Events/" + moment().format("MM-DD-YY"),
-                type: "get",
-                success: function (data) {
-                    ko.utils.arrayForEach(data, function (d) {
-                        d.eventUrl = "/Event/Details/" + d.Id;
-                    })
-                    self.events(data);
-                    var show = (model.events().length > 0) ? "#events" : "#no-events";
-                    $(show).show();
+    }
+    @*<div class="page-header-sport">
+            @if (!String.IsNullOrEmpty(ViewBag.Message))
+            {
+                <div class="page-header-sport">
+                    <div class="row" style="margin-bottom: -40px;">
+                        <div class="alert alert-warning">
+                            <p>
+                                <strong>System Says:</strong>
+                                @ViewBag.Message
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+            <h5 class="pull-left">Today's Sports</h5>
+            <span class="date pull-right">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</span>
+            <div class="clear"></div>
+            <div class="tab-container">
+                @foreach (Event ev in Model)
+                {
+                    <div class="tab @if (ev.Id == Model.ToList()[0].Id)
+                                    {
+                                        @selectedTabClass
+                                    }" id="event-@ev.Id-tab">
+                        <h2>@Html.DisplayFor(modelItem => ev.Activity.Name)</h2>
+                    </div>
                 }
-            });
-        };
-        var model = new EventsViewModel();
-        ko.applyBindings(model);
-        
-    });
+                <div class="clear"></div>
+            </div>
+        </div>*@
+    @*foreach (Event ev in Model)
+                {
+        <div class="event-container row @if (ev.Id != Model.ToList()[0].Id)
+                                        {
+                                                @hideClass;
+                                        }" id="event-@ev.Id-container">
+            <div class="col-md-5">
+                @Html.Partial("_Participants", ev)
+                <div>
+                    @Html.Partial("_Wheather", ev)
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="nested-row-breaker">
+                    @Html.Partial("_EventInformation", ev)
+                    @Html.Partial("_Comments", ev)
+                </div>
+            </div>
+        </div>
+                }*@
+}
+else
+{
+    <h1 style="padding: 20px;">There are no activities today, have a great day!</h1>
+}
+
+
+<script src="~/Scripts/jquery-2.1.0.js"></script>
+<script>
+    //var elements = new Array();
+    //elements = document.getElementsByClassName("event");
+    //elements[0].className = "show";
+    //$(".event").attr("class", "hide");
 </script>
