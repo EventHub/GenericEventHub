@@ -24,18 +24,9 @@ namespace GenericEventHub.Repositories
 
         public IEnumerable<Event> GetEventsOn(DateTime date)
         {
-            return _repo.Get(x => x.Activity.PreferredTime.Day == date.Day
-                && x.Activity.PreferredTime.Month == date.Month 
-                && x.Activity.PreferredTime.Year == date.Year);
-        }
-
-        public IEnumerable<Event> GetSubsetOfEventsFor(IEnumerable<Activity> activities, string dayOfWeek)
-        {
-            var events = from ev in GetEventsOn(dayOfWeek)
-                         join a in activities
-                            on ev.Activity.Name equals a.Name
-                         select ev;
-            return events;
+            return _repo.Get(x => x.DateTime.Day == date.Day
+                && x.DateTime.Month == date.Month
+                && x.DateTime.Year == date.Year);
         }
     }
 

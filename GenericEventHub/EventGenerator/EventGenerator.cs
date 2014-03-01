@@ -48,6 +48,7 @@ namespace EventGenerator
             var events = new List<Event>();
 
             Event ev;
+            DateTime time;
             foreach (var date in dates)
             {
                 foreach (var activity in activities)
@@ -58,10 +59,20 @@ namespace EventGenerator
                         if (DoesEventExistForActivityAndDate(activity, date))
                             continue;
 
+                        time = new DateTime(
+                            date.Year,
+                            date.Month,
+                            date.Day,
+                            activity.PreferredTime.Hours,
+                            activity.PreferredTime.Minutes,
+                            activity.PreferredTime.Seconds,
+                            activity.PreferredTime.Milliseconds,
+                            date.Kind);
                         ev = new Event
                         {
                             Name = activity.Name,
-                            ActivityID = activity.ActivityID
+                            ActivityID = activity.ActivityID,
+                            DateTime = time
                         };
 
                         events.Add(ev);

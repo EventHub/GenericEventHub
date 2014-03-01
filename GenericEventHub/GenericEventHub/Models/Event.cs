@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,8 +13,11 @@ namespace GenericEventHub.Models
         [DisplayName("Event Name")]
         public string Name { get; set; }
 
+        [Required]
         public int ActivityID { get; set; }
-        public List<int> UsersInEventID { get; set; }
+
+        [Required]
+        public DateTime DateTime { get; set; }
 
         // Navigation Properties
 
@@ -22,11 +26,6 @@ namespace GenericEventHub.Models
         public List<Guest> GuestsInEvent { get; set; }
 
         // Methods
-
-        public DateTime GetTime()
-        {
-            return Activity.PreferredTime;
-        }
 
         public string GetName()
         {

@@ -78,22 +78,22 @@ namespace EventGenerator.Tests
             // Arrange
             var activity = new Activity {
                 Name = "Test",
-                PreferredTime = selectedDate
             };
 
             var activity2 = new Activity {
                 Name = "Test2",
-                PreferredTime = selectedDate
             };
 
             var ev1 = new Event {
                 Name = activity.Name,
-                Activity = activity
+                Activity = activity,
+                DateTime = selectedDate
             };
 
             var ev2 = new Event {
                 Name = activity.Name,
-                Activity = activity2
+                Activity = activity2,
+                DateTime = selectedDate
             };
 
             IEnumerable<Event> events = new List<Event> {
