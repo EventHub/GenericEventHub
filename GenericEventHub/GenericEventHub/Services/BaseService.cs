@@ -24,6 +24,7 @@ namespace GenericEventHub.Services
             {
                 _repo.Insert(entity);
                 message = String.Format("{0} successfully created", entity.ToString());
+                success = true;
             }
             catch (Exception ex)
             {
@@ -47,6 +48,7 @@ namespace GenericEventHub.Services
             {
                 _repo.Delete(entity);
                 message = String.Format("{0} successfully deleted", entity.ToString());
+                success = true;
             }
             catch (Exception ex)
             {
@@ -65,6 +67,7 @@ namespace GenericEventHub.Services
             {
                 _repo.Update(entity);
                 message = String.Format("{0} successfully updated", entity.ToString());
+                success = true;
             }
             catch (Exception ex)
             {
@@ -84,6 +87,7 @@ namespace GenericEventHub.Services
             {
                 data = _repo.GetByID(id);
                 message = String.Format("{0} successfully obtained", data.ToString());
+                success = true;
             }
             catch (Exception ex)
             {
@@ -103,6 +107,7 @@ namespace GenericEventHub.Services
             {
                 data = _repo.GetAll();
                 message = String.Format("All successfully obtained", data.ToString());
+                success = true;
             }
             catch (Exception ex)
             {

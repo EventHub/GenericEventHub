@@ -19,9 +19,18 @@ namespace GenericEventHub.Controllers
         }
 
         [Route("")]
-        public IEnumerable<Activity> Get()
+        public HttpResponseMessage Get()
         {
-            return _service.GetAll().Data;
+            var serviceResponse = _service.GetAll();
+
+            HttpResponseMessage controllerResponse = null;
+            if (serviceResponse.Success)
+                controllerResponse = Request.CreateResponse(HttpStatusCode.OK, serviceResponse.Data);
+            else
+                controllerResponse = Request.CreateResponse(HttpStatusCode.InternalServerError, serviceResponse.Message);
+
+            return controllerResponse;
+
         }
 
         [Route("{id:int}")]
@@ -65,7 +74,7 @@ namespace GenericEventHub.Controllers
                 var res = _service.Create(activity);
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, activity);
-                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = activity.ActivityID }));
+                //response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = activity.ActivityID }));
                 return response;
             }
             else

@@ -16,7 +16,7 @@ namespace GenericEventHub.Models
         public int EventID { get; set; }
 
         // Navigation Properties
-        public User Host { get; set; }
-        public Event Event { get; set; }
+        public virtual User Host { get; set; }
+        public virtual Event Event { get; set; }
     }
 }

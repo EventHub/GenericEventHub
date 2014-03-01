@@ -14,6 +14,7 @@ namespace GenericEventHub.Repositories
             return _repo.Get(x => x.DayOfWeek.Equals(dayOfWeek));
         }
 
+
     }
 
     public interface IActivityRepository : IBaseRepository<Activity>

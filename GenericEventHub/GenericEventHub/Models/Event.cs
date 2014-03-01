@@ -21,9 +21,9 @@ namespace GenericEventHub.Models
 
         // Navigation Properties
 
-        public Activity Activity { get; set; }
-        public List<User> UsersInEvent { get; set; }
-        public List<Guest> GuestsInEvent { get; set; }
+        public virtual Activity Activity { get; set; }
+        public virtual List<User> UsersInEvent { get; set; }
+        public virtual List<Guest> GuestsInEvent { get; set; }
 
         // Methods
 
