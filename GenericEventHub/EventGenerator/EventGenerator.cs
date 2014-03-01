@@ -53,7 +53,7 @@ namespace EventGenerator
             {
                 foreach (var activity in activities)
                 {
-                    if (activity.DayOfWeek.Equals(date.DayOfWeek.ToString()))
+                    if (activity.DayOfWeek.Equals(date.DayOfWeek.ToString(), StringComparison.OrdinalIgnoreCase))
                     {
                         // Check to see if an event already exists for this day
                         if (DoesEventExistForActivityAndDate(activity, date))
