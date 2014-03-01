@@ -20,5 +20,22 @@ namespace GenericEventHub.Models
         public Activity Activity { get; set; }
         public List<User> UsersInEvent { get; set; }
         public List<Guest> GuestsInEvent { get; set; }
+
+        // Methods
+
+        public DateTime GetTime()
+        {
+            return Activity.PreferredTime;
+        }
+
+        public string GetName()
+        {
+            return Activity.Name;
+        }
+
+        public Location GetLocation()
+        {
+            return Activity.Location;
+        }
     }
 }
