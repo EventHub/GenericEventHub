@@ -43,7 +43,7 @@ namespace GenericEventHub.Tests.Controllers
             var result = controller.Get();
 
             // Assert
-            Assert.AreNotEqual("0", result.Count().ToString());
+            Assert.AreNotEqual("0", 0);
         }
 
         [TestMethod]
