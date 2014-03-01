@@ -10,6 +10,6 @@ namespace GenericEventHub.Models
         public int UserID { get; set; }
         public string Name { get; set; }
         public string EMail { get; set; }
-        public List<Event> EventsAttended { get; set; }
+        public virtual List<Event> EventsAttended { get; set; }
     }
 }
