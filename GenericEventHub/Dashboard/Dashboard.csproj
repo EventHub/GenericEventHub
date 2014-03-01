@@ -69,7 +69,6 @@
     <Content Include="dashboard\app\scripts\directives.coffee" />
     <Content Include="dashboard\app\scripts\filters.coffee" />
     <Content Include="dashboard\app\scripts\services.coffee" />
-    <Content Include="dashboard\app\styles\app.less" />
     <Content Include="dashboard\app\styles\overrides\_overrides.less" />
     <Content Include="dashboard\app\styles\overrides\_variables.less" />
     <Content Include="dashboard\bower.json" />
