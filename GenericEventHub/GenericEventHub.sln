@@ -18,8 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventGenerator", "EventGene
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventGenerator.Tests", "EventGenerator.Tests\EventGenerator.Tests.csproj", "{5253A719-8D43-4EEA-81CF-43362CC3BB6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard", "Dashboard\Dashboard.csproj", "{F38239B3-4CF4-49EC-8CE1-A0531C6D815F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,10 +40,6 @@ Global
 		{5253A719-8D43-4EEA-81CF-43362CC3BB6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5253A719-8D43-4EEA-81CF-43362CC3BB6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5253A719-8D43-4EEA-81CF-43362CC3BB6F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F38239B3-4CF4-49EC-8CE1-A0531C6D815F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F38239B3-4CF4-49EC-8CE1-A0531C6D815F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F38239B3-4CF4-49EC-8CE1-A0531C6D815F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F38239B3-4CF4-49EC-8CE1-A0531C6D815F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

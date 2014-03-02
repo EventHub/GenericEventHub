@@ -35,15 +35,10 @@ angular.module('app.controllers', [])
 
 .controller('DashboardCtrl', [
   '$scope'
+  'Restangular'
 
-($scope) ->
-  $scope.events = [
-      title: "One"
-      location: "Here"
-    ,
-      title: "Two"
-      location: "There"
-  ]
+($scope, Restangular) ->
+  $scope.events = Restangular.all('events').getList().$object;
 ])
 
 .controller('AdminDashboardCtrl', [
@@ -57,4 +52,14 @@ angular.module('app.controllers', [])
     title: "Two"
     location: "There"
   ]
+])
+
+.controller('EventCtrl', [
+  '$scope', '$routeParams', 'Restangular'
+
+($scope, $routeParams, Restangular) ->
+  eventID = $routeParams.eventID
+  console.log(eventID)
+
+  $scope.event = Restangular.one('events', eventID).get().$object
 ])

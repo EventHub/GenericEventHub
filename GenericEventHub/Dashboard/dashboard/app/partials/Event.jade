@@ -1,8 +1,7 @@
-div.panel.panel-default(ng-repeat="event in events")
-	div.panel-heading
-		div.panel-title
-			a(href="#/Dashboard/Events/{{event.EventID}}",ng-bind="event.Name")
+div.panel.panel-default
 	div.panel-body
+		div.page-header(style="margin-top: 0px;")
+			h3(style="margin: 0px;",ng-bind="event.Activity.Name")
 		div
 			span When: 
 			span(ng-bind="event.DateTime | date:'medium'")

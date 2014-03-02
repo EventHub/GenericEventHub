@@ -8,7 +8,7 @@ using GenericEventHub.Services;
 
 namespace GenericEventHub.Controllers
 {
-    [RoutePrefix("api/users")]
+    [RoutePrefix("users")]
     public class UserController : ApiController
     {
         private IUserService _service;

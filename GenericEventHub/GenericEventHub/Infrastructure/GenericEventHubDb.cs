@@ -1,4 +1,5 @@
-﻿using GenericEventHub.Models;
+﻿using GenericEventHub.Migrations;
+using GenericEventHub.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,7 +13,7 @@ namespace GenericEventHub.Infrastructure
         public GenericEventHubDb()
             : base("DevelopmentDb")
         {
-
+            
         }
         DbSet<Activity> Activities { get; set; }
         DbSet<Event> Events {get;set;}
@@ -21,5 +22,13 @@ namespace GenericEventHub.Infrastructure
         DbSet<Location> Locations { get; set; }
         DbSet<Sport> Sports { get; set; }
         DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer<GenericEventHubDb>(new CreateDatabaseIfNotExists<GenericEventHubDb>());
+            Database.SetInitializer<GenericEventHubDb>(new MigrateDatabaseToLatestVersion<GenericEventHubDb, Configuration>());
+            
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

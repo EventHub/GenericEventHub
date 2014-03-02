@@ -10,19 +10,27 @@ App = angular.module('app', [
   'app.filters'
   'app.services'
   'partials'
+  'restangular'
 ])
 
 App.config([
   '$routeProvider'
   '$locationProvider'
+  'RestangularProvider'
 
-($routeProvider, $locationProvider, config) ->
+($routeProvider, $locationProvider, RestangularProvider, config) ->
+
+  RestangularProvider.setBaseUrl("/api")
 
   $routeProvider
 
     .when('/Dashboard', {
       templateUrl: '/partials/Dashboard.html',
       controller: 'DashboardCtrl'
+    })
+    .when('/Dashboard/Events/:eventID', {
+      templateUrl: '/partials/Event.html',
+      controller: 'EventCtrl'
     })
     .when('/Admin', {
       templateUrl: '/partials/AdminDashboard.html',

@@ -8,7 +8,7 @@ using GenericEventHub.Services;
 
 namespace GenericEventHub.Controllers
 {
-    [RoutePrefix("api/locations")]
+    [RoutePrefix("locations")]
     public class LocationController : ApiController
     {
         private ILocationService _service;

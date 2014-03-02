@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace GenericEventHub.Controllers
 {
-    [RoutePrefix("api/activities")]
+    [RoutePrefix("activities")]
     public class ActivityController : ApiController
     {
         private IActivityService _service;

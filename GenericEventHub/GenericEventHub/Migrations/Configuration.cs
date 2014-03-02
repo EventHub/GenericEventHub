@@ -1,31 +1,27 @@
 namespace GenericEventHub.Migrations
 {
+    using GenericEventHub.Infrastructure;
+    using GenericEventHub.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<GenericEventHub.Infrastructure.GenericEventHubDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<GenericEventHubDb>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(GenericEventHub.Infrastructure.GenericEventHubDb context)
+        protected override void Seed(GenericEventHubDb context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.Set<Location>().AddOrUpdate(new Location[] {
+                new Location() {
+                    Name = "Test",
+                    Address = "Test test"
+                }
+            });
         }
     }
 }
