@@ -1,4 +1,4 @@
-div.panel.panel-default(ng-repeat="event in events")
+div.panel.panel-default(ng-repeat="event in events", ng-show="events")
 	div.panel-heading
 		div.panel-title
 			a(href="#/Dashboard/Events/{{event.EventID}}",ng-bind="event.Name")
@@ -11,4 +11,6 @@ div.panel.panel-default(ng-repeat="event in events")
 			span(ng-bind="event.Activity.Location.Name") 
 			span &nbsp;at 
 			span(ng-bind="event.Activity.Location.Address")
-		div 
+div.panel.panel-default(ng-if="events.length == 0")
+	div.panel-body
+		div Currently, there are no planned events. Check back later!
