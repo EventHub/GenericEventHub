@@ -45,7 +45,7 @@ namespace GenericEventHub.Controllers
             return TEntity;
         }
 
-        public HttpResponseMessage PutTEntity(int id, TEntity TEntity)
+        public HttpResponseMessage Put(int id, TEntity TEntity)
         {
             if (!ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace GenericEventHub.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        public HttpResponseMessage PostTEntity(TEntity TEntity)
+        public HttpResponseMessage Post(TEntity TEntity)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace GenericEventHub.Controllers
             }
         }
 
-        public HttpResponseMessage DeleteTEntity(int id)
+        public HttpResponseMessage Delete(int id)
         {
             var TEntity = _service.GetByID(id).Data;
             if (TEntity == null)

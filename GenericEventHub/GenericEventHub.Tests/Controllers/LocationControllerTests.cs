@@ -58,7 +58,7 @@ namespace GenericEventHub.Tests.Controllers
             };
 
             // Act
-            var result = controller.PostLocation(testLocation);
+            var result = controller.Post(testLocation);
 
             // Assert
             Assert.IsNotNull(result);
