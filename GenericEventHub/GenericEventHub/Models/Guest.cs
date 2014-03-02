@@ -6,7 +6,7 @@ using System.Web;
 
 namespace GenericEventHub.Models
 {
-    public class Guest
+    public class Guest : Entity
     {
         public int GuestID { get; set; }
         [DisplayName("Guest Name")]
@@ -18,5 +18,10 @@ namespace GenericEventHub.Models
         // Navigation Properties
         public virtual User Host { get; set; }
         public virtual Event Event { get; set; }
+
+        public override int GetID()
+        {
+            return GuestID;
+        }
     }
 }

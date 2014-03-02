@@ -21,7 +21,7 @@ namespace GenericEventHub.Tests.Controllers
         private LocationRepository _locationRepo;
 
         private LocationService _locationService;
-        private LocationController _locationController;
+        private LocationsController _locationController;
 
         [TestInitialize]
         public void SetUp()
@@ -30,14 +30,14 @@ namespace GenericEventHub.Tests.Controllers
             _genericRepo = new GenericRepository<Location>(_context);
             _locationRepo = new LocationRepository(_genericRepo);
             _locationService = new LocationService(_locationRepo);
-            _locationController = new LocationController(_locationService);
+            _locationController = new LocationsController(_locationService);
         }
 
         //[TestMethod]
         public void GetAllLocations()
         {
             // Arrange
-            LocationController controller = new LocationController(_locationService);
+            LocationsController controller = new LocationsController(_locationService);
 
             // Act
             var result = controller.Get();
@@ -50,7 +50,7 @@ namespace GenericEventHub.Tests.Controllers
         public void CreateLocation()
         {
             // Arrange
-            LocationController controller = new LocationController(_locationService);
+            LocationsController controller = new LocationsController(_locationService);
             var testLocation = new Location()
             {
                 Name = "TestName " + DateTime.Now.ToString(),

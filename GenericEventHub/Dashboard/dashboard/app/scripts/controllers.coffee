@@ -8,8 +8,9 @@ angular.module('app.controllers', [])
   '$scope'
   '$location'
   '$resource'
+  'Restangular'
 
-($scope, $location, $resource) ->
+($scope, $location, $resource, Restangular) ->
 
   # Uses the url to determine if the selected
   # menu item should have the class active.
@@ -31,6 +32,8 @@ angular.module('app.controllers', [])
       return 'active'
     else
       return ''
+
+  $scope.user = Restangular.one('Users', 'Current').get().$object;
 ])
 
 .controller('DashboardCtrl', [
@@ -38,7 +41,7 @@ angular.module('app.controllers', [])
   'Restangular'
 
 ($scope, Restangular) ->
-  $scope.events = Restangular.all('events').getList().$object;
+  $scope.events = Restangular.all('Events').getList().$object;
 ])
 
 .controller('AdminDashboardCtrl', [
@@ -61,5 +64,5 @@ angular.module('app.controllers', [])
   eventID = $routeParams.eventID
   console.log(eventID)
 
-  $scope.event = Restangular.one('events', eventID).get().$object
+  $scope.event = Restangular.one('Events', eventID).get().$object
 ])

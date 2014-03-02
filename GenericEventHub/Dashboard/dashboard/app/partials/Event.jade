@@ -1,13 +1,13 @@
-div.panel.panel-default
-	div.panel-body
+div
+	div
 		div.page-header(style="margin-top: 0px;")
-			h3(style="margin: 0px;",ng-bind="event.Activity.Name")
+			h3(style="margin: 0px;",ng-bind="event.Activity.Name") Name
 		div
 			span When: 
-			span(ng-bind="event.DateTime | date:'medium'")
+			span(ng-bind="event.DateTime | date:'medium'") Time
 		div
 			span Where:&nbsp;
-			span(ng-bind="event.Activity.Location.Name") 
+			span(ng-bind="event.Activity.Location.Name") Name
 			span &nbsp;at 
-			span(ng-bind="event.Activity.Location.Address")
-		div 
+			span(ng-bind="event.Activity.Location.Address") Address
+		div

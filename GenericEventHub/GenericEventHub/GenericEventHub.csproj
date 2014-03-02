@@ -15,7 +15,7 @@
     <AssemblyName>GenericEventHub</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
@@ -145,12 +145,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ActivityController.cs" />
-    <Compile Include="Controllers\EventController.cs" />
-    <Compile Include="Controllers\GuestController.cs" />
+    <Compile Include="Controllers\ActivitiesController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Controllers\GuestsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LocationController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\LocationsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -159,8 +160,17 @@
     <Compile Include="Migrations\201403020358197_v1.Designer.cs">
       <DependentUpon>201403020358197_v1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201403022048457_User IsAdmin.cs" />
+    <Compile Include="Migrations\201403022048457_User IsAdmin.Designer.cs">
+      <DependentUpon>201403022048457_User IsAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403022205049_User WindowsName.cs" />
+    <Compile Include="Migrations\201403022205049_User WindowsName.Designer.cs">
+      <DependentUpon>201403022205049_User WindowsName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Location.cs" />
@@ -242,6 +252,12 @@
     <EmbeddedResource Include="Migrations\201403020358197_v1.resx">
       <DependentUpon>201403020358197_v1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403022048457_User IsAdmin.resx">
+      <DependentUpon>201403022048457_User IsAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403022205049_User WindowsName.resx">
+      <DependentUpon>201403022205049_User WindowsName.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -257,15 +273,14 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61953</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/GenericEventHub</IISUrl>
+          <IISUrl>http://localhost:61953</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>http://localhost:3000</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

@@ -12,6 +12,11 @@ namespace GenericEventHub.Repositories
 
         }
 
+        public User GetUserByWindowsName(string name)
+        {
+            return _repo.Get(x => x.WindowsName == name).FirstOrDefault();
+        }
+
         public User GetUserByUsername(string username)
         {
             return _repo.GetByID(username);
@@ -27,5 +32,6 @@ namespace GenericEventHub.Repositories
     {
         User GetUserByUsername(string username);
         bool IsARegisteredUser(string username);
+        User GetUserByWindowsName(string name);
     }
 }

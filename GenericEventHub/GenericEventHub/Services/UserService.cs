@@ -16,10 +16,15 @@ namespace GenericEventHub.Services
         {
             _repo = repo;
         }
+
+        public ServiceData<User> GetUserByWindowsName(string name)
+        {
+            return new ServiceData<User>(_repo.GetUserByWindowsName(name), "user retrieved", true);
+        }
     }
 
     public interface IUserService : IBaseService<User>
     {
-
+        ServiceData<User> GetUserByWindowsName(string name);
     }
 }

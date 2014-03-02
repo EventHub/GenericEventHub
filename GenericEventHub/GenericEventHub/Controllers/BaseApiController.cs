@@ -1,24 +1,24 @@
-﻿using System;
+﻿using GenericEventHub.Models;
+using GenericEventHub.Services;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
-using GenericEventHub.Models;
-using GenericEventHub.Services;
 
 namespace GenericEventHub.Controllers
 {
-    [RoutePrefix("events")]
-    public class EventController : ApiController
+    public class BaseApiController<TEntity> : ApiController where TEntity : Entity
     {
-        private IEventService _service;
+        private IBaseService<TEntity> _service;
 
-        public EventController(IEventService service)
+        public BaseApiController(IBaseService<TEntity> service)
         {
             _service = service;
         }
 
-        [Route("")]
         public HttpResponseMessage Get()
         {
             var serviceResponse = _service.GetAll();
@@ -30,34 +30,34 @@ namespace GenericEventHub.Controllers
                 controllerResponse = Request.CreateResponse(HttpStatusCode.InternalServerError, serviceResponse.Message);
 
             return controllerResponse;
+
         }
 
         [Route("{id:int}")]
-        public Event Get(int id)
+        public TEntity Get(int id)
         {
-            var ev = _service.GetByID(id).Data;
-            if (ev == null)
+            var TEntity = _service.GetByID(id).Data;
+            if (TEntity == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return ev;
+            return TEntity;
         }
 
-        [Route("{id:int}")]
-        public HttpResponseMessage PutEvent(int id, Event ev)
+        public HttpResponseMessage PutTEntity(int id, TEntity TEntity)
         {
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            if (id != ev.EventID)
+            if (id != TEntity.GetID())
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
-            var response = _service.Update(ev);
+            var response = _service.Update(TEntity);
 
             if (!response.Success)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, response.Message);
@@ -65,15 +65,14 @@ namespace GenericEventHub.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        [Route("")]
-        public HttpResponseMessage PostEvent(Event ev)
+        public HttpResponseMessage PostTEntity(TEntity TEntity)
         {
             if (ModelState.IsValid)
             {
-                var res = _service.Create(ev);
+                var res = _service.Create(TEntity);
 
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, ev);
-                //response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = ev.EventID }));
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, TEntity);
+                //response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = TEntity.TEntityID }));
                 return response;
             }
             else
@@ -82,16 +81,15 @@ namespace GenericEventHub.Controllers
             }
         }
 
-        [Route("{id:int}")]
-        public HttpResponseMessage DeleteEvent(int id)
+        public HttpResponseMessage DeleteTEntity(int id)
         {
-            var ev = _service.GetByID(id).Data;
-            if (ev == null)
+            var TEntity = _service.GetByID(id).Data;
+            if (TEntity == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            var response = _service.Delete(ev);
+            var response = _service.Delete(TEntity);
 
 
             if (!response.Success)
@@ -99,7 +97,7 @@ namespace GenericEventHub.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, response.Message);
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, ev);
+            return Request.CreateResponse(HttpStatusCode.OK, TEntity);
         }
 
         protected override void Dispose(bool disposing)

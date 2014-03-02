@@ -7,7 +7,7 @@ using System.Web;
 
 namespace GenericEventHub.Models
 {
-    public class Event
+    public class Event : Entity
     {
         public int EventID { get; set; }
         [DisplayName("Event Name")]
@@ -35,6 +35,11 @@ namespace GenericEventHub.Models
         public Location GetLocation()
         {
             return Activity.Location;
+        }
+
+        public override int GetID()
+        {
+            return EventID;
         }
     }
 }
