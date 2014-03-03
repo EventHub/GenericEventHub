@@ -19,6 +19,7 @@ namespace GenericEventHub
                 routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
         }
     }
 }

@@ -40,7 +40,7 @@ namespace GenericEventHub.Tests.Controllers
             LocationsController controller = new LocationsController(_locationService);
 
             // Act
-            var result = controller.Get();
+            var result = controller.GetAll();
 
             // Assert
             Assert.AreNotEqual("0", 0);

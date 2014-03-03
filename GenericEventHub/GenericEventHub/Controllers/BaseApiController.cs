@@ -19,7 +19,8 @@ namespace GenericEventHub.Controllers
             _service = service;
         }
 
-        public HttpResponseMessage Get()
+        [HttpGet]
+        public HttpResponseMessage GetAll()
         {
             var serviceResponse = _service.GetAll();
 
@@ -33,18 +34,19 @@ namespace GenericEventHub.Controllers
 
         }
 
-        [Route("{id:int}")]
-        public TEntity Get(int id)
+        [HttpGet]
+        public HttpResponseMessage GetEntity(int id)
         {
-            var TEntity = _service.GetByID(id).Data;
-            if (TEntity == null)
+            var entity = _service.GetByID(id).Data;
+            if (entity == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return TEntity;
+            return Request.CreateResponse(HttpStatusCode.OK, entity);
         }
 
+        [HttpPut]
         public HttpResponseMessage Put(int id, TEntity TEntity)
         {
             if (!ModelState.IsValid)
@@ -65,6 +67,7 @@ namespace GenericEventHub.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
+        [HttpPost]
         public HttpResponseMessage Post(TEntity TEntity)
         {
             if (ModelState.IsValid)
@@ -81,15 +84,16 @@ namespace GenericEventHub.Controllers
             }
         }
 
+        [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
-            var TEntity = _service.GetByID(id).Data;
-            if (TEntity == null)
+            var entity = _service.GetByID(id).Data;
+            if (entity == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            var response = _service.Delete(TEntity);
+            var response = _service.Delete(entity);
 
 
             if (!response.Success)
@@ -97,7 +101,7 @@ namespace GenericEventHub.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, response.Message);
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, TEntity);
+            return Request.CreateResponse(HttpStatusCode.OK, entity);
         }
 
         protected override void Dispose(bool disposing)

@@ -20,7 +20,7 @@ namespace GenericEventHub.App_Start
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterType<GenericEventHubDb>().As<GenericEventHubDb>();
+            builder.RegisterType<GenericEventHubDb>().As<GenericEventHubDb>().InstancePerApiRequest();
 
             builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>));
 

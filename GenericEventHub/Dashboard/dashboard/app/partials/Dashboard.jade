@@ -11,6 +11,9 @@ div.panel.panel-default(ng-repeat="event in events", ng-show="events")
 			span(ng-bind="event.Activity.Location.Name") 
 			span &nbsp;at 
 			span(ng-bind="event.Activity.Location.Address")
+		div
+			span Attendees:&nbsp;
+			span(ng-bind="event.UsersInEvent.length + event.GuestsInEvent.length")
 div.panel.panel-default(ng-if="events.length == 0")
 	div.panel-body
 		div Currently, there are no planned events. Check back later!

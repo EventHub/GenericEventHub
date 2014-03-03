@@ -63,6 +63,39 @@ angular.module('app.controllers', [])
 ($scope, $routeParams, Restangular) ->
   eventID = $routeParams.eventID
   console.log(eventID)
+  $scope.attendees = []
+  $scope.user = Restangular.one('Users', 'Current').get().$object;
+  eventRoute = Restangular.one('Events', eventID)
+  eventRoute.get().then((data) ->
+    $scope.event = data
+    if ($scope.event.UsersInEvent.length + $scope.event.GuestsInEvent.length == 0)
+      $scope.attendees.push({name:"No one :(", id: -1})
+    else
+      for user in $scope.event.UsersInEvent
+        userObj = {}
+        userObj['name'] = user.WindowsName
+        if user.Name?
+          userObj['name'] = user.Name
+        userObj['type'] = 'user'
+        userObj['id'] = user.UserID
+        $scope.attendees.push(userObj)
+      for guest in $scope.event.GuestsInEvent
+        guestObj = {}
+        hostName = '?'
+        if guest.Host?
+          if guest.Host.Name?
+            hostName = guest.Host.Name
+          else
+            hostName = guest.Host.WindowsName
+        guestObj['name'] = guest.Name + " " + hostName
+        guestObj['type'] = 'guest'
+        guestObj['id'] = guest.GuestID
+        $scope.attendees.push(guestObj)
+  )
 
-  $scope.event = Restangular.one('Events', eventID).get().$object
+  $scope.addUser = ->
+    eventRoute.post('AddUser')
+
+  $scope.removeUser = -> 
+    eventRoute.post('RemoveUser')
 ])

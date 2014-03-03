@@ -1,13 +1,27 @@
+div.page-header(style="margin-top: 0px;")
+	h3(style="margin: 0px;",ng-bind="event.Activity.Name") Name
 div
-	div
-		div.page-header(style="margin-top: 0px;")
-			h3(style="margin: 0px;",ng-bind="event.Activity.Name") Name
-		div
-			span When: 
-			span(ng-bind="event.DateTime | date:'medium'") Time
-		div
-			span Where:&nbsp;
-			span(ng-bind="event.Activity.Location.Name") Name
-			span &nbsp;at 
-			span(ng-bind="event.Activity.Location.Address") Address
-		div
+	span When: 
+	span(ng-bind="event.DateTime | date:'medium'") Time
+div
+	span Where:&nbsp;
+	span(ng-bind="event.Activity.Location.Name") Name
+	span &nbsp;at 
+	span(ng-bind="event.Activity.Location.Address") Address
+div
+	span Attendees:&nbsp;
+	span(ng-bind="event.UsersInEvent.length + event.GuestsInEvent.length")
+br
+button.btn.btn-primary(type="button",ng-click="addUser()") Join
+button.btn.btn-primary(type="button",ng-click="removeUser()") Leave
+button.btn.btn-primary(type="button",ng-click="addGuest()") +1
+br
+br
+div.panel.panel-default
+	table.table
+		thead
+			tr.success
+				th Attending
+		tbody
+			tr(ng-repeat="attendee in attendees")
+				td(ng-bind="attendee.name")

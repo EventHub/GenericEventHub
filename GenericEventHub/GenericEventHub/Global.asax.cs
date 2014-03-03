@@ -1,7 +1,5 @@
 ﻿using GenericEventHub.App_Start;
-using GenericEventHub.Infrastructure;
-using GenericEventHub.Migrations;
-using System.Data.Entity;
+using Newtonsoft.Json;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -19,6 +17,8 @@ namespace GenericEventHub
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
         }
     }
 }
