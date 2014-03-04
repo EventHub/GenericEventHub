@@ -58,9 +58,9 @@ angular.module('app.controllers', [])
 ])
 
 .controller('EventCtrl', [
-  '$scope', '$routeParams', 'Restangular'
+  '$scope', '$routeParams', 'Restangular', '$modal'
 
-($scope, $routeParams, Restangular) ->
+($scope, $routeParams, Restangular, $modal) ->
   eventID = $routeParams.eventID
   console.log(eventID)
   $scope.attendees = []
@@ -98,4 +98,28 @@ angular.module('app.controllers', [])
 
   $scope.removeUser = -> 
     eventRoute.post('RemoveUser')
+
+  $scope.addGuest = ->
+    modalInstance = $modal.open(
+      templateUrl: 'guestModal.html'
+      controller: 'GuestModalCtrl',
+      resolve:
+        eventID: ->
+          eventID
+    )
+])
+
+.controller('GuestModalCtrl', ['$scope','$modalInstance', 'Restangular', 'eventID'
+  ($scope, $modalInstance, Restangular, eventID) ->
+    $scope.add = (guestName) ->
+      guest = 
+        Name: guestName
+        EventID: eventID
+      Restangular.one('Events',eventID).post('AddGuest', guest)
+      close()
+    $scope.cancel = ->
+      close()
+
+    close = ->
+      $modalInstance.dismiss('cancel')
 ])

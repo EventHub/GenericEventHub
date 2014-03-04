@@ -28,12 +28,10 @@ html(lang='en', ng-app='app')
           a.navbar-brand(href="#") UltiEvents
         ul.nav.navbar-nav.navbar-right
           li.dropdown
-            a.dropdown-toggle(ng-bind="user.WindowsName")
+            a.dropdown-toggle(href="#",ng-bind="user.WindowsName")
             ul.dropdown-menu
               li
-                a Settings
-              li
-                a Logout
+                a(href="#/Settings") Settings
         div.navbar-collapse.collapse
               div(ng-include="'/partials/nav.html'")
     .container.main-content

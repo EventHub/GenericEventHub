@@ -25,3 +25,13 @@ div.panel.panel-default
 		tbody
 			tr(ng-repeat="attendee in attendees")
 				td(ng-bind="attendee.name")
+
+script(id="guestModal.html",type="text/ng-template")
+	div.modal-header
+		h3 Add a guest
+	div.modal-body
+		form
+			input#guestNameInput.form-control(placeholder="Enter your guest's name",ng-model="guestName")
+	div.modal-footer
+		button.btn.btn-primary(ng-click="add(guestName)") Add
+		button.btn.btn-warning(ng-click="cancel()") Cancel

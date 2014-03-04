@@ -11,6 +11,7 @@ App = angular.module('app', [
   'app.services'
   'partials'
   'restangular'
+  'ui.bootstrap'
 ])
 
 App.config([
