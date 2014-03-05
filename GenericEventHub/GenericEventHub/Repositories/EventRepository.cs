@@ -28,11 +28,19 @@ namespace GenericEventHub.Repositories
                 && x.DateTime.Month == date.Month
                 && x.DateTime.Year == date.Year);
         }
+
+        public IEnumerable<Event> GetEventsAfter(DateTime date)
+        {
+            return _repo.Get(x => x.DateTime.Day >= date.Day
+                && x.DateTime.Month >= date.Month
+                && x.DateTime.Year >= date.Year);
+        }
     }
 
     public interface IEventRepository : IBaseRepository<Event>
     {
         IEnumerable<Event> GetEventsOn(string dayOfWeek);
         IEnumerable<Event> GetEventsOn(DateTime date);
+        IEnumerable<Event> GetEventsAfter(DateTime date);
     }
 }

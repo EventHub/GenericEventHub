@@ -5,7 +5,7 @@ div
 	span(ng-bind="event.DateTime | date:'medium'") Time
 div
 	span Where:&nbsp;
-	span(ng-bind="event.Activity.Location.Name") Name
+	a(href="{{locationLink}}", target="_blank", ng-bind="event.Activity.Location.Name") Name
 	span &nbsp;at 
 	span(ng-bind="event.Activity.Location.Address") Address
 div

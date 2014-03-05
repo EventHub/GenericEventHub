@@ -39,9 +39,17 @@ angular.module('app.controllers', [])
 .controller('DashboardCtrl', [
   '$scope'
   'Restangular'
+  '$filter'
 
-($scope, Restangular) ->
-  $scope.events = Restangular.all('Events').getList().$object;
+($scope, Restangular, $filter) ->
+  $scope.loading = true
+  $scope.events = []
+  today = $filter('date')(new Date(), 'MM-dd-yyyy')
+  Restangular.one('Events', today).getList().then((data) ->
+    $scope.events = data
+    loading = false
+  , (response) ->
+    loading = false)
 ])
 
 .controller('AdminDashboardCtrl', [
@@ -68,6 +76,7 @@ angular.module('app.controllers', [])
   eventRoute = Restangular.one('Events', eventID)
   eventRoute.get().then((data) ->
     $scope.event = data
+    $scope.locationLink = "http://maps.google.com?q=" + $scope.event.Activity.Location.Name.split(' ').join('+')
     if ($scope.event.UsersInEvent.length + $scope.event.GuestsInEvent.length == 0)
       $scope.attendees.push({name:"No one :(", id: -1})
     else

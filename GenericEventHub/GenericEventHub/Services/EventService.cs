@@ -16,10 +16,29 @@ namespace GenericEventHub.Services
         {
             _repo = repo;
         }
+
+        public ServiceData<IEnumerable<Event>> GetEventsAfter(DateTime date)
+        {
+            var success = false;
+            var message = "";
+            IEnumerable<Event> data = null;
+
+            try
+            {
+                data = _repo.GetEventsAfter(date);
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            return new ServiceData<IEnumerable<Event>>(data, message, success);
+        }
     }
+
 
     public interface IEventService : IBaseService<Event>
     {
-
+        ServiceData<IEnumerable<Event>> GetEventsAfter(DateTime date);
     }
 }

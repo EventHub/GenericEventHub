@@ -25,6 +25,17 @@ namespace GenericEventHub.Controllers
             _guestService = guestService;
         }
 
+        [HttpGet]
+        [Route("{date:datetime}")]
+        public HttpResponseMessage GetEventsForDate(DateTime date)
+        {
+            var serviceResponse = _service.GetEventsAfter(date);
+            if (serviceResponse.Success)
+                return Request.CreateResponse(HttpStatusCode.OK, serviceResponse.Data);
+            else
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "");
+        }
+
         [HttpPost]
         [Route("{eventID:int}/AddUser")]
         public HttpResponseMessage AddUser(int eventID)
