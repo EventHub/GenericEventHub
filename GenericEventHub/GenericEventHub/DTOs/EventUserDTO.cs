@@ -10,12 +10,10 @@ namespace GenericEventHub.DTOs
     {
         public int UserID { get; set; }
         public string Name { get; set; }
-        public int EventID { get; set; }
 
-        public EventUserDTO(User user, int eventID) : base(user)
+        public EventUserDTO(User user) : base(user)
         {
             Name = user.GetName();
-            EventID = eventID;
         }
     }
 }

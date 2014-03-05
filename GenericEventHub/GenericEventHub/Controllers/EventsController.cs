@@ -56,7 +56,7 @@ namespace GenericEventHub.Controllers
             {
                 ev.UsersInEvent.Add(user); 
                 _service.Update(ev);
-                _participantsContext.AddUser(new EventUserDTO(user, eventID));
+                _participantsContext.AddUser(new EventUserDTO(user));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);
@@ -78,7 +78,7 @@ namespace GenericEventHub.Controllers
             {
                 ev.UsersInEvent.Remove(user);
                 _service.Update(ev);
-                _participantsContext.RemoveUser(new EventUserDTO(user, eventID));
+                _participantsContext.RemoveUser(new EventUserDTO(user));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);

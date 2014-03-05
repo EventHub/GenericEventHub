@@ -15,7 +15,7 @@ namespace GenericEventHub.DTOs
 
         public EventGuestDTO(Guest guest) : base(guest)
         {
-            Host = new EventUserDTO(guest.Host, EventID);
+            Host = new EventUserDTO(guest.Host);
         }
     }
 }

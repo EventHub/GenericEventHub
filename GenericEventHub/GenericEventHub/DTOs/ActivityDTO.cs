@@ -16,7 +16,7 @@ namespace GenericEventHub.DTOs
 
         public ActivityDTO(Activity activity) : base(activity)
         {
-            Location = new LocationDTO(activity.Location);
+            //Location = new LocationDTO(activity.Location);
         }
     }
 }

@@ -27,14 +27,13 @@ namespace GenericEventHub.DTOs
             return _dtoCtor.Invoke(new object[] { entity });
         }
 
-        public IEnumerable<Object> GetDTOForEntities(IEnumerable<Entity> entities)
+        public IEnumerable<Object> GetDTOForEntities(IEnumerable<TEntity> entities)
         {
-            List<Object> list = new List<Object>();
+            var list = new List<Object>();
             foreach (var entity in entities)
             {
                 list.Add(GetDTOForEntity(entity));
             }
-
             return list;
         }
     }

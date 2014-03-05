@@ -21,7 +21,7 @@ namespace GenericEventHub.DTOs
 
             UsersInEvent = new List<EventUserDTO>();
             GuestsInEvent = new List<EventGuestDTO>();
-            ev.UsersInEvent.ForEach(x => UsersInEvent.Add(new EventUserDTO(x, ev.EventID)));
+            ev.UsersInEvent.ForEach(x => UsersInEvent.Add(new EventUserDTO(x)));
             ev.GuestsInEvent.ForEach(x => GuestsInEvent.Add(new EventGuestDTO(x)));
         }
     }
