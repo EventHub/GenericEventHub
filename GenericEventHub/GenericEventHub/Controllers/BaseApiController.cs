@@ -1,22 +1,28 @@
-﻿using GenericEventHub.Models;
+﻿using GenericEventHub.DTOs;
+using GenericEventHub.Models;
 using GenericEventHub.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 
 namespace GenericEventHub.Controllers
 {
-    public class BaseApiController<TEntity> : ApiController where TEntity : Entity
+    public class BaseApiController<TEntity, TEntityDTO> : ApiController 
+        where TEntity : Entity
+        where TEntityDTO : DTO
     {
         private IBaseService<TEntity> _service;
+        protected DTOMapper<TEntity, TEntityDTO> _mapper;
 
         public BaseApiController(IBaseService<TEntity> service)
         {
             _service = service;
+            _mapper = new DTOMapper<TEntity, TEntityDTO>();
         }
 
         [HttpGet]
@@ -26,7 +32,9 @@ namespace GenericEventHub.Controllers
 
             HttpResponseMessage controllerResponse = null;
             if (serviceResponse.Success)
-                controllerResponse = Request.CreateResponse(HttpStatusCode.OK, serviceResponse.Data);
+            {
+                controllerResponse = Request.CreateResponse(HttpStatusCode.OK, _mapper.GetDTOForEntities(serviceResponse.Data));
+            }
             else
                 controllerResponse = Request.CreateResponse(HttpStatusCode.InternalServerError, serviceResponse.Message);
 
@@ -43,7 +51,7 @@ namespace GenericEventHub.Controllers
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, entity);
+            return Request.CreateResponse(HttpStatusCode.OK, _mapper.GetDTOForEntity(entity));
         }
 
         [HttpPut]
@@ -68,13 +76,13 @@ namespace GenericEventHub.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Post(TEntity TEntity)
+        public HttpResponseMessage Post(TEntity entity)
         {
             if (ModelState.IsValid)
             {
-                var res = _service.Create(TEntity);
+                var res = _service.Create(entity);
 
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, TEntity);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, _mapper.GetDTOForEntity(entity));
                 //response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = TEntity.TEntityID }));
                 return response;
             }

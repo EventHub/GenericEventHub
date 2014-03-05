@@ -1,4 +1,5 @@
-﻿using GenericEventHub.Models;
+﻿using GenericEventHub.DTOs;
+using GenericEventHub.Models;
 using GenericEventHub.Services;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,8 @@ using System.Web.Http;
 namespace GenericEventHub.Controllers
 {
     [Authorize]
-    [RoutePrefix("activities")]
-    public class ActivitiesController : BaseApiController<Activity>
+    [RoutePrefix("Activities")]
+    public class ActivitiesController : BaseApiController<Activity, ActivityDTO>
     {
         private IActivityService _service;
 

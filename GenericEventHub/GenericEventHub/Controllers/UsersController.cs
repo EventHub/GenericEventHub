@@ -5,11 +5,12 @@ using System.Net.Http;
 using System.Web.Http;
 using GenericEventHub.Models;
 using GenericEventHub.Services;
+using GenericEventHub.DTOs;
 
 namespace GenericEventHub.Controllers
 {
     [RoutePrefix("Users")]
-    public class UsersController : BaseApiController<User>
+    public class UsersController : BaseApiController<User, UserDTO>
     {
         private IUserService _service;
 

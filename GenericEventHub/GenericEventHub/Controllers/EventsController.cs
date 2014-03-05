@@ -5,16 +5,20 @@ using System.Net.Http;
 using System.Web.Http;
 using GenericEventHub.Models;
 using GenericEventHub.Services;
+using Microsoft.AspNet.SignalR;
+using GenericEventHub.Hubs;
+using GenericEventHub.DTOs;
 
 namespace GenericEventHub.Controllers
 {
-    [Authorize]
+    [System.Web.Http.Authorize]
     [RoutePrefix("Events")]
-    public class EventsController : BaseApiController<Event>
+    public class EventsController : BaseApiController<Event, EventDTO>
     {
         private IEventService _service;
         private IUserService _userService;
         private IGuestService _guestService;
+        private IParticipants _participantsContext;
 
         public EventsController(IEventService service,
             IUserService userService,
@@ -23,6 +27,7 @@ namespace GenericEventHub.Controllers
             _service = service;
             _userService = userService;
             _guestService = guestService;
+            _participantsContext = new Participants(GlobalHost.ConnectionManager.GetHubContext<ParticipantsHub>());
         }
 
         [HttpGet]
@@ -51,6 +56,7 @@ namespace GenericEventHub.Controllers
             {
                 ev.UsersInEvent.Add(user); 
                 _service.Update(ev);
+                _participantsContext.AddUser(new EventUserDTO(user, eventID));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);
@@ -72,6 +78,7 @@ namespace GenericEventHub.Controllers
             {
                 ev.UsersInEvent.Remove(user);
                 _service.Update(ev);
+                _participantsContext.RemoveUser(new EventUserDTO(user, eventID));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);
@@ -96,6 +103,7 @@ namespace GenericEventHub.Controllers
             {
                 ev.GuestsInEvent.Add(guest);
                 _service.Update(ev);
+                _participantsContext.AddGuest(new EventGuestDTO(guest));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);
@@ -117,6 +125,7 @@ namespace GenericEventHub.Controllers
             {
                 ev.GuestsInEvent.Remove(guest);
                 _service.Update(ev);
+                _participantsContext.RemoveGuest(new EventGuestDTO(guest));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);

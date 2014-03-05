@@ -6,16 +6,15 @@ using System.Web;
 
 namespace GenericEventHub.DTOs
 {
-    public class EventUserDTO : DTO
+    public class GuestDTO : DTO
     {
-        public int UserID { get; set; }
+        public int GuestID { get; set; }
         public string Name { get; set; }
+        public int HostID { get; set; }
         public int EventID { get; set; }
 
-        public EventUserDTO(User user, int eventID) : base(user)
+        public GuestDTO(Guest guest) : base(guest)
         {
-            Name = user.GetName();
-            EventID = eventID;
         }
     }
 }

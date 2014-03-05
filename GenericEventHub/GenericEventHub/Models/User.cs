@@ -19,5 +19,10 @@ namespace GenericEventHub.Models
         {
             return UserID;
         }
+
+        public string GetName()
+        {
+            return Name ?? WindowsName;
+        }
     }
 }
