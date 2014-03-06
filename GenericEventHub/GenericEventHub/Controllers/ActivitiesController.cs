@@ -15,7 +15,8 @@ namespace GenericEventHub.Controllers
     {
         private IActivityService _service;
 
-        public ActivitiesController(IActivityService service) : base(service)
+        public ActivitiesController(IActivityService service,
+            IUserService users) : base(service, users)
         {
             _service = service;
         }

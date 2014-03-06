@@ -33,6 +33,10 @@ App.config([
       templateUrl: '/partials/Event.html',
       controller: 'EventCtrl'
     })
+    .when('/Settings', {
+      templateUrl: '/partials/User.html',
+      controller: 'UserCtrl'
+    })
     .when('/Admin', {
       templateUrl: '/partials/AdminDashboard.html',
       controller: 'AdminDashboardCtrl'

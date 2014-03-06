@@ -66,11 +66,10 @@ angular.module('app.controllers', [])
 ])
 
 .controller('EventCtrl', [
-  '$scope', '$routeParams', 'Restangular', '$modal'
+  '$scope', '$routeParams', 'Restangular', '$modal', '$timeout', '$route'
 
-($scope, $routeParams, Restangular, $modal) ->
+($scope, $routeParams, Restangular, $modal, $timeout, $route) ->
   eventID = $routeParams.eventID
-  console.log(eventID)
   $scope.attendees = []
   $scope.user = Restangular.one('Users', 'Current').get().$object;
   eventRoute = Restangular.one('Events', eventID)
@@ -82,9 +81,7 @@ angular.module('app.controllers', [])
     else
       for user in $scope.event.UsersInEvent
         userObj = {}
-        userObj['name'] = user.WindowsName
-        if user.Name?
-          userObj['name'] = user.Name
+        userObj['name'] = user.Name
         userObj['type'] = 'user'
         userObj['id'] = user.UserID
         $scope.attendees.push(userObj)
@@ -92,21 +89,23 @@ angular.module('app.controllers', [])
         guestObj = {}
         hostName = '?'
         if guest.Host?
-          if guest.Host.Name?
-            hostName = guest.Host.Name
-          else
-            hostName = guest.Host.WindowsName
-        guestObj['name'] = guest.Name + " " + hostName
+          hostName = guest.Host.Name
+        guestObj['name'] = guest.Name + " (" + hostName + ")"
         guestObj['type'] = 'guest'
         guestObj['id'] = guest.GuestID
         $scope.attendees.push(guestObj)
   )
 
+  connection = $.connection.ParticipantsHub
+  console.log connection
+
   $scope.addUser = ->
     eventRoute.post('AddUser')
+    $timeout($route.reload(), 2000)
 
   $scope.removeUser = -> 
     eventRoute.post('RemoveUser')
+    $timeout($route.reload(), 2000)
 
   $scope.addGuest = ->
     modalInstance = $modal.open(
@@ -118,17 +117,31 @@ angular.module('app.controllers', [])
     )
 ])
 
-.controller('GuestModalCtrl', ['$scope','$modalInstance', 'Restangular', 'eventID'
-  ($scope, $modalInstance, Restangular, eventID) ->
+.controller('GuestModalCtrl', ['$scope','$modalInstance', 'Restangular', 'eventID', '$timeout', '$route'
+  ($scope, $modalInstance, Restangular, eventID, $timeout, $route) ->
     $scope.add = (guestName) ->
       guest = 
         Name: guestName
         EventID: eventID
       Restangular.one('Events',eventID).post('AddGuest', guest)
+      $timeout($route.reload(), 2000)
       close()
     $scope.cancel = ->
       close()
 
     close = ->
       $modalInstance.dismiss('cancel')
+])
+
+.controller('UserCtrl', ['$scope', 'Restangular'
+  ($scope, Restangular) ->
+    $scope.Name = ""
+    Restangular.one('Users', 'Current').get().then((data) ->
+      $scope.user = data
+      $scope.Name = $scope.user.Name
+    )
+
+    $scope.update = (name) ->
+      $scope.user.Name = name
+      Restangular.one('Users', 'Name').post({'id': $scope.user.UserID, 'name': name})
 ])

@@ -15,7 +15,9 @@ namespace GenericEventHub.Controllers
     {
         private ILocationService _service;
 
-        public LocationsController(ILocationService service) : base(service)
+        public LocationsController(ILocationService service,
+            IUserService users)
+            : base(service, users)
         {
             _service = service;
         }

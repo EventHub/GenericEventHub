@@ -4,15 +4,19 @@ div.panel.panel-default(ng-repeat="event in events", ng-show="events")
 			a(href="#/Dashboard/Events/{{event.EventID}}",ng-bind="event.Name")
 	div.panel-body
 		div
-			span When: 
-			span(ng-bind="event.DateTime | date:'medium'")
+			span When: &nbsp;
+			span(ng-bind="event.DateTime | date:'EEEE, MMMM d, yyyy'") Time
+		div
+			span Time: &nbsp;
+			span(ng-bind="event.DateTime | date:'h:mm a'")
 		div
 			span Where:&nbsp;
-			span(ng-bind="event.Activity.Location.Name") 
-			span &nbsp;at 
-			span(ng-bind="event.Activity.Location.Address")
+			span(ng-bind="event.Activity.Location.Name") Name
 		div
-			span Attendees:&nbsp;
+			span Address:&nbsp;
+			span(ng-bind="event.Activity.Location.Address") Address
+		div
+			span # Attendees:&nbsp;
 			span(ng-bind="event.UsersInEvent.length + event.GuestsInEvent.length")
 div.panel.panel-default(ng-if="events.length == 0")
 	div.panel-body

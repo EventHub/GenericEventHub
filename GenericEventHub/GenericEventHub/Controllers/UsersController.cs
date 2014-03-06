@@ -14,7 +14,7 @@ namespace GenericEventHub.Controllers
     {
         private IUserService _service;
 
-        public UsersController(IUserService service) : base(service)
+        public UsersController(IUserService service) : base(service, service)
         {
             _service = service;
         }
@@ -37,7 +37,7 @@ namespace GenericEventHub.Controllers
                 _service.Create(user);
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, base._mapper.GetDTOForEntity(user));
+            return Request.CreateResponse(HttpStatusCode.OK, base._mapper.GetDTOForEntity<User, UserDTO>(user));
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace GenericEventHub.Controllers
             if (user == null)
             {
                 if (user.UserID != id)
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                    return Request.CreateResponse(HttpStatusCode.Forbidden);
 
                 // Create this user
                 user.Name = name;

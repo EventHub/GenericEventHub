@@ -8,8 +8,14 @@ namespace GenericEventHub.DTOs
 {
     public class DTO
     {
+        private DTOMapper _mapper;
+
         public DTO(Object x)
         {
+            _mapper = new DTOMapper();
+            
+            var dtoMethod = _mapper.GetType().GetMethod("GetDTOForEntity");
+            var dtosMethod = _mapper.GetType().GetMethod("GetDTOsForEntities");
             var myProperties = this.GetType().GetProperties();
             var xType = x.GetType();
 
@@ -25,12 +31,15 @@ namespace GenericEventHub.DTOs
                     if (propertyType.IsGenericType
                             && propertyType.GetGenericTypeDefinition() == typeof(ICollection<>) 
                             && IsDTO(propertyType)) {
-                        //xValue = ResolveListDTO(xValue, propertyType);
-                                continue;
+                        var generic = dtosMethod.MakeGenericMethod(xValue.GetType().GetGenericArguments()[0],
+                            propertyType.GetGenericArguments()[0]);
+                        xValue = generic.Invoke(_mapper, new object[] { xValue }); 
+                        //continue;
                     }
                     else if (IsDTO(propertyType))
                     {
-                        xValue = ResolveDTO(xValue, propertyType);
+                        var generic = dtoMethod.MakeGenericMethod(xValue.GetType(), propertyType);
+                        xValue = generic.Invoke(_mapper, new object[] {xValue});
                     }
                     property.SetValue(this, xValue, null);
                 }
@@ -40,32 +49,6 @@ namespace GenericEventHub.DTOs
         public bool IsDTO(Type type)
         {
             return type.FullName.Contains("DTO");
-        }
-
-        public Object ResolveDTO(Object obj, Type dto)
-        {
-            var mapper = CreateMapper(obj.GetType(), dto);
-            Object[] parameters = { obj };
-            return mapper.GetType().GetMethod("GetDTOForEntity").Invoke(mapper, parameters);
-        }
-
-        // Need to loop over list and resolve each dto.
-        //public Object ResolveListDTO(Object obj, Type dto)
-        //{
-        //    var mapper = CreateMapper(obj.GetType().GetGenericArguments()[0], 
-        //        dto.GetGenericArguments()[0]);
-        //    Object[] parameters = { obj };
-        //    var listObjs = mapper.GetType().GetMethod("GetDTOForEntities").Invoke(mapper, parameters);
-        //    return listObjs;
-        //}
-
-        public Object CreateMapper(Type obj, Type dto)
-        {
-            var mapperType = typeof(DTOMapper<,>);
-            Type[] typeArgs = { obj , dto };
-            var mapperMake = mapperType.MakeGenericType(typeArgs);
-            Object mapper = Activator.CreateInstance(mapperMake);
-            return mapper;
         }
     }
 }

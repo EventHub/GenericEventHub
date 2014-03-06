@@ -19,10 +19,10 @@ namespace GenericEventHub.DTOs
         {
             Activity = new ActivityDTO(ev.Activity);
 
-            UsersInEvent = new List<EventUserDTO>();
-            GuestsInEvent = new List<EventGuestDTO>();
-            ev.UsersInEvent.ForEach(x => UsersInEvent.Add(new EventUserDTO(x)));
-            ev.GuestsInEvent.ForEach(x => GuestsInEvent.Add(new EventGuestDTO(x)));
+            //UsersInEvent = new List<EventUserDTO>();
+            //GuestsInEvent = new List<EventGuestDTO>();
+            //ev.UsersInEvent.ForEach(x => UsersInEvent.Add(new EventUserDTO(x)));
+            //ev.GuestsInEvent.ForEach(x => GuestsInEvent.Add(new EventGuestDTO(x)));
         }
     }
 }

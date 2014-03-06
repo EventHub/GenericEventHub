@@ -7,32 +7,31 @@ using System.Web;
 
 namespace GenericEventHub.DTOs
 {
-    public class DTOMapper<TEntity, TEntityDTO>
-        where TEntity : Entity
-        where TEntityDTO : DTO
+    public class DTOMapper
     {
-        private Type _entityType, _dtoType;
-        private ConstructorInfo _dtoCtor;
 
         public DTOMapper()
         {
-            _entityType = typeof(TEntity);
-            _dtoType = typeof(TEntityDTO);
-
-            _dtoCtor = _dtoType.GetConstructor(new Type[] { _entityType });
         }
 
-        public Object GetDTOForEntity(Entity entity)
+        public TEntityDTO GetDTOForEntity<TEntity, TEntityDTO>(TEntity entity)
         {
-            return _dtoCtor.Invoke(new object[] { entity });
+            var dtoType = typeof(TEntityDTO);
+            var entityType = typeof(TEntity);
+
+            var dtoCtor = dtoType.GetConstructor(new Type[] { entityType });
+            return (TEntityDTO)dtoCtor.Invoke(new object[] { entity });
         }
 
-        public IEnumerable<Object> GetDTOForEntities(IEnumerable<TEntity> entities)
+        public IEnumerable<TEntityDTO> GetDTOsForEntities<TEntity, TEntityDTO>(IEnumerable<TEntity> entities)
         {
-            var list = new List<Object>();
+            var dtoType = typeof(TEntityDTO);
+            var entityType = typeof(TEntity);
+            var dtoCtor = dtoType.GetConstructor(new Type[] { entityType });
+            var list = new List<TEntityDTO>();
             foreach (var entity in entities)
             {
-                list.Add(GetDTOForEntity(entity));
+                list.Add((TEntityDTO)dtoCtor.Invoke(new object[] { entity }));
             }
             return list;
         }

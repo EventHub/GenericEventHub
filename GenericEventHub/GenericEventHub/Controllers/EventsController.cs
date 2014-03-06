@@ -22,7 +22,7 @@ namespace GenericEventHub.Controllers
 
         public EventsController(IEventService service,
             IUserService userService,
-            IGuestService guestService) : base(service)
+            IGuestService guestService) : base(service, userService)
         {
             _service = service;
             _userService = userService;
@@ -48,7 +48,7 @@ namespace GenericEventHub.Controllers
             var user = _userService.GetUserByWindowsName(User.Identity.Name).Data;
 
             if (user == null)
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
 
             var ev = _service.GetByID(eventID).Data;
 
@@ -69,7 +69,7 @@ namespace GenericEventHub.Controllers
             var user = _userService.GetUserByWindowsName(User.Identity.Name).Data;
 
             if (user == null)
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
 
             // Check for null event
             var ev = _service.GetByID(eventID).Data;
@@ -91,7 +91,7 @@ namespace GenericEventHub.Controllers
             var host = _userService.GetUserByWindowsName(User.Identity.Name).Data;
 
             if (host == null)
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
 
             guest.HostID = host.UserID;
             _guestService.Create(guest);
@@ -117,7 +117,7 @@ namespace GenericEventHub.Controllers
 
             var user = guest.Host;
             if (user != null && !user.WindowsName.Equals(user.WindowsName))
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
 
             var ev = _service.GetByID(eventID).Data;
 

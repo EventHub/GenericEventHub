@@ -1,15 +1,19 @@
 div.page-header(style="margin-top: 0px;")
 	h3(style="margin: 0px;",ng-bind="event.Activity.Name") Name
 div
-	span When: 
-	span(ng-bind="event.DateTime | date:'medium'") Time
+	span When: &nbsp;
+	span(ng-bind="event.DateTime | date:'EEEE, MMMM d, yyyy'") Time
+div
+	span Time: &nbsp;
+	span(ng-bind="event.DateTime | date:'h:mm a'")
 div
 	span Where:&nbsp;
 	a(href="{{locationLink}}", target="_blank", ng-bind="event.Activity.Location.Name") Name
-	span &nbsp;at 
+div
+	span Address:&nbsp;
 	span(ng-bind="event.Activity.Location.Address") Address
 div
-	span Attendees:&nbsp;
+	span # Attendees:&nbsp;
 	span(ng-bind="event.UsersInEvent.length + event.GuestsInEvent.length")
 br
 button.btn.btn-primary(type="button",ng-click="addUser()") Join

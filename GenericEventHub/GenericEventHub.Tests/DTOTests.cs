@@ -12,6 +12,57 @@ namespace GenericEventHub.Tests
     [TestClass]
     public class DTOTests
     {
+        private DTOMapper mapper;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            mapper = new DTOMapper();
+        }
+
+        [TestMethod]
+        public void DTOMapperEntityToDTOTest()
+        {
+            Location location = new Location()
+            {
+                Name = "asdf",
+                Address = "zxvc",
+                LocationID = 1
+            };
+
+            var dto = mapper.GetDTOForEntity<Location, LocationDTO>(location);
+
+            AssertLocationDTO(location, dto);
+        }
+
+        [TestMethod]
+        public void DTOMapperEntitiesToDTOTest()
+        {
+            Location location1 = new Location()
+            {
+                Name = "asdf",
+                Address = "zxvc",
+                LocationID = 1
+            };
+
+            Location location2 = new Location()
+            {
+                Name = "asdf",
+                Address = "zxvc",
+                LocationID = 2
+            };
+
+            IEnumerable<Location> locations = new List<Location>() {
+                location1, location2
+            };
+
+            var dtos = mapper.GetDTOsForEntities<Location, LocationDTO>(locations);
+
+            AssertLocationDTO(location1, dtos.First());
+            AssertLocationDTO(location2, dtos.Last());
+
+        }
+
         [TestMethod]
         public void LocationDTOTest()
         {

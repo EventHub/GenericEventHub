@@ -25,12 +25,12 @@ namespace GenericEventHub.Hubs
 
         public void AddUser(EventUserDTO user)
         {
-            _context.Clients.All.addUser(user.Name, user.UserID, string.Empty, string.Empty);
+            _context.Clients.All.addUser(user.Name, user.UserID);
         }
 
         public void RemoveUser(EventUserDTO user)
         {
-            _context.Clients.All.removeUser(user.Name, user.UserID, string.Empty, string.Empty);
+            _context.Clients.All.removeUser(user.Name, user.UserID);
         }
 
         public void AddGuest(EventGuestDTO guest)

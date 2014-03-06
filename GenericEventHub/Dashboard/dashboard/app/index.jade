@@ -27,8 +27,10 @@ html(lang='en', ng-app='app')
         div.navbar-header
           a.navbar-brand(href="#") UltiEvents
         ul.nav.navbar-nav.navbar-right
-          li.dropdown
-            a.dropdown-toggle(href="#",ng-bind="user.WindowsName")
+          li
+            a(ng-bind="user.Name")
+          //li.dropdown
+            a.dropdown-toggle(href="#",ng-bind="user.Name")
             ul.dropdown-menu
               li
                 a(href="#/Settings") Settings

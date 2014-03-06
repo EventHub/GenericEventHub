@@ -1,4 +1,5 @@
-﻿using GenericEventHub.DTOs;
+﻿using GenericEventHub.Authorization;
+using GenericEventHub.DTOs;
 using GenericEventHub.Models;
 using GenericEventHub.Services;
 using System;
@@ -12,17 +13,21 @@ using System.Web.Http;
 
 namespace GenericEventHub.Controllers
 {
+    [Authorize]
     public class BaseApiController<TEntity, TEntityDTO> : ApiController 
         where TEntity : Entity
         where TEntityDTO : DTO
     {
         private IBaseService<TEntity> _service;
-        protected DTOMapper<TEntity, TEntityDTO> _mapper;
+        private IUserService _users;
+        protected DTOMapper _mapper;
 
-        public BaseApiController(IBaseService<TEntity> service)
+        public BaseApiController(IBaseService<TEntity> service,
+            IUserService users)
         {
             _service = service;
-            _mapper = new DTOMapper<TEntity, TEntityDTO>();
+            _users = users;
+            _mapper = new DTOMapper();
         }
 
         [HttpGet]
@@ -33,7 +38,7 @@ namespace GenericEventHub.Controllers
             HttpResponseMessage controllerResponse = null;
             if (serviceResponse.Success)
             {
-                controllerResponse = Request.CreateResponse(HttpStatusCode.OK, _mapper.GetDTOForEntities(serviceResponse.Data));
+                controllerResponse = Request.CreateResponse(HttpStatusCode.OK, _mapper.GetDTOsForEntities<TEntity, TEntityDTO>(serviceResponse.Data));
             }
             else
                 controllerResponse = Request.CreateResponse(HttpStatusCode.InternalServerError, serviceResponse.Message);
@@ -51,12 +56,15 @@ namespace GenericEventHub.Controllers
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, _mapper.GetDTOForEntity(entity));
+            return Request.CreateResponse(HttpStatusCode.OK, _mapper.GetDTOForEntity<TEntity, TEntityDTO>(entity));
         }
 
         [HttpPut]
         public HttpResponseMessage Put(int id, TEntity TEntity)
         {
+            if (!IsAdmin(User.Identity.Name))
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
+
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
@@ -78,11 +86,14 @@ namespace GenericEventHub.Controllers
         [HttpPost]
         public HttpResponseMessage Post(TEntity entity)
         {
+            if (!IsAdmin(User.Identity.Name))
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
+
             if (ModelState.IsValid)
             {
                 var res = _service.Create(entity);
 
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, _mapper.GetDTOForEntity(entity));
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, _mapper.GetDTOForEntity<TEntity, TEntityDTO>(entity));
                 //response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = TEntity.TEntityID }));
                 return response;
             }
@@ -95,6 +106,9 @@ namespace GenericEventHub.Controllers
         [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
+            if (!IsAdmin(User.Identity.Name))
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
+
             var entity = _service.GetByID(id).Data;
             if (entity == null)
             {
@@ -119,6 +133,20 @@ namespace GenericEventHub.Controllers
                 _service.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        protected bool IsAdmin(string name)
+        {
+            var authorized = false;
+
+            var user = _users.GetUserByWindowsName(name);
+
+            if (user != null && user.Success)
+            {
+                authorized = user.Data.IsAdmin;
+            } 
+
+            return authorized;
         }
     }
 }

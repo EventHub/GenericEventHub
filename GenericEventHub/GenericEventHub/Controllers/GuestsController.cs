@@ -15,7 +15,9 @@ namespace GenericEventHub.Controllers
     {
         private IGuestService _service;
 
-        public GuestsController(IGuestService service) : base(service)
+        public GuestsController(IGuestService service,
+            IUserService users)
+            : base(service, users)
         {
             _service = service;
         }

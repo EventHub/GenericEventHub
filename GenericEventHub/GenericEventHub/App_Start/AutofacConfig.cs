@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
+using GenericEventHub.Authorization;
 using GenericEventHub.Infrastructure;
 using GenericEventHub.Repositories;
 using GenericEventHub.Services;
@@ -17,24 +18,17 @@ namespace GenericEventHub.App_Start
         public static void Register(HttpConfiguration config)
         {
             var builder = new ContainerBuilder();
+            var assembly = Assembly.GetExecutingAssembly();
 
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterApiControllers(assembly);
 
             builder.RegisterType<GenericEventHubDb>().As<GenericEventHubDb>().InstancePerApiRequest();
 
             builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>));
 
-            builder.RegisterType<ActivityRepository>().As<IActivityRepository>();
-            builder.RegisterType<EventRepository>().As<IEventRepository>();
-            builder.RegisterType<GuestRepository>().As<IGuestRepository>();
-            builder.RegisterType<LocationRepository>().As<ILocationRepository>();
-            builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterAssemblyTypes(assembly).Where(t => t.Name.EndsWith("Repository")).AsImplementedInterfaces();
 
-            builder.RegisterType<ActivityService>().As<IActivityService>();
-            builder.RegisterType<EventService>().As<IEventService>();
-            builder.RegisterType<GuestService>().As<IGuestService>();
-            builder.RegisterType<LocationService>().As<ILocationService>();
-            builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterAssemblyTypes(assembly).Where(t => t.Name.EndsWith("Service")).AsImplementedInterfaces();
 
             var container = builder.Build();
 
