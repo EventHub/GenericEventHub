@@ -4,4 +4,15 @@
 
 angular.module('app.services', [])
 
-.factory 'version', -> "0.1"
+angular.module "loadingService", [], ($provide) ->
+  $provide.factory "myHttpInterceptor", ($q, $window) ->
+    (promise) ->
+      promise.then ((response) ->
+        $("#loading").hide()
+        response
+      ), (response) ->
+        $("#loading").hide()
+        $q.reject response
+
+
+  return

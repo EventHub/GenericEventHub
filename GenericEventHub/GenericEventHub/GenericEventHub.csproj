@@ -438,7 +438,9 @@
     <None Include="dashboard\bower_components\restangular\test\restangularSpec.js" />
     <None Include="dashboard\bower_components\signalr\jquery.signalR-2.0.2.js" />
     <None Include="dashboard\bower_components\signalr\jquery.signalR-2.0.2.min.js" />
-    <None Include="dashboard\config.js" />
+    <None Include="dashboard\config.js">
+      <DependentUpon>config.coffee</DependentUpon>
+    </None>
     <None Include="dashboard\node_modules\.bin\r.js" />
     <None Include="dashboard\node_modules\auto-reload-brunch\index.js" />
     <None Include="dashboard\node_modules\auto-reload-brunch\node_modules\ws\bench\parser.benchmark.js" />
@@ -3749,6 +3751,13 @@
     <None Include="dashboard\_public\js\app.js" />
     <None Include="dashboard\_public\js\partials.js" />
     <None Include="dashboard\_public\js\vendor.js" />
+    <Content Include="dashboard\app\app.js">
+      <DependentUpon>app.coffee</DependentUpon>
+    </Content>
+    <Content Include="dashboard\app\assets\ajax-loader.gif" />
+    <Content Include="dashboard\app\scripts\services.js">
+      <DependentUpon>services.coffee</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -5916,8 +5925,8 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
-    <PreBuildEvent>cd $(ProjectDir)\dashboard
-brunch build</PreBuildEvent>
+    <PreBuildEvent>cd $(ProjectDir)dashboard
+$(ProjectDir)dashboard\node_modules\.bin\brunch build</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>

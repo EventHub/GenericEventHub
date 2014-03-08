@@ -18,8 +18,10 @@ App.config([
   '$routeProvider'
   '$locationProvider'
   'RestangularProvider'
+  '$httpProvider'
 
-($routeProvider, $locationProvider, RestangularProvider, config) ->
+($routeProvider, $locationProvider, RestangularProvider,
+    $httpProvider, config) ->
 
   RestangularProvider.setBaseUrl("/api")
 
@@ -46,4 +48,11 @@ App.config([
 
   # Without server side support html5 must be disabled.
   $locationProvider.html5Mode(false)
+  
+  $httpProvider.responseInterceptors.push "myHttpInterceptor"
+  spinnerFunction = (data, headers) ->
+    $("#loading").show()
+    data
+
+  $httpProvider.defaults.transformRequest.push spinnerFunction
 ])
