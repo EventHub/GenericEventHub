@@ -1,0 +1,41 @@
+!!! 5
+html(lang='en', ng-app='app')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+    meta(name='viewport', content='width=device-width', initial-scale='1.0')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title(ng-bind-template='{{pageTitle}}')
+    link(rel='stylesheet', href='/css/app.css')
+    //-script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+    //if lte IE 7
+      script(src='http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js')
+    //if lte IE 8
+      script(src='//html5shiv.googlecode.com/svn/trunk/html5.js')
+    script.
+      window.brunch = window.brunch || {};
+      window.brunch['auto-reload'] = {
+        enabled: true
+      };
+    script(src='/js/vendor.js')
+    script(src='/js/partials.js')
+    script(src='/js/app.js')
+  body(ng-controller='NavCtrl')
+    div.navbar.navbar-default.navbar-fixed-top(role="navigation")
+      div.container
+        div.navbar-header
+          a.navbar-brand(href="#") UltiEvents
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(ng-bind="user.Name")
+          //li.dropdown
+            a.dropdown-toggle(href="#",ng-bind="user.Name")
+            ul.dropdown-menu
+              li
+                a(href="#/Settings") Settings
+        div.navbar-collapse.collapse
+              div(ng-include="'/partials/nav.html'")
+    .container.main-content
+      div(ng-view)
+    .push

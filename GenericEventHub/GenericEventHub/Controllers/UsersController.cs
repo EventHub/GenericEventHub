@@ -9,7 +9,7 @@ using GenericEventHub.DTOs;
 
 namespace GenericEventHub.Controllers
 {
-    [RoutePrefix("Users")]
+    [RoutePrefix("api/Users")]
     public class UsersController : BaseApiController<User, UserDTO>
     {
         private IUserService _service;

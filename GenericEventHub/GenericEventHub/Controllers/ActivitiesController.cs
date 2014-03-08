@@ -10,7 +10,7 @@ using System.Web.Http;
 namespace GenericEventHub.Controllers
 {
     [Authorize]
-    [RoutePrefix("Activities")]
+    [RoutePrefix("api/Activities")]
     public class ActivitiesController : BaseApiController<Activity, ActivityDTO>
     {
         private IActivityService _service;

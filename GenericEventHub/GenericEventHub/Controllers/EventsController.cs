@@ -12,7 +12,7 @@ using GenericEventHub.DTOs;
 namespace GenericEventHub.Controllers
 {
     [System.Web.Http.Authorize]
-    [RoutePrefix("Events")]
+    [RoutePrefix("api/Events")]
     public class EventsController : BaseApiController<Event, EventDTO>
     {
         private IEventService _service;

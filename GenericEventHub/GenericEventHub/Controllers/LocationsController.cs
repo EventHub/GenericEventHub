@@ -10,7 +10,7 @@ using GenericEventHub.DTOs;
 namespace GenericEventHub.Controllers
 {
     [Authorize]
-    [RoutePrefix("locations")]
+    [RoutePrefix("api/Locations")]
     public class LocationsController : BaseApiController<Location, LocationDTO>
     {
         private ILocationService _service;
