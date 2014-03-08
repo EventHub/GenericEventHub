@@ -7,8 +7,8 @@ App = angular.module('app', [
   'ngRoute'
   'app.controllers'
   'app.directives'
-  'app.filters'
   'app.services'
+  'app.filters'
   'partials'
   'restangular'
   'ui.bootstrap'
@@ -20,8 +20,7 @@ App.config([
   'RestangularProvider'
   '$httpProvider'
 
-($routeProvider, $locationProvider, RestangularProvider,
-    $httpProvider, config) ->
+($routeProvider, $locationProvider, RestangularProvider, $httpProvider, config) ->
 
   RestangularProvider.setBaseUrl("/api")
 
@@ -49,10 +48,9 @@ App.config([
   # Without server side support html5 must be disabled.
   $locationProvider.html5Mode(false)
   
-  $httpProvider.responseInterceptors.push "myHttpInterceptor"
+  $httpProvider.responseInterceptors.push 'myHttpInterceptor'
   spinnerFunction = (data, headers) ->
-    $("#loading").show()
+    $('#loading').show()
     data
-
-  $httpProvider.defaults.transformRequest.push spinnerFunction
+  $httpProvider.defaults.transformRequest.push(spinnerFunction)
 ])

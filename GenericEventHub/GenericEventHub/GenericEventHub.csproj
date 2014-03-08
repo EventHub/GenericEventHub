@@ -3754,7 +3754,7 @@
     <Content Include="dashboard\app\app.js">
       <DependentUpon>app.coffee</DependentUpon>
     </Content>
-    <Content Include="dashboard\app\assets\ajax-loader.gif" />
+    <Content Include="img\ajax-loader.gif" />
     <Content Include="dashboard\app\scripts\services.js">
       <DependentUpon>services.coffee</DependentUpon>
     </Content>

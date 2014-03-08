@@ -37,5 +37,6 @@ html(lang='en', ng-app='app')
         div.navbar-collapse.collapse
               div(ng-include="'/partials/nav.html'")
     .container.main-content
+      img#loading(src="img/ajax-loader.gif")
       div(ng-view)
     .push

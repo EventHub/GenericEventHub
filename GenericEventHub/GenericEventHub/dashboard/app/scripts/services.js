@@ -3,21 +3,19 @@
   'use strict';
 
   /* Sevices */
-  angular.module('app.services', []);
-
-  angular.module("loadingService", [], function($provide) {
-    $provide.factory("myHttpInterceptor", function($q, $window) {
+  angular.module('app.services', []).factory('myHttpInterceptor', [
+    '$q', '$window', function($q, $window) {
       return function(promise) {
-        return promise.then((function(response) {
-          $("#loading").hide();
+        return promise.then(function(response) {
+          $('#loading').hide();
           return response;
-        }), function(response) {
-          $("#loading").hide();
+        }, function(response) {
+          $('#loading').hide();
           return $q.reject(response);
         });
       };
-    });
-  });
+    }
+  ]);
 
 }).call(this);
 

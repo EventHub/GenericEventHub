@@ -43,7 +43,6 @@ angular.module('app.controllers', [])
 
 ($scope, Restangular, $filter) ->
   $scope.loading = true
-  $scope.events = []
   today = $filter('date')(new Date(), 'MM-dd-yyyy')
   Restangular.one('Events', today).getList().then((data) ->
     $scope.events = data
