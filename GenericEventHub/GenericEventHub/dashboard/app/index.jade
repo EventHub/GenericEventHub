@@ -21,19 +21,18 @@ html(lang='en', ng-app='app')
     script(src='/js/vendor.js')
     script(src='/js/partials.js')
     script(src='/js/app.js')
+    script(src='/signalr/hubs')
   body(ng-controller='NavCtrl')
-    div.navbar.navbar-default.navbar-fixed-top(role="navigation")
+    div.navbar.navbar-default.navbar-fixed-top.panel-success(role="navigation")
       div.container
         div.navbar-header
           a.navbar-brand(href="#") UltiEvents
         ul.nav.navbar-nav.navbar-right
-          li
-            a(ng-bind="user.Name")
-          //li.dropdown
+          li.dropdown
             a.dropdown-toggle(href="#",ng-bind="user.Name")
             ul.dropdown-menu
               li
-                a(href="#/Settings") Settings
+                a(href="#/Profile") Profile
         div.navbar-collapse.collapse
               div(ng-include="'/partials/nav.html'")
     .container.main-content

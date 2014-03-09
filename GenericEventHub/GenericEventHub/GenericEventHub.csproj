@@ -194,6 +194,10 @@
     <Compile Include="Migrations\201403022205049_User WindowsName.Designer.cs">
       <DependentUpon>201403022205049_User WindowsName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201403090543542_user email.cs" />
+    <Compile Include="Migrations\201403090543542_user email.Designer.cs">
+      <DependentUpon>201403090543542_user email.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Entity.cs" />
@@ -5894,6 +5898,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201403022205049_User WindowsName.resx">
       <DependentUpon>201403022205049_User WindowsName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403090543542_user email.resx">
+      <DependentUpon>201403090543542_user email.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

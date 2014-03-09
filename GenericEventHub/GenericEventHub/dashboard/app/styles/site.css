@@ -86,3 +86,16 @@ body {
   margin-top: -16px;  /* -1 * image height / 2 */
   display: block;     
 }
+
+.no-margin {
+  margin: 0px;
+}
+
+.no-margin-top {
+  margin-top: 0px;
+}
+
+.panel-heading-btn-right {
+  position: relative;
+  top: -7px;
+}

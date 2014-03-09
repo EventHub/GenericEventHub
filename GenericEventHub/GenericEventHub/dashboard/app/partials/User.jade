@@ -1,7 +1,10 @@
-form.form-inline
-	div.form-group
-		label Display name: 
-		input.form-control(placeholder="Enter your display name",ng-model="Name")
+div.row
+	div.col-sm-6
+		div.form-group
+			label Display name: 
+			input.form-control(placeholder="Enter your display name",ng-model="Name")
+		div.form-group
+			label Email: 
+			input.form-control(placeholder="Enter your email",ng-model="Email")
 
-br
-button.btn.btn-success(ng-click="update(Name)") Update my info
+		button.btn.btn-success(ng-click="update(Name, Email)") Update my info

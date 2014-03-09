@@ -31,7 +31,7 @@ namespace GenericEventHub.Controllers
         }
 
         [HttpGet]
-        public HttpResponseMessage GetAll()
+        public virtual HttpResponseMessage GetAll()
         {
             var serviceResponse = _service.GetAll();
 
@@ -48,7 +48,7 @@ namespace GenericEventHub.Controllers
         }
 
         [HttpGet]
-        public HttpResponseMessage GetEntity(int id)
+        public virtual HttpResponseMessage GetEntity(int id)
         {
             var entity = _service.GetByID(id).Data;
             if (entity == null)
@@ -60,7 +60,7 @@ namespace GenericEventHub.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage Put(int id, TEntity TEntity)
+        public virtual HttpResponseMessage Put(int id, TEntity TEntity)
         {
             if (!IsAdmin(User.Identity.Name))
                 return Request.CreateResponse(HttpStatusCode.Forbidden);
@@ -84,7 +84,7 @@ namespace GenericEventHub.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Post(TEntity entity)
+        public virtual HttpResponseMessage Post(TEntity entity)
         {
             if (!IsAdmin(User.Identity.Name))
                 return Request.CreateResponse(HttpStatusCode.Forbidden);
@@ -104,7 +104,7 @@ namespace GenericEventHub.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public virtual HttpResponseMessage Delete(int id)
         {
             if (!IsAdmin(User.Identity.Name))
                 return Request.CreateResponse(HttpStatusCode.Forbidden);

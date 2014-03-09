@@ -1,4 +1,4 @@
-div.panel.panel-default(ng-repeat="event in events", ng-show="events")
+div.panel.panel-success(ng-repeat="event in events", ng-show="events")
 	div.panel-heading
 		div.panel-title
 			a(href="#/Dashboard/Events/{{event.EventID}}",ng-bind="event.Name")

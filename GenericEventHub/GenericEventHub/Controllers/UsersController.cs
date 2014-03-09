@@ -19,7 +19,6 @@ namespace GenericEventHub.Controllers
             _service = service;
         }
         
-        [HttpGet]
         [Route("Current")]
         public HttpResponseMessage GetUserInformation()
         {
@@ -40,19 +39,24 @@ namespace GenericEventHub.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, base._mapper.GetDTOForEntity<User, UserDTO>(user));
         }
 
-        [HttpPost]
-        [Route("Name")]
-        public HttpResponseMessage UpdateUserName(int id, string name)
+        [Route("Current")]
+        public HttpResponseMessage PostUserName(User reqUser)
         {
-            var user = _service.GetUserByWindowsName(User.Identity.Name).Data;
+            if (reqUser == null) {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
 
-            if (user == null)
+            var user = _service.GetUserByWindowsName(User.Identity.Name).Data;
+            if (user != null)
             {
-                if (user.UserID != id)
+                if (user.UserID != reqUser.UserID)
                     return Request.CreateResponse(HttpStatusCode.Forbidden);
 
-                // Create this user
-                user.Name = name;
+                if (reqUser.Name != null)
+                    user.Name = reqUser.Name;
+
+                if (reqUser.Email != null)
+                    user.Email = reqUser.Email;
 
                 _service.Update(user);
             }

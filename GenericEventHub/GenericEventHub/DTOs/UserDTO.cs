@@ -10,7 +10,7 @@ namespace GenericEventHub.DTOs
     {
         public int UserID { get; set; }
         public string Name { get; set; }
-        public string EMail { get; set; }
+        public string Email { get; set; }
 
         public UserDTO(User user)
             : base(user)

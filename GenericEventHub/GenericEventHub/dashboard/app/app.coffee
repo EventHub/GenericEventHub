@@ -34,7 +34,7 @@ App.config([
       templateUrl: '/partials/Event.html',
       controller: 'EventCtrl'
     })
-    .when('/Settings', {
+    .when('/Profile', {
       templateUrl: '/partials/User.html',
       controller: 'UserCtrl'
     })

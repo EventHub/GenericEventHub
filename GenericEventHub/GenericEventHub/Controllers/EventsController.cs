@@ -56,7 +56,7 @@ namespace GenericEventHub.Controllers
             {
                 ev.UsersInEvent.Add(user); 
                 _service.Update(ev);
-                _participantsContext.AddUser(new EventUserDTO(user));
+                _participantsContext.AddUser(new EventUserDTO(user), eventID);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);
@@ -78,7 +78,7 @@ namespace GenericEventHub.Controllers
             {
                 ev.UsersInEvent.Remove(user);
                 _service.Update(ev);
-                _participantsContext.RemoveUser(new EventUserDTO(user));
+                _participantsContext.RemoveUser(new EventUserDTO(user), eventID);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);
@@ -120,12 +120,15 @@ namespace GenericEventHub.Controllers
                 return Request.CreateResponse(HttpStatusCode.Forbidden);
 
             var ev = _service.GetByID(eventID).Data;
+            //guest.HostID = -1;
+            //guest.Host = null;
 
             if (ev != null && ev.GuestsInEvent.Contains(guest))
             {
-                ev.GuestsInEvent.Remove(guest);
-                _service.Update(ev);
+                //ev.GuestsInEvent.Remove(guest);
+                //_service.Update(ev);
                 _participantsContext.RemoveGuest(new EventGuestDTO(guest));
+                _guestService.Delete(guest);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);
