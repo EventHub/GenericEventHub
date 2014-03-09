@@ -5933,7 +5933,7 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
     <PreBuildEvent>cd ..\dashboard
-..\dashboard\node_modules\.bin\brunch build</PreBuildEvent>
+node_modules\.bin\brunch build</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
